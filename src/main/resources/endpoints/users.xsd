@@ -143,6 +143,7 @@
             <xs:element name="userId"  type="xs:int"/>
             <xs:element name="userName" type="xs:string"/>
             <xs:element name="userEmail" type="xs:string"/>
+            <xs:element name="userType" type="xs:string"/>
             <xs:element name="userStatus" type="xs:string"/>
             <xs:element name="languagePreference" type="xs:string"/>
             <xs:element name="themePreference" type="xs:string"/>

@@ -55,18 +55,9 @@ public class tUserStatusRepository {
         }
     }
 
-    @Transactional
     public tUserStatus findUserStatusByDescription(String description){
 
-        tUserStatus userStatusVal = repository.findByDescription(description);
-//        tUserStatus userStatusRef = new tUserStatus();
-//
-//        /**
-//         * get reference object to insert as Foreign Key
-//         */
-//        if(userStatusVal != null)
-//            userStatusRef = entityManager.getReference(tUserStatus.class, userStatusVal.getUserStatusId());
+        return repository.findByDescription(description);
 
-        return userStatusVal;
     }
 }

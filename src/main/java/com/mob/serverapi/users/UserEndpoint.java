@@ -1,6 +1,8 @@
 package com.mob.serverapi.users;
 
 
+import com.mob.serverapi.servicefault.ServiceFault;
+import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.base.*;
 import com.mob.serverapi.users.repositories.endpoints.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ public class UserEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserByIdRequest")
     @ResponsePayload
     public GetUserByIdResponse getUserById(@RequestPayload GetUserByIdRequest request) {
+
         GetUserByIdResponse response = new GetUserByIdResponse();
         response.setUser(userRepository.getUserById(request.getUserId()));
 
@@ -42,6 +45,7 @@ public class UserEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setUserRequest")
     @ResponsePayload
     public SetUserResponse setUser (@RequestPayload SetUserRequest request) {
+
         SetUserResponse response = new SetUserResponse();
         response.setUser(userRepository.setUser(request.getUserName(),request.getUserEmail(),
                 request.getUserPassword(), request.getUserType()));

@@ -1,5 +1,7 @@
 package com.mob.serverapi.users.repositories.endpoints;
 
+import com.mob.serverapi.servicefault.ServiceFault;
+import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.base.User;
 import com.mob.serverapi.users.database.*;
 import com.mob.serverapi.users.repositories.database.*;
@@ -28,16 +30,30 @@ public class UserRepository implements IUserRepository {
 
         User userToReturn = new User();
 
-        tUser u = userRepository.findById(id);
+        try {
+            tUser u = userRepository.findById(id);
 
-        if(u != null)
-            userToReturn = UserUtils.transformUser(u);
+            if (u != null)
+                userToReturn = UserUtils.transformUser(u);
+        }
+        catch (Exception ex){
+            throw new ServiceFaultException("ERROR",new ServiceFault("GETUSERBYID", ex.getMessage()));
+        }
 
         return userToReturn;
     }
 
     @Override
     public User userLogin(int userId) {
+
+//        if(u.getUserStatus().getDescription().equals("BLOCKED") ){
+//            throw new ServiceFaultException("WARNING",new ServiceFault(
+//                    "USER_BLOCKED", ""));
+//        }
+//        else if(u.getUserStatus().getDescription().equals("INACTIVE") ){
+//            throw new ServiceFaultException("WARNING",new ServiceFault(
+//                    "USER_INACTIVE", ""));
+//        }
         return null;
     }
 
@@ -45,29 +61,32 @@ public class UserRepository implements IUserRepository {
     public User setUser(String userName, String userEmail, String userPassword, String userType) {
         User createdUser = new User();
 
+        try {
+            String langPref = "EN";
+            String themePref = "L";
+            LocalDateTime creationDate = LocalDateTime.now();
+            tUserType userTypeVal = userTypeRepository.findUserTypeByDescription(userType);
+            tUserStatus userStatusVal = userStatusRepository.findUserStatusByDescription("CHANGEPW");
 
-        String langPref = "EN";
-        String themePref ="L";
-        LocalDateTime creationDate = LocalDateTime.now();
-        tUserType userTypeVal= userTypeRepository.findUserTypeByDescription(userType);
-        tUserStatus userStatusVal = userStatusRepository.findUserStatusByDescription("CHANGEPW");
+            tUser userToCreate = new tUser();
+            userToCreate.setUserName(userName);
+            userToCreate.setUserEmail(userEmail);
+            userToCreate.setPassword(userPassword);
+            userToCreate.setCreationDate(creationDate);
+            userToCreate.setThemePreference(themePref);
+            userToCreate.setLanguagePreference(langPref);
 
-        tUser userToCreate = new tUser();
-        userToCreate.setUserName(userName);
-        userToCreate.setUserEmail(userEmail);
-        userToCreate.setPassword(userPassword);
-        userToCreate.setCreationDate(creationDate);
-        userToCreate.setThemePreference(themePref);
-        userToCreate.setLanguagePreference(langPref);
+            userToCreate.setUserType(userTypeVal);
+            userToCreate.setUserStatus(userStatusVal);
 
-        userToCreate.setUserType(userTypeVal);
-        userToCreate.setUserStatus(userStatusVal);
+            tUser saved = userRepository.savetUser(userToCreate);
 
-        tUser saved = userRepository.savetUser(userToCreate);
-
-        if(saved != null)
-            createdUser = UserUtils.transformUser(saved);
-
+            if (saved != null)
+                createdUser = UserUtils.transformUser(saved);
+        }
+        catch (Exception ex){
+            throw new ServiceFaultException("ERROR",new ServiceFault("SETUSER", ex.getMessage()));
+        }
         return createdUser;
     }
 
@@ -96,18 +115,6 @@ public class UserRepository implements IUserRepository {
         return false;
     }
 
-//    @Override
-//    @Transactional
-//    public boolean setUser(String userName, String userCode, String userEmail) {
-//
-//        int val = entityManager.createNativeQuery("INSERT INTO user (user_name, user_code, user_email) " +
-//                        "VALUES (:userName,:userCode,:userEmail)")
-//                .setParameter("userName", userName)
-//                .setParameter("userCode", userCode)
-//                .setParameter("userEmail", userEmail)
-//                .executeUpdate();
-//
-//        return val==1 ?true:false;
-//    }
+
 }
 

@@ -52,20 +52,10 @@ public class tUserTypeRepository {
 
         }
     }
-    @Transactional
+
     public tUserType findUserTypeByDescription(String description){
 
-        tUserType userTypeVal = repository.findByDescription(description);
-//        tUserType userTypeRef = new tUserType();
-//
-//        /**
-//         * get reference object to insert as Foreign Key
-//         */
-//
-//        if(userTypeVal != null)
-//            userTypeRef = entityManager.getReference(tUserType.class, userTypeVal.getUserTypeId());
-
-        return userTypeVal;
+        return repository.findByDescription(description);
     }
 
 }
