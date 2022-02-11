@@ -36,16 +36,16 @@ public class tUserTypeRepository {
             tUserType t = new tUserType();
             t.setDescription(d);
 
-            ExampleMatcher modelMatcher = ExampleMatcher.matching()
-                    .withIgnorePaths("id")
-                    .withMatcher("model", ignoreCase());
-
-            Example<tUserType> userType = Example.of(t, modelMatcher);
-
-            if(!repository.exists(userType)) {
-
-                savetUserType(t);
-            }
+//            ExampleMatcher modelMatcher = ExampleMatcher.matching()
+//                    .withIgnorePaths("id")
+//                    .withMatcher("model", ignoreCase());
+//
+//            Example<tUserType> userType = Example.of(t, modelMatcher);
+//
+//            if(!repository.exists(userType)) {
+//
+//                savetUserType(t);
+//            }
 
         }
     }
