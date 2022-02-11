@@ -1,0 +1,119 @@
+package com.mob.serverapi.support.database;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "supportNotification")
+public class tSupportNotification implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "supportNotificationId", unique = true, nullable = false)
+    private int supportNotificationId;
+
+    @Column(name = "creationDate", nullable = false)
+    private LocalDateTime creationDate;
+
+    @Column(name = "detail", nullable = false)
+    @Lob
+    private String detail;
+
+    @Column(name = "checked", nullable = false)
+    private boolean checked;
+
+    @Column(name = "checkedDate")
+    private LocalDateTime checkedDate;
+
+    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    //FK to Reseller, column resellerId
+    @JoinColumn(name = "supportId", referencedColumnName = "supportId",
+            foreignKey = @ForeignKey(name="FK_SUPPORTNOTIFICATION_SUPPORTID"))
+    private tSupport support;
+
+    public tSupportNotification() {
+    }
+
+    public tSupportNotification(int supportNotificationId, LocalDateTime creationDate, String detail,
+                                boolean checked, LocalDateTime checkedDate, tSupport support) {
+        this.supportNotificationId = supportNotificationId;
+        this.creationDate = creationDate;
+        this.detail = detail;
+        this.checked = checked;
+        this.checkedDate = checkedDate;
+        this.support = support;
+    }
+    /**
+     * @return the supportNotificationId.
+     */
+    public int getSupportNotificationId() {
+        return supportNotificationId;
+    }
+    /**
+     * @param supportNotificationId to set to.
+     */
+    public void setSupportNotificationId(int supportNotificationId) {
+        this.supportNotificationId = supportNotificationId;
+    }
+    /**
+     * @return the creationDate.
+     */
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+    /**
+     * @param creationDate to set to.
+     */
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+    /**
+     * @return the detail.
+     */
+    public String getDetail() {
+        return detail;
+    }
+    /**
+     * @param detail to set to.
+     */
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+    /**
+     * @return the checked.
+     */
+    public boolean isChecked() {
+        return checked;
+    }
+    /**
+     * @param checked to set to.
+     */
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+    /**
+     * @return the checkedDate.
+     */
+    public LocalDateTime getCheckedDate() {
+        return checkedDate;
+    }
+    /**
+     * @param checkedDate to set to.
+     */
+    public void setCheckedDate(LocalDateTime checkedDate) {
+        this.checkedDate = checkedDate;
+    }
+    /**
+     * @return the support.
+     */
+    public tSupport getSupport() {
+        return support;
+    }
+    /**
+     * @param support to set to.
+     */
+    public void setSupport(tSupport support) {
+        this.support = support;
+    }
+}
