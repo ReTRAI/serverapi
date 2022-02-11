@@ -1,5 +1,7 @@
 package com.mob.serverapi;
 
+import com.mob.serverapi.device.repositories.tDeviceStatusRepository;
+import com.mob.serverapi.support.repositories.tTicketStatusRepository;
 import com.mob.serverapi.users.repositories.database.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +21,8 @@ public class ServerapiApplication extends SpringBootServletInitializer {
 		 */
 		context.getBean(tUserTypeRepository.class).createDefaultUserType();
 		context.getBean(tUserStatusRepository.class).createDefaultUserStatus();
+		context.getBean(tTicketStatusRepository.class).createDefaultTicketStatus();
+		context.getBean(tDeviceStatusRepository.class).createDefaultDeviceStatus();
 	}
 
 	@Override

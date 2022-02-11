@@ -14,7 +14,7 @@ public class tTicketStatus implements Serializable {
 
     @Column(name = "description", nullable = false)
     private String description;
-    private enum TicketStatusEnum {
+    public enum TicketStatusEnum {
         OPEN,
         ONPROGRESS,
         PENDING,

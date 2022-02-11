@@ -14,7 +14,7 @@ public class tDeviceStatus implements Serializable {
 
     @Column(name = "description", nullable = false)
     private String description;
-    private enum DeviceStatusEnum {
+    public enum DeviceStatusEnum {
         ACTIVE,
         FREE,
         WIPED,

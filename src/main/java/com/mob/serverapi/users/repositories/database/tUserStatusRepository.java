@@ -17,8 +17,8 @@ public class tUserStatusRepository {
     @Autowired
     ItUserStatusRepository repository;
 
-    public void savetUserStatus(tUserStatus userType){
-        repository.save(userType);
+    public void savetUserStatus(tUserStatus userStatus){
+        repository.save(userStatus);
     }
 
     public void createDefaultUserStatus(){
