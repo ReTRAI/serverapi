@@ -24,7 +24,7 @@ public class tResellerBalance implements Serializable {
     @Column(name = "movementDate", nullable = false)
     private LocalDateTime movementDate;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
     //FK to Reseller, column resellerId
     @JoinColumn(name = "resellerId", referencedColumnName = "resellerId",
             foreignKey = @ForeignKey(name="FK_RESELLERBALANCE_RESELLERID"))

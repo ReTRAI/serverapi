@@ -25,7 +25,7 @@ public class tDeviceUser implements Serializable {
     @Lob
     private String userActivationPassword;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
     //FK to table device, column deviceId
     @JoinColumn(name = "deviceId", referencedColumnName = "deviceId",
             foreignKey = @ForeignKey(name="FK_DEVICEUSER_DEVICEID"))

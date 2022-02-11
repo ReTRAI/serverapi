@@ -13,13 +13,13 @@ public class tResellerAssociation implements Serializable {
     private int resellerAssociationId;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "parentResellerId", referencedColumnName = "resellerId",
             foreignKey = @ForeignKey(name="FK_RESELLER_PARENTID"))
     private tReseller parentReseller;
 
     //FK to resellerId
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "childResellerId", referencedColumnName = "resellerId",
             foreignKey = @ForeignKey(name="FK_RESELLER_CHILDID"))
     private tReseller childReseller;

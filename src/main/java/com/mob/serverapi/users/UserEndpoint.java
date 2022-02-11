@@ -12,7 +12,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 @Endpoint
 public class UserEndpoint {
 
-    private static final String NAMESPACE_URI = "http://www.mobile.com/serverapi/users/base";
+    private static final String NAMESPACE_URI = "http://www.mob.com/serverapi/users/base";
 
     private UserRepository userRepository;
 
@@ -39,13 +39,13 @@ public class UserEndpoint {
 //        return response;
 //    }
 //
-//    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setUserRequest")
-//    @ResponsePayload
-//    public SetUserResponse setUserUser(@RequestPayload SetUserRequest request) {
-//        SetUserResponse response = new SetUserResponse();
-//        response.setVal(userRepository.setUser(request.getUserName(), request.getUserCode(),
-//                request.getUserEmail()));
-//
-//        return response;
-//    }
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setUserRequest")
+    @ResponsePayload
+    public SetUserResponse setUser (@RequestPayload SetUserRequest request) {
+        SetUserResponse response = new SetUserResponse();
+        response.setUser(userRepository.setUser(request.getUserName(),request.getUserEmail(),
+                request.getUserPassword(), request.getUserType()));
+
+        return response;
+    }
 }

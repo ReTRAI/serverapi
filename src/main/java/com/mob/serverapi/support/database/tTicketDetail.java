@@ -14,7 +14,7 @@ public class tTicketDetail {
     @Column(name = "ticketDetailId", unique = true, nullable = false)
     private int ticketDetailId;
 
-    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    @OneToOne(cascade = CascadeType.MERGE,optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "ticketId", referencedColumnName = "ticketId",
             foreignKey = @ForeignKey(name="FK_TICKETDETAIL_TICKETID"))

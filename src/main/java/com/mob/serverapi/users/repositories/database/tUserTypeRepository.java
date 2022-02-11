@@ -1,22 +1,24 @@
 package com.mob.serverapi.users.repositories.database;//package com.mobile.serverapi.users.repositories.database;
 
 import com.mob.serverapi.users.database.tUserType;
-import com.mob.serverapi.users.repositories.database.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.ignoreCase;
 
 @Component
 public class tUserTypeRepository {
 
+    @PersistenceContext
+    protected EntityManager entityManager;
     @Autowired
     ItUserTypeRepository repository;
 
@@ -50,4 +52,20 @@ public class tUserTypeRepository {
 
         }
     }
+    @Transactional
+    public tUserType findUserTypeByDescription(String description){
+
+        tUserType userTypeVal = repository.findByDescription(description);
+//        tUserType userTypeRef = new tUserType();
+//
+//        /**
+//         * get reference object to insert as Foreign Key
+//         */
+//
+//        if(userTypeVal != null)
+//            userTypeRef = entityManager.getReference(tUserType.class, userTypeVal.getUserTypeId());
+
+        return userTypeVal;
+    }
+
 }

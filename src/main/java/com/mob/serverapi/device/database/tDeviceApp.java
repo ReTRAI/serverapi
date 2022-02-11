@@ -27,13 +27,13 @@ public class tDeviceApp implements Serializable {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
     //FK to Reseller, column resellerId
     @JoinColumn(name = "deviceId", referencedColumnName = "deviceId",
             foreignKey = @ForeignKey(name="FK_DEVICEAPPS_DEVICEID"))
     private tDevice device;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
     //FK to Reseller, column resellerId
     @JoinColumn(name = "appId", referencedColumnName = "appId",
             foreignKey = @ForeignKey(name="FK_DEVICEAPPS_APPID"))

@@ -19,7 +19,7 @@ public class tDevice implements Serializable {
     @Column(name = "brand", nullable = false)
     private String brand;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
     //FK to table UserType, column userTypeId
     @JoinColumn(name = "resellerId", referencedColumnName = "resellerId",
             foreignKey = @ForeignKey(name="FK_DEVICE_RESELLERID"))
@@ -52,7 +52,7 @@ public class tDevice implements Serializable {
     @Column(name = "lastBackup")
     private  LocalDateTime lastBackup;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
     //FK to table UserType, column userTypeId
     @JoinColumn(name = "deviceStatusId", referencedColumnName = "deviceStatusId",
             foreignKey = @ForeignKey(name="FK_DEVICE_STATUSID"))

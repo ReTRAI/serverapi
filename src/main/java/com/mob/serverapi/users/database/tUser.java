@@ -38,7 +38,7 @@ public class tUser implements Serializable {
     @Column(name = "themePreference", length=1, nullable = false)
     private String themePreference;
 
-    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    @OneToOne(cascade = CascadeType.MERGE,optional = false)
     //FK to table UserType, column userTypeId
     @JoinColumn(name = "userStatusId", referencedColumnName = "userStatusId",
             foreignKey = @ForeignKey(name="FK_USER_USERSTATUSID"))
@@ -48,7 +48,7 @@ public class tUser implements Serializable {
     private LocalDateTime inactivationDate;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     //FK to table UserType, column userTypeId
     @JoinColumn(name = "userTypeId", referencedColumnName = "userTypeId",
             foreignKey = @ForeignKey(name="FK_USER_USERTYPEID"))
@@ -158,7 +158,7 @@ public class tUser implements Serializable {
     @OneToOne(mappedBy = "user")
     private tTicketLog ticketLog;
 
-    protected tUser() {}
+    public tUser() {}
 
     public tUser(int userId, String userName, String userEmail, String password, LocalDateTime creationDate,
                  String languagePreference, String themePreference, tUserStatus userStatus,

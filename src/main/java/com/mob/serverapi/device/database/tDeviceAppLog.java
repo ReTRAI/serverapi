@@ -18,13 +18,13 @@ public class tDeviceAppLog implements Serializable {
     @Column(name = "action")
     public String action;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "actionUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_DEVICEAPPLOG_USERID"))
     private tUser user;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = false)
+    @OneToOne(cascade = CascadeType.MERGE, optional = false)
     //FK to table device, column deviceId
     @JoinColumn(name = "deviceAppId", referencedColumnName = "deviceAppId",
             foreignKey = @ForeignKey(name="FK_DEVICEAPPLOG_DEVICEAPPID"))

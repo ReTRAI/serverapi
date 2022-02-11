@@ -14,7 +14,7 @@ public class tSupport implements Serializable {
     @Column(name = "supportId", unique = true, nullable = false)
     private int supportId;
 
-    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    @OneToOne(cascade = CascadeType.MERGE,optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "userId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_SUPPORT_USERID"))

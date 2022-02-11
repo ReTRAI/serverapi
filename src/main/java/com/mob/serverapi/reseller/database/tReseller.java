@@ -16,7 +16,7 @@ public class tReseller implements Serializable {
     @Column(name = "resellerId", unique = true, nullable = false)
     private int resellerId;
 
-    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    @OneToOne(cascade = CascadeType.MERGE,optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "userId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_RESELLER_USERID"))

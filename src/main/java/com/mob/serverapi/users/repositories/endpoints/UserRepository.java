@@ -1,8 +1,10 @@
 package com.mob.serverapi.users.repositories.endpoints;
 
 import com.mob.serverapi.users.base.User;
-import com.mob.serverapi.users.database.tUser;
+import com.mob.serverapi.users.database.*;
+import com.mob.serverapi.users.repositories.database.*;
 import com.mob.serverapi.utils.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,24 +15,23 @@ public class UserRepository implements IUserRepository {
 
     @PersistenceContext
     protected EntityManager entityManager;
-
+    @Autowired
+    protected tUserRepository userRepository = new tUserRepository();
+    @Autowired
+    protected tUserTypeRepository userTypeRepository = new tUserTypeRepository();
+    @Autowired
+    protected tUserStatusRepository userStatusRepository = new tUserStatusRepository();
 
     @Override
     @SuppressWarnings("unchecked")
     public User getUserById(int id) {
 
         User userToReturn = new User();
-        tUser u= (tUser) entityManager.createNativeQuery("SELECT * FROM user u " +
-                        "WHERE u.user_id = :userId", tUser.class)
-                .setParameter("userId", id)
-                .getResultList()
-                .stream()
-                .findFirst()
-                .orElse(null);
+
+        tUser u = userRepository.findById(id);
 
         if(u != null)
             userToReturn = UserUtils.transformUser(u);
-
 
         return userToReturn;
     }
@@ -48,24 +49,26 @@ public class UserRepository implements IUserRepository {
         String langPref = "EN";
         String themePref ="L";
         LocalDateTime creationDate = LocalDateTime.now();
+        tUserType userTypeVal= userTypeRepository.findUserTypeByDescription(userType);
+        tUserStatus userStatusVal = userStatusRepository.findUserStatusByDescription("CHANGEPW");
 
-        int val = entityManager.createNativeQuery("INSERT INTO user (user_name, user_email, password, " +
-                        "creation_date, language_preference, theme_preference, user_status_id, user_type_id) " +
-                        "VALUES (:userName,:userEmail, :password, :creationDate, " +
-                        ":langPreference, :themePreference, :userStatusId, :userTypeId)")
+        tUser userToCreate = new tUser();
+        userToCreate.setUserName(userName);
+        userToCreate.setUserEmail(userEmail);
+        userToCreate.setPassword(userPassword);
+        userToCreate.setCreationDate(creationDate);
+        userToCreate.setThemePreference(themePref);
+        userToCreate.setLanguagePreference(langPref);
 
-                .setParameter("userName", userName)
-                .setParameter("userEmail", userEmail)
-                .setParameter("password", userPassword)
-                .setParameter("creationDate", creationDate)
-                .setParameter("langPreference", langPref)
-                .setParameter("themePreference", themePref)
-                .setParameter("userStatusId", 1)
-                .setParameter("userTypeId", 1)
+        userToCreate.setUserType(userTypeVal);
+        userToCreate.setUserStatus(userStatusVal);
 
-                .executeUpdate();
+        tUser saved = userRepository.savetUser(userToCreate);
 
-        return null;
+        if(saved != null)
+            createdUser = UserUtils.transformUser(saved);
+
+        return createdUser;
     }
 
     @Override

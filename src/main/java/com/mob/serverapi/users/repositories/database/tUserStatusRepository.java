@@ -1,11 +1,15 @@
 package com.mob.serverapi.users.repositories.database;
 
 import com.mob.serverapi.users.database.tUserStatus;
+import com.mob.serverapi.users.database.tUserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,8 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 @Component
 public class tUserStatusRepository {
 
+    @PersistenceContext
+    protected EntityManager entityManager;
     @Autowired
     ItUserStatusRepository repository;
 
@@ -47,5 +53,20 @@ public class tUserStatusRepository {
             }
 
         }
+    }
+
+    @Transactional
+    public tUserStatus findUserStatusByDescription(String description){
+
+        tUserStatus userStatusVal = repository.findByDescription(description);
+//        tUserStatus userStatusRef = new tUserStatus();
+//
+//        /**
+//         * get reference object to insert as Foreign Key
+//         */
+//        if(userStatusVal != null)
+//            userStatusRef = entityManager.getReference(tUserStatus.class, userStatusVal.getUserStatusId());
+
+        return userStatusVal;
     }
 }

@@ -12,7 +12,7 @@ public class tUserLoginLog {
     @Column(name = "userLoginLogId", unique = true, nullable = false)
     private int userLoginLogId;
 
-    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    @OneToOne(cascade = CascadeType.MERGE,optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "userId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_USERLOGINLOG_USERID"))

@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 interface ItUserStatusRepository extends JpaRepository<tUserStatus,Integer> {
 
+    tUserStatus findByDescription(String description);
 }

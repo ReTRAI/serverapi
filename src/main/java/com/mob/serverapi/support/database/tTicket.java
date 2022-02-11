@@ -18,18 +18,18 @@ public class tTicket implements Serializable {
     @Column(name = "openDate", nullable = false)
     private LocalDateTime openDate;
 
-    @ManyToOne(fetch = FetchType.EAGER,optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name = "openUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_TICKET_OPENUSERID"))
     private tUser openUser;
 
-    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    @OneToOne(cascade = CascadeType.MERGE,optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "ticketStatusId", referencedColumnName = "ticketStatusId",
             foreignKey = @ForeignKey(name="FK_TICKET_TICKETSTATUSID"))
     private tTicketStatus ticketStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "assignedUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_TICKET_ASSIGNEDUSERID"))
     private tUser assignedUser;
