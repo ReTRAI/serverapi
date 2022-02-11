@@ -13,7 +13,7 @@ public class tTicketStatus implements Serializable {
     private int ticketStatusId;
 
     @Column(name = "description", nullable = false)
-    private TicketStatusEnum description;
+    private String description;
     private enum TicketStatusEnum {
         OPEN,
         ONPROGRESS,
@@ -30,7 +30,7 @@ public class tTicketStatus implements Serializable {
     public tTicketStatus() {
     }
 
-    public tTicketStatus(int ticketStatusId, TicketStatusEnum description) {
+    public tTicketStatus(int ticketStatusId, String description) {
         this.ticketStatusId = ticketStatusId;
         this.description = description;
     }
@@ -49,13 +49,13 @@ public class tTicketStatus implements Serializable {
     /**
      * @return the description.
      */
-    public TicketStatusEnum getDescription() {
+    public String getDescription() {
         return description;
     }
     /**
      * @param description to set to.
      */
-    public void setDescription(TicketStatusEnum description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 }

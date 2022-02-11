@@ -13,7 +13,7 @@ public class tDeviceStatus implements Serializable {
     private int deviceStatusId;
 
     @Column(name = "description", nullable = false)
-    private DeviceStatusEnum description;
+    private String description;
     private enum DeviceStatusEnum {
         ACTIVE,
         FREE,
@@ -37,7 +37,7 @@ public class tDeviceStatus implements Serializable {
     public tDeviceStatus() {
     }
 
-    public tDeviceStatus(int deviceStatusId, DeviceStatusEnum description) {
+    public tDeviceStatus(int deviceStatusId, String description) {
         this.deviceStatusId = deviceStatusId;
         this.description = description;
     }
@@ -59,14 +59,14 @@ public class tDeviceStatus implements Serializable {
     /**
      * @return the description.
      */
-    public DeviceStatusEnum getDescription() {
+    public String getDescription() {
         return description;
     }
 
     /**
      * @param description to set to.
      */
-    public void setDescription(DeviceStatusEnum description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 }

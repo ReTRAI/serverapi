@@ -1,6 +1,6 @@
 package com.mob.serverapi;
 
-import com.mob.serverapi.users.repositories.database.tUserTypeRepository;
+import com.mob.serverapi.users.repositories.database.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -13,7 +13,12 @@ public class ServerapiApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 
 		ConfigurableApplicationContext context = SpringApplication.run(ServerapiApplication.class, args);
+
+		/**
+		 * Initial Data Seed
+		 */
 		context.getBean(tUserTypeRepository.class).createDefaultUserType();
+		context.getBean(tUserStatusRepository.class).createDefaultUserStatus();
 	}
 
 	@Override
