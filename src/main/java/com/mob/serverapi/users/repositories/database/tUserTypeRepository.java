@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.ignoreCase;
 
 @Component
@@ -34,18 +35,18 @@ public class tUserTypeRepository {
         for (tUserType.UserTypeEnum d: descrs) {
 
             tUserType t = new tUserType();
-            t.setDescription(d);
+            t.setDescription(d.toString());
 
-//            ExampleMatcher modelMatcher = ExampleMatcher.matching()
-//                    .withIgnorePaths("id")
-//                    .withMatcher("model", ignoreCase());
-//
-//            Example<tUserType> userType = Example.of(t, modelMatcher);
-//
-//            if(!repository.exists(userType)) {
-//
-//                savetUserType(t);
-//            }
+            ExampleMatcher descriptionMatch = ExampleMatcher.matchingAny()
+                    .withIgnorePaths("id")
+                    .withMatcher("description", exact().ignoreCase());
+
+            Example<tUserType> userType = Example.of(t, descriptionMatch);
+
+            if(!repository.exists(userType)) {
+
+                savetUserType(t);
+            }
 
         }
     }

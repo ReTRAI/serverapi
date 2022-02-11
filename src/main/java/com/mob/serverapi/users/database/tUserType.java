@@ -13,7 +13,7 @@ public class tUserType implements Serializable {
     private int userTypeId;
 
     @Column(name = "description", nullable = false)
-    private UserTypeEnum description;
+    private String description;
     public enum UserTypeEnum {
         ADMIN,
         RESELLER,
@@ -28,7 +28,7 @@ public class tUserType implements Serializable {
 
     public tUserType() {}
 
-    public tUserType(int userTypeId, UserTypeEnum description) {
+    public tUserType(int userTypeId, String description) {
         this.userTypeId = userTypeId;
         this.description = description;
     }
@@ -50,14 +50,14 @@ public class tUserType implements Serializable {
     /**
      * @return the description.
      */
-    public UserTypeEnum getDescription() {
+    public String getDescription() {
         return description;
     }
 
     /**
      * @param description to set to.
      */
-    public void setDescription(UserTypeEnum description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 }
