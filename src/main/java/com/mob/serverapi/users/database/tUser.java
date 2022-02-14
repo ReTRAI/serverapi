@@ -25,9 +25,13 @@ public class tUser implements Serializable {
     @Column(name = "userEmail", length=50, nullable = false)
     private String userEmail;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "passwordHash", nullable = false)
     @Lob
-    private String password;
+    private byte[] passwordHash;
+
+    @Column(name = "passwordSalt", nullable = false)
+    @Lob
+    private byte[] passwordSalt;
 
     @Column(name = "creationDate", nullable = false)
     private LocalDateTime creationDate;
@@ -178,13 +182,15 @@ public class tUser implements Serializable {
 
     public tUser() {}
 
-    public tUser(int userId, String userName, String userEmail, String password, LocalDateTime creationDate,
+    public tUser(int userId, String userName, String userEmail, byte[] passwordHash, byte[] passwordSalt,
+                 LocalDateTime creationDate,
                  String languagePreference, String themePreference, tUserStatus userStatus,
                  LocalDateTime inactivationDate, tUserType userType) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
-        this.password = password;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
         this.creationDate = creationDate;
         this.languagePreference = languagePreference;
         this.themePreference = themePreference;
@@ -236,17 +242,31 @@ public class tUser implements Serializable {
     }
 
     /**
-     * @return the password.
+     * @return the passwordHash.
      */
-    public String getPassword() {
-        return password;
+    public byte[] getPasswordHash() {
+        return passwordHash;
     }
 
     /**
-     * @param password to set to.
+     * @param passwordHash to set to.
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(byte[] passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    /**
+     * @return the passwordHash.
+     */
+    public byte[] getPasswordSalt() {
+        return passwordSalt;
+    }
+
+    /**
+     * @param passwordSalt to set to.
+     */
+    public void setPasswordSalt(byte[] passwordSalt) {
+        this.passwordSalt = passwordSalt;
     }
 
     /**
@@ -331,4 +351,6 @@ public class tUser implements Serializable {
     public void setUserStatus(tUserStatus userStatus) {
         this.userStatus = userStatus;
     }
+
+
 }

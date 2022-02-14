@@ -43,6 +43,7 @@
                 <xs:element name="userEmail" type="xs:string"/>
                 <xs:element name="userPassword" type="xs:string"/>
                 <xs:element name="userType" type="xs:string"/>
+                <xs:element name="actionUserId"  type="xs:int"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -59,6 +60,8 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:int"/>
+                <xs:element name="actionUserId"  type="xs:int"/>
+
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -76,6 +79,8 @@
             <xs:sequence>
                 <xs:element name="userId" type="xs:int"/>
                 <xs:element name="password" type="xs:string"/>
+                <xs:element name="actionUserId"  type="xs:int"/>
+
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -92,6 +97,8 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:int"/>
+                <xs:element name="actionUserId"  type="xs:int"/>
+
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -109,6 +116,8 @@
             <xs:sequence>
                 <xs:element name="userId" type="xs:int"/>
                 <xs:element name="lang" type="xs:string"/>
+                <xs:element name="actionUserId"  type="xs:int"/>
+
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -126,6 +135,7 @@
             <xs:sequence>
                 <xs:element name="userId" type="xs:int"/>
                 <xs:element name="theme" type="xs:string"/>
+                <xs:element name="actionUserId"  type="xs:int"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

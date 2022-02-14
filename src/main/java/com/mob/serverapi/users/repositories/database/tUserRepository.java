@@ -24,6 +24,11 @@ public class tUserRepository {
         return repository.findById(userId).orElse(null);
     }
 
+    public tUser findByEmail(String email){
+
+        return repository.findByUserEmail(email);
+    }
+
     public boolean userExistsByField(tUser user, String field){
 
         boolean exists = false;

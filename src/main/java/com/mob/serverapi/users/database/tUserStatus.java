@@ -17,6 +17,7 @@ public class tUserStatus implements Serializable {
 
     @Column(name = "description", nullable = false)
     private String description;
+
     public enum UserStatusEnum {
         ACTIVE,
         INACTIVE,

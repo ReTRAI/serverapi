@@ -33,15 +33,16 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "changeLangPreferenceRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "userLoginRequest")
     @ResponsePayload
-    public ChangeLangPreferenceResponse changeLangPreference(@RequestPayload ChangeLangPreferenceRequest request) {
+    public UserLoginResponse userLogin (@RequestPayload UserLoginRequest request) {
 
-        ChangeLangPreferenceResponse response = new ChangeLangPreferenceResponse();
-        response.setResult(userRepository.changeLangPreference(request.getUserId(),request.getLang()));
+        UserLoginResponse response = new UserLoginResponse();
+        response.setUser(userRepository.userLogin(request.getUserEmail(), request.getUserPassword()));
 
         return response;
     }
+
 
 //    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllUsersRequest")
 //    @ResponsePayload
@@ -58,7 +59,64 @@ public class UserEndpoint {
 
         SetUserResponse response = new SetUserResponse();
         response.setUser(userRepository.setUser(request.getUserName(),request.getUserEmail(),
-                request.getUserPassword(), request.getUserType()));
+                request.getUserPassword(), request.getUserType(), request.getActionUserId()));
+
+        return response;
+    }
+
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "unblockUserRequest")
+    @ResponsePayload
+    public UnblockUserResponse unblockUser (@RequestPayload UnblockUserRequest request) {
+
+        UnblockUserResponse response = new UnblockUserResponse();
+        response.setResult(userRepository.unblockUser(request.getUserId(),request.getActionUserId()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "changeUserPwRequest")
+    @ResponsePayload
+    public ChangeUserPwResponse changeUserPw (@RequestPayload ChangeUserPwRequest request) {
+
+        ChangeUserPwResponse response = new ChangeUserPwResponse();
+        response.setResult(userRepository.changeUserPw(request.getUserId(), request.getPassword(),
+                request.getActionUserId()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "inactivateUserRequest")
+    @ResponsePayload
+    public InactivateUserResponse inactivateUser (@RequestPayload InactivateUserRequest request) {
+
+        InactivateUserResponse response = new InactivateUserResponse();
+        response.setResult(userRepository.inactivateUser(request.getUserId(),request.getActionUserId()));
+
+        return response;
+    }
+
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "changeLangPreferenceRequest")
+    @ResponsePayload
+    public ChangeLangPreferenceResponse changeLangPreference
+            (@RequestPayload ChangeLangPreferenceRequest request) {
+
+        ChangeLangPreferenceResponse response = new ChangeLangPreferenceResponse();
+        response.setResult(userRepository.changeLangPreference(request.getUserId(),request.getLang(),
+                request.getActionUserId()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "changeThemePreferenceRequest")
+    @ResponsePayload
+    public ChangeThemePreferenceResponse changeThemePreference
+            (@RequestPayload ChangeThemePreferenceRequest request) {
+
+        ChangeThemePreferenceResponse response = new ChangeThemePreferenceResponse();
+        response.setResult(userRepository.changeThemePreference(request.getUserId(),request.getTheme(),
+                request.getActionUserId()));
 
         return response;
     }
