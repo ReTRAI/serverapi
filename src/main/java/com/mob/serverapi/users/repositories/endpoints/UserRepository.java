@@ -184,7 +184,7 @@ public class UserRepository implements IUserRepository {
             if(getUser.getUserStatus().getDescription().equals(tUserStatus.UserStatusEnum.BLOCKED.name()))
             {
                 tUserStatus userStatusVal = userStatusRepository
-                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.ACTIVE.name());
+                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
 
 
             getUser.setUserStatus(userStatusVal);
