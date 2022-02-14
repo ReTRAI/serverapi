@@ -1,9 +1,11 @@
 package com.mob.serverapi.support.database;
 
+import com.mob.serverapi.reseller.database.tResellerLog;
 import com.mob.serverapi.users.database.tUser;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "support")
@@ -14,7 +16,7 @@ public class tSupport implements Serializable {
     @Column(name = "supportId", unique = true, nullable = false)
     private int supportId;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "userId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_SUPPORT_USERID"))
@@ -23,14 +25,17 @@ public class tSupport implements Serializable {
     /**
      * FK from supportLog to support
      */
-    @OneToOne(mappedBy = "support")
-    private tSupportLog supportLog;
+    @OneToMany(targetEntity = tSupportLog.class,mappedBy="support" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tSupportLog> supportLog;
+
 
     /**
      * FK from support notification to support
      */
-    @OneToOne(mappedBy = "support")
-    private tSupportNotification supportNotification;
+    @OneToMany(targetEntity = tSupportNotification.class,mappedBy="support" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tSupportNotification> supportNotification;
 
     public tSupport() {
     }

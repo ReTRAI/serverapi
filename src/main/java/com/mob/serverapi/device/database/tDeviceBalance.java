@@ -23,8 +23,8 @@ public class tDeviceBalance implements Serializable {
     @Column(name = "movementDate", nullable = false)
     private LocalDateTime movementDate;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
-    //FK to Reseller, column resellerId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to device, column deviceId
     @JoinColumn(name = "deviceId", referencedColumnName = "deviceId",
             foreignKey = @ForeignKey(name="FK_DEVICEBALANCE_DEVICEID"))
     private tDevice device;

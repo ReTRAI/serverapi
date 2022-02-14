@@ -106,12 +106,23 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean changeLangPreference(int userId) {
-        return false;
+    public boolean changeLangPreference(int userId, String lang) {
+        boolean val = false;
+        try{
+            tUser getUser = userRepository.findById(userId);
+            getUser.setLanguagePreference(lang);
+
+            tUser saved = userRepository.savetUser(getUser);
+            val=true;
+        }
+        catch (Exception ex){
+            throw new ServiceFaultException("ERROR",new ServiceFault("CHANGELANG", ex.getMessage()));
+        }
+        return val;
     }
 
     @Override
-    public boolean changeThemePreference(int userId) {
+    public boolean changeThemePreference(int userId, String theme) {
         return false;
     }
 

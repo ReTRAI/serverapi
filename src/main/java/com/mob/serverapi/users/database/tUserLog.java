@@ -16,14 +16,17 @@ public class tUserLog implements Serializable {
     @Column(name = "action", nullable = false)
     public String action;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "actionUserId", referencedColumnName = "userId",
-            foreignKey = @ForeignKey(name="FK_USERLOG_USERID"))
-    private tUser user;
+            foreignKey = @ForeignKey(name="FK_USERLOG_ACTIONUSERID"))
+    private tUser actionUser;
 
-    @Column(name = "alteredId", nullable = false)
-    private int alteredId;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table User, column userId
+    @JoinColumn(name = "alteredId", referencedColumnName = "userId",
+            foreignKey = @ForeignKey(name="FK_USERLOG_ALTEREDUSERID"))
+    private tUser alteredUser;
 
     @Column(name = "alterationDate", nullable = false)
     private LocalDateTime alterationDate;
@@ -34,12 +37,12 @@ public class tUserLog implements Serializable {
     public tUserLog() {
     }
 
-    public tUserLog(int userLogId, String action, tUser user,
-                    int alteredId, LocalDateTime alterationDate, String alterationDetail) {
+    public tUserLog(int userLogId, String action, tUser actionUser,
+                    tUser alteredUser, LocalDateTime alterationDate, String alterationDetail) {
         this.userLogId = userLogId;
         this.action = action;
-        this.user = user;
-        this.alteredId = alteredId;
+        this.actionUser = actionUser;
+        this.alteredUser = alteredUser;
         this.alterationDate = alterationDate;
         this.alterationDetail = alterationDetail;
     }
@@ -75,29 +78,29 @@ public class tUserLog implements Serializable {
     /**
      * @return the actionUserId.
      */
-    public tUser getUser() {
-        return user;
+    public tUser getActionUser() {
+        return actionUser;
     }
 
     /**
-     * @param user to set to.
+     * @param actionUser to set to.
      */
-    public void setUser(tUser user) {
-        this.user = user;
+    public void setActionUser(tUser actionUser) {
+        this.actionUser = actionUser;
     }
 
     /**
      * @return the alteredId.
      */
-    public int getAlteredId() {
-        return alteredId;
+    public tUser getAlteredUser() {
+        return alteredUser;
     }
 
     /**
-     * @param alteredId to set to.
+     * @param alteredUser to set to.
      */
-    public void setAlteredId(int alteredId) {
-        this.alteredId = alteredId;
+    public void setAlteredUser(tUser alteredUser) {
+        this.alteredUser = alteredUser;
     }
 
     /**

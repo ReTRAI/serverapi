@@ -4,6 +4,7 @@ package com.mob.serverapi.device.database;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "deviceUser")
@@ -25,7 +26,7 @@ public class tDeviceUser implements Serializable {
     @Lob
     private String userActivationPassword;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table device, column deviceId
     @JoinColumn(name = "deviceId", referencedColumnName = "deviceId",
             foreignKey = @ForeignKey(name="FK_DEVICEUSER_DEVICEID"))
@@ -35,8 +36,9 @@ public class tDeviceUser implements Serializable {
     /**
      * FK from deviceUserLog to deviceUser
      */
-    @OneToOne(mappedBy = "deviceUser")
-    private tDeviceUserLog deviceUser;
+    @OneToMany(targetEntity = tDeviceUserLog.class,mappedBy="deviceUser" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceUserLog> deviceUser;
 
     public tDeviceUser() {
     }

@@ -26,7 +26,7 @@ public class tResellerNotification implements Serializable {
     @Column(name = "checkedDate")
     private LocalDateTime checkedDate;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to Reseller, column resellerId
     @JoinColumn(name = "resellerId", referencedColumnName = "resellerId",
             foreignKey = @ForeignKey(name="FK_RESELLENOTIFICATION_RESELLERID"))

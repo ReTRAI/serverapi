@@ -26,8 +26,8 @@ public class tSupportNotification implements Serializable {
     @Column(name = "checkedDate")
     private LocalDateTime checkedDate;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
-    //FK to Reseller, column resellerId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to support, column supportId
     @JoinColumn(name = "supportId", referencedColumnName = "supportId",
             foreignKey = @ForeignKey(name="FK_SUPPORTNOTIFICATION_SUPPORTID"))
     private tSupport support;

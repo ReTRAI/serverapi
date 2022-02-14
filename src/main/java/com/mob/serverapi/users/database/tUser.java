@@ -38,8 +38,8 @@ public class tUser implements Serializable {
     @Column(name = "themePreference", length=1, nullable = false)
     private String themePreference;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
-    //FK to table UserType, column userTypeId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table userStatus, column userStatusId
     @JoinColumn(name = "userStatusId", referencedColumnName = "userStatusId",
             foreignKey = @ForeignKey(name="FK_USER_USERSTATUSID"))
     private tUserStatus userStatus;
@@ -48,7 +48,7 @@ public class tUser implements Serializable {
     private LocalDateTime inactivationDate;
 
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table UserType, column userTypeId
     @JoinColumn(name = "userTypeId", referencedColumnName = "userTypeId",
             foreignKey = @ForeignKey(name="FK_USER_USERTYPEID"))
@@ -57,77 +57,92 @@ public class tUser implements Serializable {
     /**
      * FK from reseller to user
      */
-    @OneToOne(mappedBy = "user")
-    private tReseller reseller;
+    @OneToMany(targetEntity = tReseller.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tReseller> reseller;
 
     /**
      * FK from UserLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tUserLog userLog;
+    @OneToMany(targetEntity = tUserLog.class,mappedBy="actionUser" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tUserLog> actionUser;
+
+    @OneToMany(targetEntity = tUserLog.class,mappedBy="alteredUser" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tUserLog> alteredUser;
 
     /**
      * FK from ResellerLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tResellerLog resellerLog;
+
+    @OneToMany(targetEntity = tResellerLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tResellerLog> resellerLog;
 
     /**
      * FK from ResellerAssociationLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tResellerAssociationLog resellerAssociationLog;
+    @OneToMany(targetEntity = tResellerAssociationLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tResellerAssociationLog> resellerAssociationLog;
 
     /**
      * FK from DeviceLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tDeviceLog deviceLog;
+    @OneToMany(targetEntity = tDeviceLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceLog> deviceLog;
+
 
     /**
      * FK from DeviceStatusLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tDeviceStatusLog deviceStatusLog;
+    @OneToMany(targetEntity = tDeviceStatusLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceStatusLog> deviceStatusLog;
 
     /**
      * FK from DeviceUserLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tDeviceUserLog deviceUserLog;
-
+    @OneToMany(targetEntity = tDeviceUserLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceUserLog> deviceUserLog;
 
     /**
      * FK from appLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tAppLog appLog;
-
+    @OneToMany(targetEntity = tAppLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tAppLog> appLog;
 
     /**
      * FK from deviceAppLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tDeviceAppLog deviceAppLog;
-
+    @OneToMany(targetEntity = tDeviceAppLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceAppLog> deviceAppLog;
 
     /**
      * FK from support to user
      */
-    @OneToOne(mappedBy = "user")
-    private tSupport support;
+    @OneToMany(targetEntity = tSupport.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tSupport> support;
 
     /**
      * FK from supportLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tSupportLog supportLog;
+    @OneToMany(targetEntity = tSupportLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tSupportLog> supportLog;
 
     /**
      * FK from ticketStatusLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tTicketStatusLog ticketStatusLog;
+    @OneToMany(targetEntity = tTicketStatusLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tTicketStatusLog> ticketStatusLog;
 
     /**
      * FK from Ticket to User
@@ -143,20 +158,23 @@ public class tUser implements Serializable {
     /**
      * FK from ticketDetail to user
      */
-    @OneToOne(mappedBy = "user")
-    private tTicketDetail ticketDetail;
+    @OneToMany(targetEntity = tTicketDetail.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tTicketDetail> ticketDetail;
 
     /**
      * FK from userLoginLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tUserLoginLog userLoginLog;
+    @OneToMany(targetEntity = tUserLoginLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tUserLoginLog> userLoginLog;
 
     /**
      * FK from TicketLog to user
      */
-    @OneToOne(mappedBy = "user")
-    private tTicketLog ticketLog;
+    @OneToMany(targetEntity = tTicketLog.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tTicketLog> ticketLog;
 
     public tUser() {}
 

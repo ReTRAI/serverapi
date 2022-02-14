@@ -14,8 +14,8 @@ public class tTicketDetail {
     @Column(name = "ticketDetailId", unique = true, nullable = false)
     private int ticketDetailId;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
-    //FK to table User, column userId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table ticket, column ticketId
     @JoinColumn(name = "ticketId", referencedColumnName = "ticketId",
             foreignKey = @ForeignKey(name="FK_TICKETDETAIL_TICKETID"))
     private tTicket ticket;
@@ -26,7 +26,7 @@ public class tTicketDetail {
     private String detail;
 
 
-    @OneToOne(cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "responseUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_TICKETDETAIL_RESPONCEUSERID"))

@@ -17,14 +17,14 @@ public class tTicketLog {
     @Column(name = "action", nullable = false)
     public String action;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "actionUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_TICKETLOG_USERID"))
     private tUser user;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
-    //FK to table device, column deviceId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table ticket, column ticketId
     @JoinColumn(name = "alteredId", referencedColumnName = "ticketId",
             foreignKey = @ForeignKey(name="FK_TICKETLOG_TICKETID"))
     private tTicket ticket;

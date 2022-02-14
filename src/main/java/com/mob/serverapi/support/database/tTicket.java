@@ -5,6 +5,7 @@ import com.mob.serverapi.users.database.tUser;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "ticket")
@@ -19,17 +20,19 @@ public class tTicket implements Serializable {
     private LocalDateTime openDate;
 
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,optional = false)
+    //FK to table user, column userId
     @JoinColumn(name = "openUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_TICKET_OPENUSERID"))
     private tUser openUser;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
-    //FK to table User, column userId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table ticketStatus, column ticketStatusId
     @JoinColumn(name = "ticketStatusId", referencedColumnName = "ticketStatusId",
             foreignKey = @ForeignKey(name="FK_TICKET_TICKETSTATUSID"))
     private tTicketStatus ticketStatus;
 
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER, optional = true)
+    //FK to table user, column userId
     @JoinColumn(name = "assignedUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_TICKET_ASSIGNEDUSERID"))
     private tUser assignedUser;
@@ -37,14 +40,16 @@ public class tTicket implements Serializable {
     /**
      * FK from ticketDetail to ticket
      */
-    @OneToOne(mappedBy = "ticket")
-    private tTicketDetail ticketDetail;
+    @OneToMany(targetEntity = tTicketDetail.class,mappedBy="ticket" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tTicketDetail> ticketDetail;
 
     /**
      * FK from TicketLog to user
      */
-    @OneToOne(mappedBy = "ticket")
-    private tTicketLog ticketLog;
+    @OneToMany(targetEntity = tTicketLog.class,mappedBy="ticket" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tTicketLog> ticketLog;
 
     public tTicket() {
     }

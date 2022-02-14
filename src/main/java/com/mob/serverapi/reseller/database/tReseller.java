@@ -39,26 +39,30 @@ public class tReseller implements Serializable {
     /**
      * FK from resellerBalance to Reseller
      */
-    @OneToOne(mappedBy = "reseller")
-    private tResellerBalance resellerBalance;
+    @OneToMany(targetEntity = tResellerBalance.class,mappedBy="reseller" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tResellerBalance> resellerBalance;
 
     /**
      * FK from resellerNotification to Reseller
      */
-    @OneToOne(mappedBy = "reseller")
-    private tResellerNotification resellerNotification;
 
+    @OneToMany(targetEntity = tResellerNotification.class,mappedBy="reseller" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tResellerNotification> resellerNotification;
     /**
      * FK from device to Reseller
      */
-    @OneToOne(mappedBy = "reseller")
-    private tDevice device;
+    @OneToMany(targetEntity = tDevice.class,mappedBy="reseller" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDevice> device;
 
     /**
      * FK from resellerLog to Reseller
      */
-    @OneToOne(mappedBy = "reseller")
-    private tResellerLog resellerLog;
+    @OneToMany(targetEntity = tResellerLog.class,mappedBy="reseller" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tResellerLog> resellerLog;
 
     protected tReseller() {}
 

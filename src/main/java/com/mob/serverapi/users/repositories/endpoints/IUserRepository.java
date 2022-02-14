@@ -17,9 +17,9 @@ interface IUserRepository {
 
     boolean inactivateUser(int userId);
 
-    boolean changeLangPreference(int userId);
+    boolean changeLangPreference(int userId, String lang);
 
-    boolean changeThemePreference(int userId);
+    boolean changeThemePreference(int userId, String theme);
 
 
 }

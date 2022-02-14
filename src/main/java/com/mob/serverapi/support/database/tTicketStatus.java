@@ -2,6 +2,7 @@ package com.mob.serverapi.support.database;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "ticketStatus")
@@ -24,8 +25,9 @@ public class tTicketStatus implements Serializable {
     /**
      * FK from ticketStatusLog to ticketStatus
      */
-    @OneToOne(mappedBy = "ticketStatus")
-    private tTicketStatusLog ticketStatusLog;
+    @OneToMany(targetEntity = tTicketStatusLog.class,mappedBy="ticketStatus" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tTicketStatusLog> ticketStatusLog;
 
     public tTicketStatus() {
     }

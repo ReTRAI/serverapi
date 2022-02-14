@@ -18,14 +18,14 @@ public class tAppLog implements Serializable {
     @Column(name = "action", nullable = false)
     public String action;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "actionUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_APPLOG_USERID"))
     private tUser user;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
-    //FK to table device, column deviceId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table App, column appId
     @JoinColumn(name = "appId", referencedColumnName = "appId",
             foreignKey = @ForeignKey(name="FK_APPLOG_DEVICEID"))
     private tApp app;

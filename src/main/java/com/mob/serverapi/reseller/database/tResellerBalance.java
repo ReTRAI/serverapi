@@ -11,9 +11,7 @@ public class tResellerBalance implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "resellerBalanceId", unique = true, nullable = false)
-    private int resellerBalanceId;    /**
-     * @return the deviceApp.
-     */
+    private int resellerBalanceId;
 
     @Column(name = "debitCredit", nullable = false)
     private String debitCredit;
@@ -24,7 +22,7 @@ public class tResellerBalance implements Serializable {
     @Column(name = "movementDate", nullable = false)
     private LocalDateTime movementDate;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to Reseller, column resellerId
     @JoinColumn(name = "resellerId", referencedColumnName = "resellerId",
             foreignKey = @ForeignKey(name="FK_RESELLERBALANCE_RESELLERID"))

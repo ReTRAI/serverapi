@@ -33,6 +33,16 @@ public class UserEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "changeLangPreferenceRequest")
+    @ResponsePayload
+    public ChangeLangPreferenceResponse changeLangPreference(@RequestPayload ChangeLangPreferenceRequest request) {
+
+        ChangeLangPreferenceResponse response = new ChangeLangPreferenceResponse();
+        response.setResult(userRepository.changeLangPreference(request.getUserId(),request.getLang()));
+
+        return response;
+    }
+
 //    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllUsersRequest")
 //    @ResponsePayload
 //    public GetAllUsersResponse getAllUser(@RequestPayload GetAllUsersRequest request) {

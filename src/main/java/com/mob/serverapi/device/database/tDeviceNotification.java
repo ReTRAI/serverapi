@@ -26,8 +26,8 @@ public class tDeviceNotification implements Serializable {
     @Column(name = "checkedDate")
     private LocalDateTime checkedDate;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
-    //FK to Reseller, column resellerId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to device, column deviceId
     @JoinColumn(name = "deviceId", referencedColumnName = "deviceId",
             foreignKey = @ForeignKey(name="FK_DEVICENOTIFICATION_DEVICEID"))
     private tDevice device;

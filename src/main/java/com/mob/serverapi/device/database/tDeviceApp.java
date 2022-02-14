@@ -5,6 +5,7 @@ import com.mob.serverapi.apps.database.tApp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "deviceApp")
@@ -27,14 +28,14 @@ public class tDeviceApp implements Serializable {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
-    //FK to Reseller, column resellerId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to device, column deviceId
     @JoinColumn(name = "deviceId", referencedColumnName = "deviceId",
             foreignKey = @ForeignKey(name="FK_DEVICEAPPS_DEVICEID"))
     private tDevice device;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
-    //FK to Reseller, column resellerId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to App, column appId
     @JoinColumn(name = "appId", referencedColumnName = "appId",
             foreignKey = @ForeignKey(name="FK_DEVICEAPPS_APPID"))
     private tApp app;
@@ -42,8 +43,10 @@ public class tDeviceApp implements Serializable {
     /**
      * FK from deviceAppLog to deviceapp
      */
-    @OneToOne(mappedBy = "deviceApp")
-    private tDeviceAppLog deviceAppLog;
+
+    @OneToMany(targetEntity = tDeviceAppLog.class,mappedBy="deviceApp" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceAppLog> deviceAppLog;
 
     public tDeviceApp() {
     }

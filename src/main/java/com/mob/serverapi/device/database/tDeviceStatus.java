@@ -2,6 +2,7 @@ package com.mob.serverapi.device.database;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "deviceStatus")
@@ -25,14 +26,17 @@ public class tDeviceStatus implements Serializable {
     /**
      * FK from device to deviceStatus
      */
-    @OneToOne(mappedBy = "deviceStatus")
-    private tDevice device;
+
+    @OneToMany(targetEntity = tDevice.class,mappedBy="deviceStatus" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDevice> device;
 
     /**
      * FK from DeviceStatusLog to deviceStatus
      */
-    @OneToOne(mappedBy = "deviceStatus")
-    private tDeviceStatusLog deviceStatusLog;
+    @OneToMany(targetEntity = tDeviceStatusLog.class,mappedBy="deviceStatus" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceStatusLog> deviceStatusLog;
 
     public tDeviceStatus() {
     }

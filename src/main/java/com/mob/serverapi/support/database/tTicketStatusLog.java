@@ -18,14 +18,14 @@ public class tTicketStatusLog implements Serializable {
     @Column(name = "action", nullable = false)
     public String action;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "actionUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_TICKETSTATUSLOG_USERID"))
     private tUser user;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
-    //FK to table device, column deviceId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table ticketStatus, column ticketStatusId
     @JoinColumn(name = "alteredId", referencedColumnName = "ticketStatusId",
             foreignKey = @ForeignKey(name="FK_TICKETSTATUSLOG_TICKETSTATUSID"))
     private tTicketStatus ticketStatus;

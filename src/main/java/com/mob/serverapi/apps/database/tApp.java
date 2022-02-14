@@ -1,10 +1,12 @@
 package com.mob.serverapi.apps.database;
 
 import com.mob.serverapi.device.database.tDeviceApp;
+import com.mob.serverapi.users.database.tUser;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "app")
@@ -41,14 +43,16 @@ public class tApp implements Serializable {
     /**
      * FK from appLog to app
      */
-    @OneToOne(mappedBy = "app")
-    private tAppLog appLog;
+    @OneToMany(targetEntity = tAppLog.class,mappedBy="app" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tAppLog> appLog;
 
     /**
      * FK from deviceApp to app
      */
-    @OneToOne(mappedBy = "app")
-    private tDeviceApp deviceApp;
+    @OneToMany(targetEntity = tDeviceApp.class,mappedBy="app" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceApp> deviceApp;
 
     public tApp() {
     }

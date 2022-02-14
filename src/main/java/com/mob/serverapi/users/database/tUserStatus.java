@@ -1,7 +1,10 @@
 package com.mob.serverapi.users.database;
 
+import com.mob.serverapi.reseller.database.tResellerAssociation;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "userStatus")
@@ -23,9 +26,9 @@ public class tUserStatus implements Serializable {
     /**
      * FK from user to userStatus
      */
-    @OneToOne(mappedBy = "userStatus")
-    private tUser user;
-
+    @OneToMany(targetEntity = tUser.class,mappedBy="userStatus" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tUser> user;
 
     public tUserStatus() {
     }

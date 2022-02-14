@@ -19,14 +19,14 @@ public class tResellerLog implements Serializable {
     @Column(name = "action", nullable = false)
     public String action;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
     @JoinColumn(name = "actionUserId", referencedColumnName = "userId",
             foreignKey = @ForeignKey(name="FK_RESELLERLOG_USERID"))
     private tUser user;
 
-    @OneToOne(cascade = CascadeType.MERGE,optional = false)
-    //FK to table User, column userId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table reseller, column resellerId
     @JoinColumn(name = "alteredId", referencedColumnName = "resellerId",
             foreignKey = @ForeignKey(name="FK_RESELLERLOG_RESELLERID"))
     private tReseller reseller;

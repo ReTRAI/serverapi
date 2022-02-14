@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "device")
@@ -19,8 +20,8 @@ public class tDevice implements Serializable {
     @Column(name = "brand", nullable = false)
     private String brand;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
-    //FK to table UserType, column userTypeId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table reseller, column resellerId
     @JoinColumn(name = "resellerId", referencedColumnName = "resellerId",
             foreignKey = @ForeignKey(name="FK_DEVICE_RESELLERID"))
     private tReseller reseller;
@@ -52,8 +53,8 @@ public class tDevice implements Serializable {
     @Column(name = "lastBackup")
     private  LocalDateTime lastBackup;
 
-    @OneToOne(cascade = CascadeType.MERGE, optional = false)
-    //FK to table UserType, column userTypeId
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    //FK to table deviceStatus, column deviceStatusId
     @JoinColumn(name = "deviceStatusId", referencedColumnName = "deviceStatusId",
             foreignKey = @ForeignKey(name="FK_DEVICE_STATUSID"))
     private tDeviceStatus deviceStatus;
@@ -80,33 +81,38 @@ public class tDevice implements Serializable {
     /**
      * FK from DeviceLog to device
      */
-    @OneToOne(mappedBy = "device")
-    private tDeviceLog deviceLog;
+    @OneToMany(targetEntity = tDeviceLog.class,mappedBy="device" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceLog> deviceLog;
 
     /**
      * FK from deviceNotification to device
      */
-    @OneToOne(mappedBy = "device")
-    private tDeviceNotification deviceNotification;
+    @OneToMany(targetEntity = tDeviceNotification.class,mappedBy="device" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceNotification> deviceNotification;
 
     /**
      * FK from deviceBalance to device
      */
-    @OneToOne(mappedBy = "device")
-    private tDeviceBalance deviceBalance;
+    @OneToMany(targetEntity = tDeviceBalance.class,mappedBy="device" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceBalance> deviceBalance;
 
     /**
      * FK from deviceUser to device
      */
-    @OneToOne(mappedBy = "device")
-    private tDeviceUser deviceUser;
+    @OneToMany(targetEntity = tDeviceUser.class,mappedBy="device" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceUser> deviceUser;
 
     /**
      * FK from deviceApp to device
      */
-    @OneToOne(mappedBy = "device")
-    private tDeviceApp deviceApp;
 
+    @OneToMany(targetEntity = tDeviceApp.class,mappedBy="device" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tDeviceApp> deviceApp;
 
     public tDevice() {
     }
@@ -388,20 +394,6 @@ public class tDevice implements Serializable {
      */
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    /**
-     * @return the deviceLog.
-     */
-    public tDeviceLog getDeviceLog() {
-        return deviceLog;
-    }
-
-    /**
-     * @param deviceLog to set to.
-     */
-    public void setDeviceLog(tDeviceLog deviceLog) {
-        this.deviceLog = deviceLog;
     }
 
     /**
