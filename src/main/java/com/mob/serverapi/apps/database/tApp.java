@@ -43,15 +43,13 @@ public class tApp implements Serializable {
     /**
      * FK from appLog to app
      */
-    @OneToMany(targetEntity = tAppLog.class,mappedBy="app" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tAppLog.class,mappedBy="app" , fetch = FetchType.LAZY)
     private Set<tAppLog> appLog;
 
     /**
      * FK from deviceApp to app
      */
-    @OneToMany(targetEntity = tDeviceApp.class,mappedBy="app" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tDeviceApp.class,mappedBy="app" , fetch = FetchType.LAZY)
     private Set<tDeviceApp> deviceApp;
 
     public tApp() {

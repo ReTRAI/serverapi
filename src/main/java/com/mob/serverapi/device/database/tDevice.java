@@ -81,37 +81,32 @@ public class tDevice implements Serializable {
     /**
      * FK from DeviceLog to device
      */
-    @OneToMany(targetEntity = tDeviceLog.class,mappedBy="device" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tDeviceLog.class,mappedBy="device" , fetch = FetchType.LAZY)
     private Set<tDeviceLog> deviceLog;
 
     /**
      * FK from deviceNotification to device
      */
-    @OneToMany(targetEntity = tDeviceNotification.class,mappedBy="device" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tDeviceNotification.class,mappedBy="device" , fetch = FetchType.LAZY)
     private Set<tDeviceNotification> deviceNotification;
 
     /**
      * FK from deviceBalance to device
      */
-    @OneToMany(targetEntity = tDeviceBalance.class,mappedBy="device" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tDeviceBalance.class,mappedBy="device" , fetch = FetchType.LAZY)
     private Set<tDeviceBalance> deviceBalance;
 
     /**
      * FK from deviceUser to device
      */
-    @OneToMany(targetEntity = tDeviceUser.class,mappedBy="device" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tDeviceUser.class,mappedBy="device" , fetch = FetchType.LAZY)
     private Set<tDeviceUser> deviceUser;
 
     /**
      * FK from deviceApp to device
      */
 
-    @OneToMany(targetEntity = tDeviceApp.class,mappedBy="device" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tDeviceApp.class,mappedBy="device" , fetch = FetchType.LAZY)
     private Set<tDeviceApp> deviceApp;
 
     public tDevice() {

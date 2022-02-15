@@ -28,33 +28,28 @@ public class tReseller implements Serializable {
     /**
      * FK from ResellerAssociation to Reseller
      */
-    @OneToMany(targetEntity = tResellerAssociation.class,mappedBy="parentReseller" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tResellerAssociation.class,mappedBy="parentReseller" , fetch = FetchType.LAZY)
     private Set<tResellerAssociation> resellerAssociationParent;
 
-    @OneToMany(targetEntity = tResellerAssociation.class,mappedBy="childReseller" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tResellerAssociation.class,mappedBy="childReseller" , fetch = FetchType.LAZY)
     private Set<tResellerAssociation> resellerAssociationChild;
 
     /**
      * FK from resellerBalance to Reseller
      */
-    @OneToMany(targetEntity = tResellerBalance.class,mappedBy="reseller" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tResellerBalance.class,mappedBy="reseller" , fetch = FetchType.LAZY)
     private Set<tResellerBalance> resellerBalance;
 
     /**
      * FK from resellerNotification to Reseller
      */
 
-    @OneToMany(targetEntity = tResellerNotification.class,mappedBy="reseller" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tResellerNotification.class,mappedBy="reseller" , fetch = FetchType.LAZY)
     private Set<tResellerNotification> resellerNotification;
     /**
      * FK from device to Reseller
      */
-    @OneToMany(targetEntity = tDevice.class,mappedBy="reseller" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tDevice.class,mappedBy="reseller" , fetch = FetchType.LAZY)
     private Set<tDevice> device;
 
     /**

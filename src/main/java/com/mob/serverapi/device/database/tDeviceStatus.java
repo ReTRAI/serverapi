@@ -27,8 +27,7 @@ public class tDeviceStatus implements Serializable {
      * FK from device to deviceStatus
      */
 
-    @OneToMany(targetEntity = tDevice.class,mappedBy="deviceStatus" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tDevice.class,mappedBy="deviceStatus" , fetch = FetchType.LAZY)
     private Set<tDevice> device;
 
     /**
