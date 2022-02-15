@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 interface ItUserTypeRepository extends JpaRepository<tUserType,Integer> {
-
     tUserType findByDescription(String description);
+
 }

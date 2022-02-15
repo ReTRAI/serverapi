@@ -11,21 +11,21 @@ package com.mob.serverapi.users.base;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for userRole complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType>
+ * &lt;complexType name="userRole">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="user" type="{http://www.mob.com/serverapi/users/base}user"/>
+ *         &lt;element name="userRoleId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="userRoleName" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,37 +35,54 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "user"
+@XmlType(name = "userRole", propOrder = {
+    "userRoleId",
+    "userRoleName"
 })
-@XmlRootElement(name = "setUserResponse")
-public class SetUserResponse {
+public class UserRole {
 
+    protected int userRoleId;
     @XmlElement(required = true)
-    protected User user;
+    protected String userRoleName;
 
     /**
-     * Gets the value of the user property.
+     * Gets the value of the userRoleId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link User }
-     *     
      */
-    public User getUser() {
-        return user;
+    public int getUserRoleId() {
+        return userRoleId;
     }
 
     /**
-     * Sets the value of the user property.
+     * Sets the value of the userRoleId property.
+     * 
+     */
+    public void setUserRoleId(int value) {
+        this.userRoleId = value;
+    }
+
+    /**
+     * Gets the value of the userRoleName property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUserRoleName() {
+        return userRoleName;
+    }
+
+    /**
+     * Sets the value of the userRoleName property.
      * 
      * @param value
      *     allowed object is
-     *     {@link User }
+     *     {@link String }
      *     
      */
-    public void setUser(User value) {
-        this.user = value;
+    public void setUserRoleName(String value) {
+        this.userRoleName = value;
     }
 
 }

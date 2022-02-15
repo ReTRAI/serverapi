@@ -1,6 +1,9 @@
 package com.mob.serverapi.users.repositories.endpoints;
 
 import com.mob.serverapi.users.base.User;
+import com.mob.serverapi.users.base.UserRole;
+
+import java.util.List;
 
 
 interface IUserRepository {
@@ -23,5 +26,6 @@ interface IUserRepository {
 
     boolean changeThemePreference(int userId, String theme, int actionUserId);
 
+    List<UserRole> getUserRolesByUserById (int userId);
 
 }

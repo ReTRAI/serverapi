@@ -1,6 +1,7 @@
 package com.mob.serverapi.utils;
 
 import com.mob.serverapi.users.base.User;
+import com.mob.serverapi.users.base.UserRole;
 import com.mob.serverapi.users.database.*;
 
 import javax.crypto.SecretKeyFactory;
@@ -34,6 +35,26 @@ public  class UserUtils {
         for (tUser u: users) {
             User newUser = transformUser(u);
             us.add(newUser);
+        }
+
+        return us;
+    }
+
+    public static UserRole transformUserRole(tUserRole userRole){
+
+        UserRole u = new UserRole();
+        u.setUserRoleId(userRole.getUserRoleId());
+        u.setUserRoleName(userRole.getUserType().getDescription());
+        return  u;
+    }
+
+    public static List<UserRole> transformUserRoleList(List<tUserRole> userRoles){
+
+        List<UserRole> us= new ArrayList<UserRole>();
+
+        for (tUserRole u: userRoles) {
+            UserRole newUserRole = transformUserRole(u);
+            us.add(newUserRole);
         }
 
         return us;

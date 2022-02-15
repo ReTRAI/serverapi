@@ -14,7 +14,7 @@ public class tUserRepository {
     @Autowired
     ItUserRepository repository;
 
-    public tUser savetUser(tUser user){
+    public tUser saveUser(tUser user){
 
         return repository.save(user);
     }

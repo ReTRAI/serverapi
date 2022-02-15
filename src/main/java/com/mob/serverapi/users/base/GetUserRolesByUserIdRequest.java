@@ -25,7 +25,6 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="actionUserId" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,14 +35,12 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "userId",
-    "actionUserId"
+    "userId"
 })
-@XmlRootElement(name = "unblockUserRequest")
-public class UnblockUserRequest {
+@XmlRootElement(name = "getUserRolesByUserIdRequest")
+public class GetUserRolesByUserIdRequest {
 
     protected int userId;
-    protected int actionUserId;
 
     /**
      * Gets the value of the userId property.
@@ -59,22 +56,6 @@ public class UnblockUserRequest {
      */
     public void setUserId(int value) {
         this.userId = value;
-    }
-
-    /**
-     * Gets the value of the actionUserId property.
-     * 
-     */
-    public int getActionUserId() {
-        return actionUserId;
-    }
-
-    /**
-     * Sets the value of the actionUserId property.
-     * 
-     */
-    public void setActionUserId(int value) {
-        this.actionUserId = value;
     }
 
 }

@@ -1,10 +1,8 @@
 package com.mob.serverapi.reseller;
 
 
-import com.mob.serverapi.reseller.base.GetResellerByIdResponse;
-import com.mob.serverapi.reseller.base.GetResellerByRequest;
+import com.mob.serverapi.reseller.base.*;
 import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
-import com.mob.serverapi.users.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -25,7 +23,7 @@ public class ResellerEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerByIdRequest")
     @ResponsePayload
-    public GetResellerByIdResponse getResellerByIdRequest(@RequestPayload GetResellerByRequest request) {
+    public GetResellerByIdResponse getResellerByIdRequest(@RequestPayload GetResellerByIdRequest request) {
 
         GetResellerByIdResponse response = new GetResellerByIdResponse();
         response.setReseller(resellerRepository.getResellerById(request.getResellerId()));
@@ -33,4 +31,23 @@ public class ResellerEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerRequest")
+    @ResponsePayload
+        public SetResellerResponse setReseller (@RequestPayload SetResellerRequest request) {
+
+        SetResellerResponse response = new SetResellerResponse();
+        response.setReseller(resellerRepository.setReseller(request.getUserId(), request.getActionUserId()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeResellerRequest")
+    @ResponsePayload
+    public RemoveResellerResponse removeReseller (@RequestPayload RemoveResellerRequest request) {
+
+        RemoveResellerResponse response = new RemoveResellerResponse();
+        response.setResult(resellerRepository.removeReseller(request.getResellerId(),request.getActionUserId()));
+
+        return response;
+    }
 }

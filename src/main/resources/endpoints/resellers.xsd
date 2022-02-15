@@ -3,7 +3,7 @@
            targetNamespace="http://www.mob.com/serverapi/reseller/base" elementFormDefault="qualified">
 
     <!-- getResellerBy-->
-    <xs:element name="getResellerByRequest">
+    <xs:element name="getResellerByIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:int"/>
@@ -23,6 +23,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:int"/>
+                <xs:element name="actionUserId" type="xs:int"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -30,6 +31,23 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="reseller" type="tns:reseller"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- removeReseller-->
+    <xs:element name="removeResellerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resellerId" type="xs:int"/>
+                <xs:element name="actionUserId" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="removeResellerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

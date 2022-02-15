@@ -18,6 +18,22 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- getUserRolesByUserId-->
+    <xs:element name="getUserRolesByUserIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserRolesByUserIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userRole" type="tns:userRole" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- userLogin-->
     <xs:element name="userLoginRequest">
         <xs:complexType>
@@ -155,6 +171,14 @@
             <xs:element name="userStatus" type="xs:string"/>
             <xs:element name="languagePreference" type="xs:string"/>
             <xs:element name="themePreference" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Endpoint UserRole Object-->
+    <xs:complexType name="userRole">
+        <xs:sequence>
+            <xs:element name="userRoleId"  type="xs:int"/>
+            <xs:element name="userRoleName" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

@@ -60,11 +60,10 @@ public class tReseller implements Serializable {
     /**
      * FK from resellerLog to Reseller
      */
-    @OneToMany(targetEntity = tResellerLog.class,mappedBy="reseller" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tResellerLog.class,mappedBy="reseller" , fetch = FetchType.LAZY)
     private Set<tResellerLog> resellerLog;
 
-    protected tReseller() {}
+    public tReseller() {}
 
     public tReseller(int resellerId, tUser user, float currentBalance) {
         this.resellerId = resellerId;

@@ -3,7 +3,11 @@ package com.mob.serverapi.users.repositories.endpoints;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.base.User;
-import com.mob.serverapi.users.database.*;
+import com.mob.serverapi.users.base.UserRole;
+import com.mob.serverapi.users.database.tUser;
+import com.mob.serverapi.users.database.tUserLoginLog;
+import com.mob.serverapi.users.database.tUserRole;
+import com.mob.serverapi.users.database.tUserStatus;
 import com.mob.serverapi.users.repositories.database.*;
 import com.mob.serverapi.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserRepository implements IUserRepository {
@@ -20,7 +26,7 @@ public class UserRepository implements IUserRepository {
     @Autowired
     protected tUserRepository userRepository = new tUserRepository();
     @Autowired
-    protected tUserTypeRepository userTypeRepository = new tUserTypeRepository();
+    protected tUserRoleRepository userRoleRepository = new tUserRoleRepository();
     @Autowired
     protected tUserStatusRepository userStatusRepository = new tUserStatusRepository();
     @Autowired
@@ -37,14 +43,15 @@ public class UserRepository implements IUserRepository {
         try {
             tUser u = userRepository.findById(id);
 
-            if (u != null)
+            if (u != null) {
                 userToReturn = UserUtils.transformUser(u);
-        }
-        catch (ServiceFaultException se) {
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
             throw se;
-        }
-        catch (Exception ex){
-            throw new ServiceFaultException("ERROR",new ServiceFault("GET_USER_BY_ID", ex.getMessage()));
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_USER_BY_ID", ex.getMessage()));
         }
 
         return userToReturn;
@@ -54,11 +61,11 @@ public class UserRepository implements IUserRepository {
     public User userLogin(String userEmail, String userPassword) {
         User validateUser = new User();
 
-        try{
+        try {
 
             tUser user = userRepository.findByEmail(userEmail);
 
-            if(user != null) {
+            if (user != null) {
                 tUserStatus.UserStatusEnum status = tUserStatus.UserStatusEnum.valueOf(user.getUserStatus().getDescription());
 
                 if (UserUtils.verifyHash(userPassword, user.getPasswordSalt(), user.getPasswordHash())) {
@@ -70,41 +77,39 @@ public class UserRepository implements IUserRepository {
                         case BLOCKED:
                             throw new ServiceFaultException("WARNING",
                                     new ServiceFault("USER_BLOCKED", ""));
-                        case CHANGEPW:
-                            throw new ServiceFaultException("WARNING",
-                                    new ServiceFault("USER_CHANGE_PW", ""));
 
+                        case CHANGEPW:
                         case ACTIVE:
 
                             validateUser = UserUtils.transformUser(user);
 
-                            userLoginLogRepository.insertUserLoginLog(user,true,"");
-                            userLogRepository.insertUserLog(user,user,"VALID_USER", "SUCCESSFUL LOGIN");
+                            userLoginLogRepository.insertUserLoginLog(user, true, "");
+                            userLogRepository.insertUserLog(user, user, "VALID_USER", "SUCCESSFUL LOGIN");
 
                     }
                 } else {
 
-                   tUserLoginLog lastValid = userLoginLogRepository.getLastValid(user.getUserId(),true);
+                    tUserLoginLog lastValid = userLoginLogRepository.getLastValid(user.getUserId(), true);
 
-                   if(lastValid != null) {
+                    if (lastValid != null) {
 
-                       long countFailed = userLoginLogRepository.countFailedLogins(user.getUserId(),false,lastValid.getLoginDate());
+                        long countFailed = userLoginLogRepository.countFailedLogins(user.getUserId(), false, lastValid.getLoginDate());
 
-                       if(countFailed>2)
-                           blockUser(user.getUserId());
-                   }
+                        if (countFailed > 2)
+                            blockUser(user.getUserId());
+                    }
 
-                    userLoginLogRepository.insertUserLoginLog(user,false,"WRONG CREDENTIALS");
-                    userLogRepository.insertUserLog(user,user,"WRONG_CREDENTIALS", "WRONG CREDENTIALS");
+                    userLoginLogRepository.insertUserLoginLog(user, false, "WRONG CREDENTIALS");
+                    userLogRepository.insertUserLog(user, user, "WRONG_CREDENTIALS", "WRONG CREDENTIALS");
                     throw new ServiceFaultException("ERROR", new ServiceFault("WRONG_CREDENTIALS", ""));
                 }
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("WRONG_CREDENTIALS", ""));
             }
-        }
-        catch (ServiceFaultException se) {
+        } catch (ServiceFaultException se) {
             throw se;
-        }
-        catch (Exception ex){
-            throw new ServiceFaultException("ERROR",new ServiceFault("LOGIN_FAILED", ex.getMessage()));
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("LOGIN_FAILED", ex.getMessage()));
         }
         return validateUser;
     }
@@ -117,7 +122,7 @@ public class UserRepository implements IUserRepository {
 
             tUser userExist = userRepository.findByEmail(userEmail);
 
-            if(userExist == null) {
+            if (userExist == null) {
                 tUser actionUser = userRepository.findById(actionUserId);
 
                 if (actionUserId == 0 || actionUser != null) {
@@ -141,7 +146,7 @@ public class UserRepository implements IUserRepository {
 
                     userToCreate.setUserStatus(userStatusVal);
 
-                    tUser saved = userRepository.savetUser(userToCreate);
+                    tUser saved = userRepository.saveUser(userToCreate);
 
                     if (saved != null)
                         createdUser = UserUtils.transformUser(saved);
@@ -156,17 +161,14 @@ public class UserRepository implements IUserRepository {
                 } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("INVALID_ACTION_USER", ""));
                 }
-            }
-            else {
+            } else {
                 throw new ServiceFaultException("ERROR", new ServiceFault("EMAIL ALREADY EXISTS", ""));
 
             }
-        }
-        catch (ServiceFaultException se) {
+        } catch (ServiceFaultException se) {
             throw se;
-        }
-        catch (Exception ex){
-            throw new ServiceFaultException("ERROR",new ServiceFault("SET_USER", ex.getMessage()));
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("SET_USER", ex.getMessage()));
         }
         return createdUser;
     }
@@ -174,35 +176,33 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean unblockUser(int userId, int actionUserId) {
         boolean val = false;
-        try{
+        try {
             tUser actionUser = userRepository.findById(actionUserId);
-
             tUser getUser = userRepository.findById(userId);
 
-            if(getUser.getUserStatus().getDescription().equals(tUserStatus.UserStatusEnum.BLOCKED.name()))
-            {
-                tUserStatus userStatusVal = userStatusRepository
-                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
+            if (actionUser != null && getUser != null) {
+                if (getUser.getUserStatus().getDescription().equals(tUserStatus.UserStatusEnum.BLOCKED.name())) {
+                    tUserStatus userStatusVal = userStatusRepository
+                            .findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
 
 
-            getUser.setUserStatus(userStatusVal);
+                    getUser.setUserStatus(userStatusVal);
 
-            tUser saved = userRepository.savetUser(getUser);
+                    tUser saved = userRepository.saveUser(getUser);
 
-            userLogRepository.insertUserLog(actionUser,saved,"UNBLOCKED", "UNBLOCK USER");
+                    userLogRepository.insertUserLog(actionUser, saved, "UNBLOCKED", "UNBLOCK USER");
 
-            val=true;
+                    val = true;
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("USER NOT BLOCKED", ""));
+                }
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
             }
-            else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER NOT BLOCKED", ""));
-            }
-        }
-
-        catch (ServiceFaultException se) {
+        } catch (ServiceFaultException se) {
             throw se;
-        }
-        catch (Exception ex){
-            throw new ServiceFaultException("ERROR",new ServiceFault("UNBLOCK_USER", ex.getMessage()));
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("UNBLOCK_USER", ex.getMessage()));
         }
         return val;
     }
@@ -211,23 +211,26 @@ public class UserRepository implements IUserRepository {
     //NOT IN ENDPOINT
     public boolean blockUser(int userId) {
         boolean val = false;
-        try{
+        try {
             tUser getUser = userRepository.findById(userId);
-            tUserStatus userStatusVal = userStatusRepository
-                    .findUserStatusByDescription(tUserStatus.UserStatusEnum.BLOCKED.name());
 
-            getUser.setUserStatus(userStatusVal);
+            if (getUser != null) {
+                tUserStatus userStatusVal = userStatusRepository
+                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.BLOCKED.name());
 
-            tUser saved = userRepository.savetUser(getUser);
+                getUser.setUserStatus(userStatusVal);
 
-            userLogRepository.insertUserLog(saved,saved,"BLOCKED", "BLOCKED BY EXCEEDING MAX ATTEMPTS");
-            val=true;
-        }
-        catch (ServiceFaultException se) {
+                tUser saved = userRepository.saveUser(getUser);
+
+                userLogRepository.insertUserLog(saved, saved, "BLOCKED", "BLOCKED BY EXCEEDING MAX ATTEMPTS");
+                val = true;
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
             throw se;
-        }
-        catch (Exception ex){
-            throw new ServiceFaultException("ERROR",new ServiceFault("UNBLOCK_USER", ex.getMessage()));
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("UNBLOCK_USER", ex.getMessage()));
         }
         return val;
     }
@@ -235,27 +238,30 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean changeUserPw(int userId, String newPassword, int actionUserId) {
         boolean val = false;
-        try{
+        try {
             tUser actionUser = userRepository.findById(actionUserId);
 
             tUser getUser = userRepository.findById(userId);
-            byte[] passwdSalt = UserUtils.createPasswordSalt();
-            byte[] passwdHash = UserUtils.hashPassword(passwdSalt,newPassword);
 
-            getUser.setPasswordSalt(passwdSalt);
-            getUser.setPasswordHash(passwdHash);
+            if (actionUser != null && getUser != null) {
+                byte[] passwdSalt = UserUtils.createPasswordSalt();
+                byte[] passwdHash = UserUtils.hashPassword(passwdSalt, newPassword);
 
-            tUser saved = userRepository.savetUser(getUser);
+                getUser.setPasswordSalt(passwdSalt);
+                getUser.setPasswordHash(passwdHash);
 
-            userLogRepository.insertUserLog(actionUser,saved,"CHANGEPW", "CHANGE PASSWORD FOR USER");
+                tUser saved = userRepository.saveUser(getUser);
 
-            val=true;
-        }
-        catch (ServiceFaultException se) {
+                userLogRepository.insertUserLog(actionUser, saved, "CHANGEPW", "CHANGE PASSWORD FOR USER");
+
+                val = true;
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
             throw se;
-        }
-        catch (Exception ex){
-            throw new ServiceFaultException("ERROR",new ServiceFault("CHANGE_USER_PW", ex.getMessage()));
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("CHANGE_USER_PW", ex.getMessage()));
         }
         return val;
     }
@@ -263,27 +269,30 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean inactivateUser(int userId, int actionUserId) {
         boolean val = false;
-        try{
+        try {
             tUser actionUser = userRepository.findById(actionUserId);
 
             tUser getUser = userRepository.findById(userId);
-            tUserStatus userStatusVal = userStatusRepository
-                     .findUserStatusByDescription(tUserStatus.UserStatusEnum.INACTIVE.name());
 
-            getUser.setUserStatus(userStatusVal);
-            getUser.setInactivationDate(LocalDateTime.now());
+            if (actionUser != null && getUser != null) {
+                tUserStatus userStatusVal = userStatusRepository
+                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.INACTIVE.name());
 
-            tUser saved = userRepository.savetUser(getUser);
+                getUser.setUserStatus(userStatusVal);
+                getUser.setInactivationDate(LocalDateTime.now());
 
-            userLogRepository.insertUserLog(actionUser,saved,"INACTIVATE", "INACTIVATE USER");
+                tUser saved = userRepository.saveUser(getUser);
 
-            val=true;
-        }
-        catch (ServiceFaultException se) {
+                userLogRepository.insertUserLog(actionUser, saved, "INACTIVATE", "INACTIVATE USER");
+
+                val = true;
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
             throw se;
-        }
-        catch (Exception ex){
-            throw new ServiceFaultException("ERROR",new ServiceFault("INACTIVATE_USER", ex.getMessage()));
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("INACTIVATE_USER", ex.getMessage()));
         }
         return val;
     }
@@ -291,22 +300,24 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean changeLangPreference(int userId, String lang, int actionUserId) {
         boolean val = false;
-        try{
+        try {
             tUser actionUser = userRepository.findById(actionUserId);
-
             tUser getUser = userRepository.findById(userId);
-            getUser.setLanguagePreference(lang);
 
-            tUser saved = userRepository.savetUser(getUser);
+            if (actionUser != null && getUser != null) {
+                getUser.setLanguagePreference(lang);
 
-            userLogRepository.insertUserLog(actionUser,saved,"CHANGELANG", "CHANGE LANGUAGE FOR USER");
-            val=true;
-        }
-        catch (ServiceFaultException se) {
+                tUser saved = userRepository.saveUser(getUser);
+
+                userLogRepository.insertUserLog(actionUser, saved, "CHANGELANG", "CHANGE LANGUAGE FOR USER");
+                val = true;
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
             throw se;
-        }
-        catch (Exception ex){
-            throw new ServiceFaultException("ERROR",new ServiceFault("CHANGE_LANG", ex.getMessage()));
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("CHANGE_LANG", ex.getMessage()));
         }
         return val;
     }
@@ -314,24 +325,47 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean changeThemePreference(int userId, String theme, int actionUserId) {
         boolean val = false;
-        try{
+        try {
             tUser actionUser = userRepository.findById(actionUserId);
-
             tUser getUser = userRepository.findById(userId);
-            getUser.setThemePreference(theme);
 
-            tUser saved = userRepository.savetUser(getUser);
+            if (actionUser != null && getUser != null) {
+                getUser.setThemePreference(theme);
 
-            userLogRepository.insertUserLog(actionUser,saved,"CHANGETHEME", "CHANGE THEME FOR USER");
-            val=true;
-        }
-        catch (ServiceFaultException se) {
+                tUser saved = userRepository.saveUser(getUser);
+
+                userLogRepository.insertUserLog(actionUser, saved, "CHANGETHEME", "CHANGE THEME FOR USER");
+                val = true;
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
             throw se;
-        }
-        catch (Exception ex){
-            throw new ServiceFaultException("ERROR",new ServiceFault("CHANGE_THEME", ex.getMessage()));
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("CHANGE_THEME", ex.getMessage()));
         }
         return val;
+    }
+
+    @Override
+    public List<UserRole> getUserRolesByUserById(int userId) {
+        List<UserRole> userRoles = new ArrayList<>();
+
+        try {
+            tUser user = userRepository.findById(userId);
+
+            if (user != null) {
+                List<tUserRole> role = userRoleRepository.findAllRolesByUserId(userId);
+                userRoles = UserUtils.transformUserRoleList(role);
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("CHANGE_THEME", ex.getMessage()));
+        }
+        return userRoles;
     }
 
 

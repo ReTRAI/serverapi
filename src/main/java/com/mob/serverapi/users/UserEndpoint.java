@@ -44,15 +44,15 @@ public class UserEndpoint {
     }
 
 
-//    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllUsersRequest")
-//    @ResponsePayload
-//    public GetAllUsersResponse getAllUser(@RequestPayload GetAllUsersRequest request) {
-//        GetAllUsersResponse response = new GetAllUsersResponse();
-//        response.getUsers().addAll(userRepository.getAllUsers());
-//
-//        return response;
-//    }
-//
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRolesByUserIdRequest")
+    @ResponsePayload
+    public GetUserRolesByUserIdResponse getAllUser(@RequestPayload GetUserRolesByUserIdRequest request) {
+        GetUserRolesByUserIdResponse response = new GetUserRolesByUserIdResponse();
+        response.getUserRole().addAll(userRepository.getUserRolesByUserById(request.getUserId()));
+
+        return response;
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setUserRequest")
     @ResponsePayload
     public SetUserResponse setUser (@RequestPayload SetUserRequest request) {

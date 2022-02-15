@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.reseller.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -24,8 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="actionUserId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="result" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,45 +35,27 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "userId",
-    "actionUserId"
+    "result"
 })
-@XmlRootElement(name = "unblockUserRequest")
-public class UnblockUserRequest {
+@XmlRootElement(name = "removeResellerResponse")
+public class RemoveResellerResponse {
 
-    protected int userId;
-    protected int actionUserId;
+    protected boolean result;
 
     /**
-     * Gets the value of the userId property.
+     * Gets the value of the result property.
      * 
      */
-    public int getUserId() {
-        return userId;
+    public boolean isResult() {
+        return result;
     }
 
     /**
-     * Sets the value of the userId property.
+     * Sets the value of the result property.
      * 
      */
-    public void setUserId(int value) {
-        this.userId = value;
-    }
-
-    /**
-     * Gets the value of the actionUserId property.
-     * 
-     */
-    public int getActionUserId() {
-        return actionUserId;
-    }
-
-    /**
-     * Sets the value of the actionUserId property.
-     * 
-     */
-    public void setActionUserId(int value) {
-        this.actionUserId = value;
+    public void setResult(boolean value) {
+        this.result = value;
     }
 
 }

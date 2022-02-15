@@ -7,6 +7,7 @@ interface IResellerRepository {
 
     Reseller getResellerById(int resellerId);
 
+    Reseller setReseller(int userId, int actionUserId);
 
-
+    boolean removeReseller(int resellerId, int actionUserId);
 }
