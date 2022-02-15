@@ -138,9 +138,11 @@ public class ResellerRepository implements IResellerRepository {
                     List<tDevice> associatedDevices = deviceRepository.getAllDevicesByResellerId(resellerId);
 
                     if (associatedDevices.isEmpty()) {
-                        userRoleRepository.deleteUserRoleById(role.getUserRoleId());
 
+                        userRoleRepository.deleteUserRoleById(role.getUserRoleId());
+                        resellerLogRepository.deleteResellerLogByResellerId(resellerValidation.getResellerId());
                         resellerRepository.deleteResellerById(resellerValidation.getResellerId());
+
                         userLogRepository.insertUserLog(associatedUser, actionUser, "REMOVE_RESELLER_ROLE", "");
 
                         val=true;
@@ -160,7 +162,6 @@ public class ResellerRepository implements IResellerRepository {
         } catch (Exception ex) {
             throw new ServiceFaultException("ERROR", new ServiceFault("REMOVE_RESELLER", ex.getMessage()));
         }
-
 
         return val;
     }

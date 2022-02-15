@@ -6,6 +6,7 @@ import com.mob.serverapi.users.database.tUser;
 import com.mob.serverapi.users.database.tUserLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -30,5 +31,11 @@ public class tResellerLogRepository {
         log.setAlterationDetail(detail);
 
         saveResellerLog(log);
+    }
+
+    @Transactional
+    public void deleteResellerLogByResellerId(int resellerId){
+
+        repository.deleteByReseller_ResellerId(resellerId);
     }
 }
