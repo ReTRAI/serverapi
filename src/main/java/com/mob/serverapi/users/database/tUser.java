@@ -52,11 +52,12 @@ public class tUser implements Serializable {
     private LocalDateTime inactivationDate;
 
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
-    //FK to table UserType, column userTypeId
-    @JoinColumn(name = "userTypeId", referencedColumnName = "userTypeId",
-            foreignKey = @ForeignKey(name="FK_USER_USERTYPEID"))
-    private tUserType userType;
+    /**
+     * FK from userRoles to user
+     */
+    @OneToMany(targetEntity = tReseller.class,mappedBy="user" , fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<tUserRole> userRoles;
 
     /**
      * FK from reseller to user
@@ -185,7 +186,7 @@ public class tUser implements Serializable {
     public tUser(int userId, String userName, String userEmail, byte[] passwordHash, byte[] passwordSalt,
                  LocalDateTime creationDate,
                  String languagePreference, String themePreference, tUserStatus userStatus,
-                 LocalDateTime inactivationDate, tUserType userType) {
+                 LocalDateTime inactivationDate) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -196,7 +197,6 @@ public class tUser implements Serializable {
         this.themePreference = themePreference;
         this.userStatus = userStatus;
         this.inactivationDate = inactivationDate;
-        this.userType = userType;
     }
 
     /**
@@ -323,20 +323,6 @@ public class tUser implements Serializable {
      */
     public void setInactivationDate(LocalDateTime inactivationDate) {
         this.inactivationDate = inactivationDate;
-    }
-
-    /**
-     * @return the userType.
-     */
-    public tUserType getUserType() {
-        return userType;
-    }
-
-    /**
-     * @param userType to set to.
-     */
-    public void setUserType(tUserType userType) {
-        this.userType = userType;
     }
 
     /**

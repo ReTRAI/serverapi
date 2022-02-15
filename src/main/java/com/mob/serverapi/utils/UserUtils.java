@@ -21,7 +21,6 @@ public  class UserUtils {
         u.setUserId(user.getUserId());
         u.setUserName(user.getUserName());
         u.setUserEmail(user.getUserEmail());
-        u.setUserType(user.getUserType().getDescription());
         u.setUserStatus(user.getUserStatus().getDescription());
         u.setLanguagePreference(user.getLanguagePreference());
         u.setThemePreference(user.getThemePreference());

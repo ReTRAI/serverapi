@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/reseller/base"
+           targetNamespace="http://www.mob.com/serverapi/reseller/base" elementFormDefault="qualified">
+
+    <!-- getResellerBy-->
+    <xs:element name="getResellerByRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resellerId"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getResellerByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reseller" type="tns:reseller"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- setReseller-->
+    <xs:element name="setResellerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="setResellerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reseller" type="tns:reseller"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Endpoint Reseller Object-->
+    <xs:complexType name="reseller">
+        <xs:sequence>
+            <xs:element name="resellerId"  type="xs:int"/>
+            <xs:element name="userId" type="xs:int"/>
+            <xs:element name="resellerName" type="xs:string"/>
+            <xs:element name="currentBalance" type="xs:decimal"/>
+            <xs:element name="totalDevices" type="xs:int"/>
+            <xs:element name="activeDevices" type="xs:int"/>
+            <xs:element name="inactiveDevices" type="xs:int"/>
+            <xs:element name="freeDevices" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

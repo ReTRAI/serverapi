@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.reseller.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="user" type="{http://www.mob.com/serverapi/users/base}user"/>
+ *         &lt;element name="reseller" type="{http://www.mob.com/serverapi/reseller/base}reseller"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "user"
+    "reseller"
 })
-@XmlRootElement(name = "userLoginResponse")
-public class UserLoginResponse {
+@XmlRootElement(name = "getResellerByIdResponse")
+public class GetResellerByIdResponse {
 
     @XmlElement(required = true)
-    protected User user;
+    protected Reseller reseller;
 
     /**
-     * Gets the value of the user property.
+     * Gets the value of the reseller property.
      * 
      * @return
      *     possible object is
-     *     {@link User }
+     *     {@link Reseller }
      *     
      */
-    public User getUser() {
-        return user;
+    public Reseller getReseller() {
+        return reseller;
     }
 
     /**
-     * Sets the value of the user property.
+     * Sets the value of the reseller property.
      * 
      * @param value
      *     allowed object is
-     *     {@link User }
+     *     {@link Reseller }
      *     
      */
-    public void setUser(User value) {
-        this.user = value;
+    public void setReseller(Reseller value) {
+        this.reseller = value;
     }
 
 }

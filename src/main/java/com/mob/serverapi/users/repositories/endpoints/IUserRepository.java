@@ -9,7 +9,7 @@ interface IUserRepository {
 
     User userLogin(String userEmail, String userPassword);
 
-    User setUser(String userName, String userEmail, String userPassword, String userType, int actionUserId);
+    User setUser(String userName, String userEmail, String userPassword, int actionUserId);
 
     boolean unblockUser(int userId, int actionUserId);
 

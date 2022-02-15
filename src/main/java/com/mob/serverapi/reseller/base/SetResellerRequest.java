@@ -6,11 +6,10 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.reseller.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="user" type="{http://www.mob.com/serverapi/users/base}user"/>
+ *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +35,27 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "user"
+    "userId"
 })
-@XmlRootElement(name = "userLoginResponse")
-public class UserLoginResponse {
+@XmlRootElement(name = "setResellerRequest")
+public class SetResellerRequest {
 
-    @XmlElement(required = true)
-    protected User user;
+    protected int userId;
 
     /**
-     * Gets the value of the user property.
+     * Gets the value of the userId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link User }
-     *     
      */
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
     /**
-     * Sets the value of the user property.
+     * Sets the value of the userId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link User }
-     *     
      */
-    public void setUser(User value) {
-        this.user = value;
+    public void setUserId(int value) {
+        this.userId = value;
     }
 
 }

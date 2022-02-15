@@ -24,12 +24,11 @@ public class tUserType implements Serializable {
     }
 
     /**
-     * FK from user to userType
+     * FK from userRole to userType
      */
-
-    @OneToMany(targetEntity = tUser.class,mappedBy="userType" , fetch = FetchType.LAZY,
+    @OneToMany(targetEntity = tUserRole.class,mappedBy="userType" , fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private Set<tUser> user;
+    private Set<tUserRole> userRoles;
 
     public tUserType() {}
 

@@ -1,5 +1,6 @@
 package com.mob.serverapi;
 
+import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
 import com.mob.serverapi.servicefault.DetailSoapFaultDefinitionExceptionResolver;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.repositories.endpoints.UserRepository;
@@ -48,8 +49,12 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean(servlet, "/*");
     }
 
+    /**
+     * DIRECTORY BEANS
+     */
+
     @Bean(name = "users")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema usersSchema) {
+    public DefaultWsdl11Definition usersWsdl11Definition(XsdSchema usersSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("UsersPort");
         wsdl11Definition.setLocationUri("/");
@@ -58,13 +63,39 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
+    @Bean(name = "resellers")
+    public DefaultWsdl11Definition resellerWsdl11Definition(XsdSchema resellersSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("ResellerPort");
+        wsdl11Definition.setLocationUri("/");
+        wsdl11Definition.setTargetNamespace("http://www.mob.com/serverapi/reseller/base");
+        wsdl11Definition.setSchema(resellersSchema);
+        return wsdl11Definition;
+    }
+
+    /**
+     * ENDPOINT BEANS
+     */
     @Bean
     public XsdSchema usersSchema() {
         return new SimpleXsdSchema(new ClassPathResource("endpoints/users.xsd"));
     }
 
     @Bean
+    public XsdSchema resellersSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("endpoints/resellers.xsd"));
+    }
+
+    /**
+     * REPOSITORY BEANS
+     */
+    @Bean
     public UserRepository userRepository() {
         return new UserRepository();
+    }
+
+    @Bean
+    public ResellerRepository resellerRepository() {
+        return new ResellerRepository();
     }
 }

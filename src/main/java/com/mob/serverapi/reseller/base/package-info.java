@@ -5,5 +5,5 @@
 // Generated on: 2022.02.15 at 10:20:42 AM UTC 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.mob.com/serverapi/users/base", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package com.mob.serverapi.users.base;
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.mob.com/serverapi/reseller/base", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+package com.mob.serverapi.reseller.base;

@@ -110,7 +110,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User setUser(String userName, String userEmail, String userPassword, String userType, int actionUserId) {
+    public User setUser(String userName, String userEmail, String userPassword, int actionUserId) {
         User createdUser = new User();
 
         try {
@@ -125,7 +125,6 @@ public class UserRepository implements IUserRepository {
                     String langPref = "EN";
                     String themePref = "L";
                     LocalDateTime creationDate = LocalDateTime.now();
-                    tUserType userTypeVal = userTypeRepository.findUserTypeByDescription(userType);
                     tUserStatus userStatusVal = userStatusRepository.
                             findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
                     byte[] passwdSalt = UserUtils.createPasswordSalt();
@@ -140,7 +139,6 @@ public class UserRepository implements IUserRepository {
                     userToCreate.setThemePreference(themePref);
                     userToCreate.setLanguagePreference(langPref);
 
-                    userToCreate.setUserType(userTypeVal);
                     userToCreate.setUserStatus(userStatusVal);
 
                     tUser saved = userRepository.savetUser(userToCreate);

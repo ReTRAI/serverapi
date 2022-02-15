@@ -59,7 +59,7 @@ public class UserEndpoint {
 
         SetUserResponse response = new SetUserResponse();
         response.setUser(userRepository.setUser(request.getUserName(),request.getUserEmail(),
-                request.getUserPassword(), request.getUserType(), request.getActionUserId()));
+                request.getUserPassword(), request.getActionUserId()));
 
         return response;
     }
