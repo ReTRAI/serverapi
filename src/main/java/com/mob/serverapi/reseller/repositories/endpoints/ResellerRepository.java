@@ -73,9 +73,9 @@ public class ResellerRepository implements IResellerRepository {
                                               @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
 
         Integer localResellerId = resellerId==0?null:resellerId;
-        String localResellerName = resellerName==""?null:resellerName;
-        String localField = field==""?null:field;
-        String localOrderField = orderField==""?null:orderField;
+        String localResellerName = resellerName.equals("") ? null :resellerName;
+        String localField = field.equals("") ?null:field;
+        String localOrderField = orderField.equals("") ?null:orderField;
 
        List<tReseller> resellers = resellerRepository.getResellerFiltered(localResellerId,localResellerName
                ,localField,localOrderField,offset,numberRecords);
