@@ -19,9 +19,11 @@ import com.mob.serverapi.users.repositories.database.tUserTypeRepository;
 import com.mob.serverapi.utils.ResellerUtils;
 import com.mob.serverapi.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -67,6 +69,21 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
+    public List<Reseller> getResellerFiltered(@Nullable int resellerId, @Nullable String resellerName, boolean recursive,
+                                              @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
+
+        Integer localResellerId = resellerId==0?null:resellerId;
+        String localResellerName = resellerName==""?null:resellerName;
+        String localField = field==""?null:field;
+        String localOrderField = orderField==""?null:orderField;
+
+       List<tReseller> resellers = resellerRepository.getResellerFiltered(localResellerId,localResellerName
+               ,localField,localOrderField,offset,numberRecords);
+
+       return ResellerUtils.transformResellerList(resellers);
+    }
+
+    @Override
     public Reseller setReseller(int userId, int actionUserId) {
 
         Reseller reseller = new Reseller();
@@ -85,6 +102,11 @@ public class ResellerRepository implements IResellerRepository {
                     tReseller resellerToCreate = new tReseller();
                     resellerToCreate.setUserId(associatedUser);
                     resellerToCreate.setCurrentBalance(0);
+                    resellerToCreate.setTotalDevices(0);
+                    resellerToCreate.setActiveDevices(0);
+                    resellerToCreate.setFreeDevices(0);
+                    resellerToCreate.setInactiveDevices(0);
+                    resellerToCreate.setCreationDate(LocalDateTime.now());
 
                     tReseller saved = resellerRepository.saveReseller(resellerToCreate);
 

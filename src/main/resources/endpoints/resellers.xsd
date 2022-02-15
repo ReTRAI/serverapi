@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/reseller/base"
            targetNamespace="http://www.mob.com/serverapi/reseller/base" elementFormDefault="qualified">
 
-    <!-- getResellerBy-->
+    <!-- getResellerById-->
     <xs:element name="getResellerByIdRequest">
         <xs:complexType>
             <xs:sequence>
@@ -17,6 +17,29 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <!-- getResellerFiltered-->
+    <xs:element name="getResellerFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resellerId"  type="xs:int" />
+                <xs:element name="resellerName"  type="xs:string"/>
+                <xs:element name="recursive"  type="xs:boolean"/>
+                <xs:element name="field"  type="xs:string" />
+                <xs:element name="orderField"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getResellerFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reseller" type="tns:reseller" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 
     <!-- setReseller-->
     <xs:element name="setResellerRequest">

@@ -5,6 +5,7 @@ import com.mob.serverapi.users.database.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,21 @@ public class tReseller implements Serializable {
 
     @Column(name = "currentBalance", nullable = false)
     private float currentBalance;
+
+    @Column(name = "totalDevices", nullable = false)
+    private float totalDevices;
+
+    @Column(name = "activeDevices", nullable = false)
+    private float activeDevices;
+
+    @Column(name = "inactiveDevices", nullable = false)
+    private float inactiveDevices;
+
+    @Column(name = "freeDevices", nullable = false)
+    private float freeDevices;
+
+    @Column(name = "creationDate", nullable = false)
+    private LocalDateTime creationDate;
 
     /**
      * FK from ResellerAssociation to Reseller
@@ -116,5 +132,73 @@ public class tReseller implements Serializable {
         this.currentBalance = currentBalance;
     }
 
+    /**
+     * @return the totalDevices.
+     */
+    public float getTotalDevices() {
+        return totalDevices;
+    }
 
+    /**
+     * @param totalDevices  to set to.
+     */
+    public void setTotalDevices(float totalDevices) {
+        this.totalDevices = totalDevices;
+    }
+
+    /**
+     * @return the creationDate .
+     */
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    /**
+     * @param creationDate  to set to.
+     */
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    /**
+     * @return the activeDevices.
+     */
+    public float getActiveDevices() {
+        return activeDevices;
+    }
+
+    /**
+     * @param activeDevices  to set to.
+     */
+    public void setActiveDevices(float activeDevices) {
+        this.activeDevices = activeDevices;
+    }
+
+    /**
+     * @return the inactiveDevices .
+     */
+    public float getInactiveDevices() {
+        return inactiveDevices;
+    }
+
+    /**
+     * @param inactiveDevices  to set to.
+     */
+    public void setInactiveDevices(float inactiveDevices) {
+        this.inactiveDevices = inactiveDevices;
+    }
+
+    /**
+     * @return the freeDevices .
+     */
+    public float getFreeDevices() {
+        return freeDevices;
+    }
+
+    /**
+     * @param freeDevices  to set to.
+     */
+    public void setFreeDevices(float freeDevices) {
+        this.freeDevices = freeDevices;
+    }
 }

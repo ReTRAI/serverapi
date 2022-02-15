@@ -23,7 +23,7 @@ public class ResellerEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerByIdRequest")
     @ResponsePayload
-    public GetResellerByIdResponse getResellerByIdRequest(@RequestPayload GetResellerByIdRequest request) {
+    public GetResellerByIdResponse getResellerById(@RequestPayload GetResellerByIdRequest request) {
 
         GetResellerByIdResponse response = new GetResellerByIdResponse();
         response.setReseller(resellerRepository.getResellerById(request.getResellerId()));
@@ -31,9 +31,21 @@ public class ResellerEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerFilteredRequest")
+    @ResponsePayload
+    public GetResellerFilteredResponse getResellerFiltered(@RequestPayload GetResellerFilteredRequest request) {
+
+        GetResellerFilteredResponse response = new GetResellerFilteredResponse();
+        response.getReseller().addAll(resellerRepository.getResellerFiltered(request.getResellerId(),
+                request.getResellerName(),request.isRecursive(),request.getField(), request.getOrderField(),
+                request.getOffset(), request.getNumberRecords()));
+
+        return response;
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerRequest")
     @ResponsePayload
-        public SetResellerResponse setReseller (@RequestPayload SetResellerRequest request) {
+    public SetResellerResponse setReseller (@RequestPayload SetResellerRequest request) {
 
         SetResellerResponse response = new SetResellerResponse();
         response.setReseller(resellerRepository.setReseller(request.getUserId(), request.getActionUserId()));
