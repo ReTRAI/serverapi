@@ -9,20 +9,27 @@ import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.database.tResellerAssociationLog;
 import com.mob.serverapi.reseller.database.tResellerLog;
 import com.mob.serverapi.support.database.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "user")
 public class tUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId", unique = true, nullable = false)
-    private int userId;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "userId", unique = true, updatable = false, nullable = false)
+    private UUID userId;
+
 
     @Column(name = "userName", nullable = false)
     private String userName;
@@ -170,7 +177,7 @@ public class tUser implements Serializable {
     public tUser() {
     }
 
-    public tUser(int userId, String userName, String userEmail, byte[] passwordHash, byte[] passwordSalt,
+    public tUser(UUID userId, String userName, String userEmail, byte[] passwordHash, byte[] passwordSalt,
                  LocalDateTime creationDate,
                  String languagePreference, String themePreference, tUserStatus userStatus,
                  LocalDateTime inactivationDate) {
@@ -189,14 +196,14 @@ public class tUser implements Serializable {
     /**
      * @return the userId.
      */
-    public int getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
     /**
      * @param userId to set to.
      */
-    public void setUserId(int userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

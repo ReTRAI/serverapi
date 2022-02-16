@@ -8,7 +8,6 @@ import com.mob.serverapi.reseller.repositories.database.tResellerLogRepository;
 import com.mob.serverapi.reseller.repositories.database.tResellerRepository;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
-import com.mob.serverapi.users.base.User;
 import com.mob.serverapi.users.database.tUser;
 import com.mob.serverapi.users.database.tUserRole;
 import com.mob.serverapi.users.database.tUserType;
@@ -17,13 +16,13 @@ import com.mob.serverapi.users.repositories.database.tUserRepository;
 import com.mob.serverapi.users.repositories.database.tUserRoleRepository;
 import com.mob.serverapi.users.repositories.database.tUserTypeRepository;
 import com.mob.serverapi.utils.ResellerUtils;
-import com.mob.serverapi.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,6 +44,7 @@ public class ResellerRepository implements IResellerRepository {
     protected tUserLogRepository userLogRepository = new tUserLogRepository();
     @Autowired
     protected tDeviceRepository deviceRepository = new tDeviceRepository();
+
 
     @Override
     public Reseller getResellerById(int resellerId) {
@@ -69,18 +69,37 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public List<Reseller> getResellerFiltered(@Nullable int resellerId, @Nullable String resellerName, boolean recursive,
-                                              @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
+    public List<Reseller> getResellerFiltered(@Nullable int resellerId, @Nullable String resellerName,
+                                              boolean onlyChildren, @Nullable String field,
+                                              @Nullable String orderField, int offset, int numberRecords) {
 
-        Integer localResellerId = resellerId==0?null:resellerId;
-        String localResellerName = resellerName.equals("") ? null :resellerName;
-        String localField = field.equals("") ?null:field;
-        String localOrderField = orderField.equals("") ?null:orderField;
+        List<Reseller> returnList = new ArrayList<>();
 
-       List<tReseller> resellers = resellerRepository.getResellerFiltered(localResellerId,localResellerName
-               ,localField,localOrderField,offset,numberRecords);
+        try {
 
-       return ResellerUtils.transformResellerList(resellers);
+
+            Integer localResellerId = resellerId == 0 ? null : resellerId;
+            String localResellerName = resellerName.equals("") ? null : resellerName;
+            String localField = field.equals("") ? null : field;
+            String localOrderField = orderField.equals("") ? null : orderField;
+
+
+            List<tReseller> resellers = resellerRepository.getResellerFiltered(localResellerId, localResellerName,
+                    onlyChildren, localField, localOrderField, offset, numberRecords);
+
+            if (resellers != null) {
+                returnList = ResellerUtils.transformResellerList(resellers);
+
+            } else {
+                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_RESELLER_LIST", ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_FILTERED", ex.getMessage()));
+        }
+        return returnList;
     }
 
     @Override
@@ -98,7 +117,7 @@ public class ResellerRepository implements IResellerRepository {
                         findUserTypeByDescription(tUserType.UserTypeEnum.RESELLER.name());
                 long nRole = userRoleRepository.countByUserIdAndUserTypeId(userId, userTypeVal.getUserTypeId());
 
-                if(nRole == 0) {
+                if (nRole == 0) {
                     tReseller resellerToCreate = new tReseller();
                     resellerToCreate.setUserId(associatedUser);
                     resellerToCreate.setCurrentBalance(0);
@@ -118,13 +137,12 @@ public class ResellerRepository implements IResellerRepository {
 
                         userRoleRepository.saveUserRole(role);
                         userLogRepository.insertUserLog(associatedUser, actionUser, "ADD_RESELLER_ROLE", "RESELLER_ID:" + saved.getResellerId());
-                        resellerLogRepository.insertResellerLog(associatedUser, saved, "ADD_RESELLER", "" );
+                        resellerLogRepository.insertResellerLog(associatedUser, saved, "ADD_RESELLER", "");
                     }
 
                     if (saved != null)
                         reseller = ResellerUtils.transformReseller(saved);
-                }
-                else {
+                } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("USER_IS_ALREADY_RESELLER", ""));
                 }
 
@@ -167,7 +185,7 @@ public class ResellerRepository implements IResellerRepository {
 
                         userLogRepository.insertUserLog(associatedUser, actionUser, "REMOVE_RESELLER_ROLE", "");
 
-                        val=true;
+                        val = true;
                     } else {
                         throw new ServiceFaultException("ERROR", new ServiceFault("RESSELER_HAS_DEVICES", ""));
                     }

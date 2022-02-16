@@ -7,6 +7,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Component
@@ -20,12 +21,12 @@ public class tUserLoginLogRepository {
         return repository.save(userLoginLog);
     }
 
-    public tUserLoginLog getLastValid(int userId, boolean validAuthentication){
+    public tUserLoginLog getLastValid(UUID userId, boolean validAuthentication){
 
-        return repository.findFirstByUser_UserIdAndValidAuthenticationOrderByLoginDateAsc(userId, validAuthentication);
+        return repository.findFirstByUser_UserIdAndValidAuthenticationOrderByLoginDateDesc(userId, validAuthentication);
     }
 
-    public long countFailedLogins(int userId, boolean validAuthentication, LocalDateTime loginDate){
+    public long countFailedLogins(UUID userId, boolean validAuthentication, LocalDateTime loginDate){
 
         return repository.countByUser_UserIdAndValidAuthenticationAndLoginDateGreaterThan(userId, validAuthentication,loginDate);
     }

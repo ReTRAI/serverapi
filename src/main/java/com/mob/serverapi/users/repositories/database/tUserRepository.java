@@ -6,6 +6,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
 @Component
@@ -19,7 +21,7 @@ public class tUserRepository {
         return repository.save(user);
     }
 
-    public tUser findById(int userId){
+    public tUser findById(UUID userId){
 
         return repository.findById(userId).orElse(null);
     }

@@ -37,7 +37,7 @@ public class ResellerEndpoint {
 
         GetResellerFilteredResponse response = new GetResellerFilteredResponse();
         response.getReseller().addAll(resellerRepository.getResellerFiltered(request.getResellerId(),
-                request.getResellerName(),request.isRecursive(),request.getField(), request.getOrderField(),
+                request.getResellerName(),request.isOnlyChildren(),request.getField(), request.getOrderField(),
                 request.getOffset(), request.getNumberRecords()));
 
         return response;

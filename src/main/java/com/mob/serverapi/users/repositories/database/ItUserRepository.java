@@ -5,7 +5,9 @@ import com.mob.serverapi.users.database.tUserStatus;
 import com.mob.serverapi.users.database.tUserType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface ItUserRepository extends JpaRepository<tUser,Integer> {
+import java.util.UUID;
+
+interface ItUserRepository extends JpaRepository<tUser, UUID> {
 
     tUser findByUserEmail(String userEmail);
 

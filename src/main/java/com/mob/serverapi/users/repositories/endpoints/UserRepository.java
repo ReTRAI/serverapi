@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class UserRepository implements IUserRepository {
@@ -115,7 +116,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User setUser(String userName, String userEmail, String userPassword, int actionUserId) {
+    public User setUser(String userName, String userEmail, String userPassword, UUID actionUserId) {
         User createdUser = new User();
 
         try {
@@ -125,7 +126,7 @@ public class UserRepository implements IUserRepository {
             if (userExist == null) {
                 tUser actionUser = userRepository.findById(actionUserId);
 
-                if (actionUserId == 0 || actionUser != null) {
+                if (actionUserId.equals("") || actionUser != null) {
 
                     String langPref = "EN";
                     String themePref = "L";
@@ -174,7 +175,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean unblockUser(int userId, int actionUserId) {
+    public boolean unblockUser(UUID userId, UUID actionUserId) {
         boolean val = false;
         try {
             tUser actionUser = userRepository.findById(actionUserId);
@@ -209,7 +210,7 @@ public class UserRepository implements IUserRepository {
 
     @Override
     //NOT IN ENDPOINT
-    public boolean blockUser(int userId) {
+    public boolean blockUser(UUID userId) {
         boolean val = false;
         try {
             tUser getUser = userRepository.findById(userId);
@@ -236,7 +237,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean changeUserPw(int userId, String newPassword, int actionUserId) {
+    public boolean changeUserPw(UUID userId, String newPassword, UUID actionUserId) {
         boolean val = false;
         try {
             tUser actionUser = userRepository.findById(actionUserId);
@@ -246,7 +247,10 @@ public class UserRepository implements IUserRepository {
             if (actionUser != null && getUser != null) {
                 byte[] passwdSalt = UserUtils.createPasswordSalt();
                 byte[] passwdHash = UserUtils.hashPassword(passwdSalt, newPassword);
+                tUserStatus userStatusVal = userStatusRepository
+                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.ACTIVE.name());
 
+                getUser.setUserStatus(userStatusVal);
                 getUser.setPasswordSalt(passwdSalt);
                 getUser.setPasswordHash(passwdHash);
 
@@ -267,7 +271,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean inactivateUser(int userId, int actionUserId) {
+    public boolean inactivateUser(UUID userId, int actionUserId) {
         boolean val = false;
         try {
             tUser actionUser = userRepository.findById(actionUserId);
@@ -298,7 +302,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean changeLangPreference(int userId, String lang, int actionUserId) {
+    public boolean changeLangPreference(UUID userId, String lang, UUID actionUserId) {
         boolean val = false;
         try {
             tUser actionUser = userRepository.findById(actionUserId);
@@ -323,7 +327,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean changeThemePreference(int userId, String theme, int actionUserId) {
+    public boolean changeThemePreference(UUID userId, String theme, UUID actionUserId) {
         boolean val = false;
         try {
             tUser actionUser = userRepository.findById(actionUserId);
@@ -348,7 +352,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public List<UserRole> getUserRolesByUserById(int userId) {
+    public List<UserRole> getUserRolesByUserById(UUID userId) {
         List<UserRole> userRoles = new ArrayList<>();
 
         try {
