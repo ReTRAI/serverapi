@@ -10,8 +10,9 @@ import org.springframework.lang.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
-interface ItResellerRepository extends JpaRepository<tReseller,Integer>, JpaSpecificationExecutor<tReseller> {
+interface ItResellerRepository extends JpaRepository<tReseller, UUID>, JpaSpecificationExecutor<tReseller> {
 
 
 }

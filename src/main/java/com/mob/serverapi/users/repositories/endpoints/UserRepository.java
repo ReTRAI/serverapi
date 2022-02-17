@@ -37,7 +37,7 @@ public class UserRepository implements IUserRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public User getUserById(int id) {
+    public User getUserById(UUID id) {
 
         User userToReturn = new User();
 
@@ -152,7 +152,7 @@ public class UserRepository implements IUserRepository {
                     if (saved != null)
                         createdUser = UserUtils.transformUser(saved);
 
-                    if (actionUserId == 0) {
+                    if (actionUserId.equals("")) {
                         actionUserId = saved.getUserId();
                         actionUser = userRepository.findById(actionUserId);
                     }
@@ -271,7 +271,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean inactivateUser(UUID userId, int actionUserId) {
+    public boolean inactivateUser(UUID userId, UUID actionUserId) {
         boolean val = false;
         try {
             tUser actionUser = userRepository.findById(actionUserId);

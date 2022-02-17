@@ -1,16 +1,19 @@
 package com.mob.serverapi.users.database;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table(name = "userRole")
 public class tUserRole implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userRoleId", unique = true, nullable = false)
-    private int userRoleId;
+    @GeneratedValue
+    @Column(name = "userRoleId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID userRoleId;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "userId", referencedColumnName = "userId",
@@ -25,7 +28,7 @@ public class tUserRole implements Serializable {
     public tUserRole() {
     }
 
-    public tUserRole(int userRoleId, tUser user, tUserType userType) {
+    public tUserRole(UUID userRoleId, tUser user, tUserType userType) {
         this.userRoleId = userRoleId;
         this.user = user;
         this.userType = userType;
@@ -34,14 +37,14 @@ public class tUserRole implements Serializable {
     /**
      * @return the userRoleId.
      */
-    public int getUserRoleId() {
+    public UUID getUserRoleId() {
         return userRoleId;
     }
 
     /**
      * @param userRoleId to set to.
      */
-    public void setUserRoleId(int userRoleId) {
+    public void setUserRoleId(UUID userRoleId) {
         this.userRoleId = userRoleId;
     }
 

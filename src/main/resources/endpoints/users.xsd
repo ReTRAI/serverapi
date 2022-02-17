@@ -6,7 +6,7 @@
     <xs:element name="getUserByIdRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userId"  type="xs:int"/>
+                <xs:element name="userId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -22,7 +22,7 @@
     <xs:element name="getUserRolesByUserIdRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userId"  type="xs:int"/>
+                <xs:element name="userId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -58,7 +58,7 @@
                 <xs:element name="userName" type="xs:string"/>
                 <xs:element name="userEmail" type="xs:string"/>
                 <xs:element name="userPassword" type="xs:string"/>
-                <xs:element name="actionUserId"  type="xs:int"/>
+                <xs:element name="actionUserId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -74,8 +74,8 @@
     <xs:element name="unblockUserRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userId" type="xs:int"/>
-                <xs:element name="actionUserId"  type="xs:int"/>
+                <xs:element name="userId" type="xs:string"/>
+                <xs:element name="actionUserId"  type="xs:string"/>
 
             </xs:sequence>
         </xs:complexType>
@@ -92,9 +92,9 @@
     <xs:element name="changeUserPwRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userId" type="xs:int"/>
+                <xs:element name="userId" type="xs:string"/>
                 <xs:element name="password" type="xs:string"/>
-                <xs:element name="actionUserId"  type="xs:int"/>
+                <xs:element name="actionUserId"  type="xs:string"/>
 
             </xs:sequence>
         </xs:complexType>
@@ -111,8 +111,8 @@
     <xs:element name="inactivateUserRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userId" type="xs:int"/>
-                <xs:element name="actionUserId"  type="xs:int"/>
+                <xs:element name="userId" type="xs:string"/>
+                <xs:element name="actionUserId"  type="xs:string"/>
 
             </xs:sequence>
         </xs:complexType>
@@ -129,9 +129,9 @@
     <xs:element name="changeLangPreferenceRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userId" type="xs:int"/>
+                <xs:element name="userId" type="xs:string"/>
                 <xs:element name="lang" type="xs:string"/>
-                <xs:element name="actionUserId"  type="xs:int"/>
+                <xs:element name="actionUserId"  type="xs:string"/>
 
             </xs:sequence>
         </xs:complexType>
@@ -148,9 +148,9 @@
     <xs:element name="changeThemePreferenceRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userId" type="xs:int"/>
+                <xs:element name="userId" type="xs:string"/>
                 <xs:element name="theme" type="xs:string"/>
-                <xs:element name="actionUserId"  type="xs:int"/>
+                <xs:element name="actionUserId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -165,7 +165,7 @@
     <!-- Endpoint User Object-->
     <xs:complexType name="user">
         <xs:sequence>
-            <xs:element name="userId"  type="xs:int"/>
+            <xs:element name="userId"  type="xs:string"/>
             <xs:element name="userName" type="xs:string"/>
             <xs:element name="userEmail" type="xs:string"/>
             <xs:element name="userStatus" type="xs:string"/>
@@ -177,7 +177,7 @@
     <!-- Endpoint UserRole Object-->
     <xs:complexType name="userRole">
         <xs:sequence>
-            <xs:element name="userRoleId"  type="xs:int"/>
+            <xs:element name="userRoleId"  type="xs:string"/>
             <xs:element name="userRoleName" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>

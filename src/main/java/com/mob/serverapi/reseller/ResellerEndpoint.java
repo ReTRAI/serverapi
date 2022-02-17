@@ -9,6 +9,8 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.UUID;
+
 @Endpoint
 public class ResellerEndpoint {
 
@@ -26,7 +28,7 @@ public class ResellerEndpoint {
     public GetResellerByIdResponse getResellerById(@RequestPayload GetResellerByIdRequest request) {
 
         GetResellerByIdResponse response = new GetResellerByIdResponse();
-        response.setReseller(resellerRepository.getResellerById(request.getResellerId()));
+        response.setReseller(resellerRepository.getResellerById(UUID.fromString(request.getResellerId())));
 
         return response;
     }
@@ -48,7 +50,19 @@ public class ResellerEndpoint {
     public SetResellerResponse setReseller (@RequestPayload SetResellerRequest request) {
 
         SetResellerResponse response = new SetResellerResponse();
-        response.setReseller(resellerRepository.setReseller(request.getUserId(), request.getActionUserId()));
+        response.setReseller(resellerRepository.setReseller(UUID.fromString(request.getUserId()),
+                UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerAssociationRequest")
+    @ResponsePayload
+    public SetResellerAssociationResponse setResellerAssociation (@RequestPayload SetResellerAssociationRequest request) {
+
+        SetResellerAssociationResponse response = new SetResellerAssociationResponse();
+        response.setResult(resellerRepository.setResellerAssociation(UUID.fromString(request.getParentResselerId()),
+                UUID.fromString(request.getChildResselerId())));
 
         return response;
     }
@@ -58,7 +72,8 @@ public class ResellerEndpoint {
     public RemoveResellerResponse removeReseller (@RequestPayload RemoveResellerRequest request) {
 
         RemoveResellerResponse response = new RemoveResellerResponse();
-        response.setResult(resellerRepository.removeReseller(request.getResellerId(),request.getActionUserId()));
+        response.setResult(resellerRepository.removeReseller(UUID.fromString(request.getResellerId()),
+                UUID.fromString(request.getActionUserId())));
 
         return response;
     }

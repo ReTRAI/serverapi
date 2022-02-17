@@ -1,20 +1,22 @@
 package com.mob.serverapi.device.database;
 
 import com.mob.serverapi.apps.database.tApp;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "deviceApp")
 public class tDeviceApp implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deviceAppId", unique = true, nullable = false)
-    private int deviceAppId;
+    @GeneratedValue
+    @Column(name = "deviceAppId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID deviceAppId;
 
     @Column(name = "currentVersion", length = 100, nullable = false)
     private String currentVersion;
@@ -50,7 +52,7 @@ public class tDeviceApp implements Serializable {
     public tDeviceApp() {
     }
 
-    public tDeviceApp(int deviceAppId, String currentVersion, LocalDateTime installationDate,
+    public tDeviceApp(UUID deviceAppId, String currentVersion, LocalDateTime installationDate,
                       LocalDateTime lastUpdateDate, boolean active, tDevice device, tApp app) {
         this.deviceAppId = deviceAppId;
         this.currentVersion = currentVersion;
@@ -64,13 +66,13 @@ public class tDeviceApp implements Serializable {
     /**
      * @return the deviceAppId.
      */
-    public int getDeviceAppId() {
+    public UUID getDeviceAppId() {
         return deviceAppId;
     }
     /**
      * @param deviceAppId to set to.
      */
-    public void setDeviceAppId(int deviceAppId) {
+    public void setDeviceAppId(UUID deviceAppId) {
         this.deviceAppId = deviceAppId;
     }
     /**

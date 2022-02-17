@@ -7,14 +7,15 @@ import com.mob.serverapi.reseller.database.tReseller;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public  class ResellerUtils {
 
     public static Reseller transformReseller(tReseller reseller){
 
         Reseller r = new Reseller();
-        r.setResellerId(reseller.getResellerId());
-        r.setUserId(reseller.getUserId().getUserId());
+        r.setResellerId(reseller.getResellerId().toString());
+        r.setUserId(reseller.getUserId().getUserId().toString());
         r.setResellerName(reseller.getUserId().getUserName());
         r.setCurrentBalance(BigDecimal.valueOf(reseller.getCurrentBalance()));
         r.setTotalDevices(getResellerTotalDevices(reseller.getResellerId()));
@@ -36,18 +37,19 @@ public  class ResellerUtils {
         return rs;
     }
 
-    public static int getResellerTotalDevices(int resellerId){
+    public static int getResellerTotalDevices(UUID resellerId){
         return 0;
     }
 
-    public static int getResellerActiveDevices(int resellerId){
+    public static int getResellerActiveDevices(UUID resellerId){
         return 0;
     }
 
-    public static int getResellerInactiveDevices(int resellerId){
+    public static int getResellerInactiveDevices(UUID resellerId){
         return 0;
     }
-    public static int getResellerFreeDevices(int resellerId){
+
+    public static int getResellerFreeDevices(UUID resellerId){
         return 0;
     }
 }

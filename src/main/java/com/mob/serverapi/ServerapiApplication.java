@@ -9,20 +9,25 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 @SpringBootApplication
 public class ServerapiApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
 		ConfigurableApplicationContext context = SpringApplication.run(ServerapiApplication.class, args);
 
 		/**
 		 * Initial Data Seed
 		 */
+
 		context.getBean(tUserTypeRepository.class).createDefaultUserType();
 		context.getBean(tUserStatusRepository.class).createDefaultUserStatus();
 		context.getBean(tTicketStatusRepository.class).createDefaultTicketStatus();
 		context.getBean(tDeviceStatusRepository.class).createDefaultDeviceStatus();
+		context.getBean(tUserRepository.class).createDefaultUser();
 	}
 
 	@Override

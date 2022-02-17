@@ -1,18 +1,21 @@
 package com.mob.serverapi.device.database;
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "deviceBalance")
 public class tDeviceBalance implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deviceBalanceId", unique = true, nullable = false)
-    private int deviceBalanceId;
+    @GeneratedValue
+    @Column(name = "deviceBalanceId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID deviceBalanceId;
 
     @Column(name = "debitCredit", nullable = false)
     private String debitCredit;
@@ -31,7 +34,7 @@ public class tDeviceBalance implements Serializable {
 
     protected tDeviceBalance() {}
 
-    public tDeviceBalance(int deviceBalanceId, String DebitCredit, float movementValue, tDevice device) {
+    public tDeviceBalance(UUID deviceBalanceId, String DebitCredit, float movementValue, tDevice device) {
         this.deviceBalanceId = deviceBalanceId;
         this.debitCredit = DebitCredit;
         this.movementValue = movementValue;
@@ -42,14 +45,14 @@ public class tDeviceBalance implements Serializable {
      * @return the deviceBalanceId.
      */
 
-    public int getDeviceBalanceId() {
+    public UUID getDeviceBalanceId() {
         return deviceBalanceId;
     }
 
     /**
      * @param deviceBalanceId the id to set to.
      */
-    public void setDeviceBalanceId(int deviceBalanceId) {
+    public void setDeviceBalanceId(UUID deviceBalanceId) {
         this.deviceBalanceId = deviceBalanceId;
     }
 

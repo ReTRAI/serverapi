@@ -22,12 +22,8 @@ import java.util.UUID;
 public class tUser implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(name = "userId", unique = true, updatable = false, nullable = false)
+    @GeneratedValue
+    @Column(name = "userId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
     private UUID userId;
 
 

@@ -13,13 +13,14 @@ import java.security.spec.KeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public  class UserUtils {
 
     public static  User transformUser(tUser user){
 
         User u = new User();
-        u.setUserId(user.getUserId());
+        u.setUserId(user.getUserId().toString());
         u.setUserName(user.getUserName());
         u.setUserEmail(user.getUserEmail());
         u.setUserStatus(user.getUserStatus().getDescription());
@@ -43,7 +44,7 @@ public  class UserUtils {
     public static UserRole transformUserRole(tUserRole userRole){
 
         UserRole u = new UserRole();
-        u.setUserRoleId(userRole.getUserRoleId());
+        //u.setUserRoleId(UUID.fromString(userRole.getUserRoleId()));
         u.setUserRoleName(userRole.getUserType().getDescription());
         return  u;
     }

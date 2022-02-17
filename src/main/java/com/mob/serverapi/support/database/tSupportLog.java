@@ -1,19 +1,21 @@
 package com.mob.serverapi.support.database;
 
 import com.mob.serverapi.users.database.tUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "supportLog")
 public class tSupportLog implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "supportLogId", unique = true, nullable = false)
-    public int supportLogId;
+    @GeneratedValue
+    @Column(name = "supportLogId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    public UUID supportLogId;
 
     @Column(name = "action", nullable = false)
     public String action;
@@ -39,7 +41,7 @@ public class tSupportLog implements Serializable {
     public tSupportLog() {
     }
 
-    public tSupportLog(int supportLogId, String action, tUser user, tSupport support,
+    public tSupportLog(UUID supportLogId, String action, tUser user, tSupport support,
                        LocalDateTime alterationDate, String alterationDetail) {
         this.supportLogId = supportLogId;
         this.action = action;
@@ -52,13 +54,13 @@ public class tSupportLog implements Serializable {
     /**
      * @return the supportLogId.
      */
-    public int getSupportLogId() {
+    public UUID getSupportLogId() {
         return supportLogId;
     }
     /**
      * @param supportLogId to set to.
      */
-    public void setSupportLogId(int supportLogId) {
+    public void setSupportLogId(UUID supportLogId) {
         this.supportLogId = supportLogId;
     }
     /**

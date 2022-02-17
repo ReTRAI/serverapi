@@ -2,20 +2,22 @@ package com.mob.serverapi.reseller.database;
 
 import com.mob.serverapi.device.database.*;
 import com.mob.serverapi.users.database.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "reseller")
 public class tReseller implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "resellerId", unique = true, nullable = false)
-    private int resellerId;
+    @GeneratedValue
+    @Column(name = "resellerId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID resellerId;
 
     @OneToOne(cascade = CascadeType.MERGE,optional = false)
     //FK to table User, column userId
@@ -76,7 +78,7 @@ public class tReseller implements Serializable {
 
     public tReseller() {}
 
-    public tReseller(int resellerId, tUser user, float currentBalance) {
+    public tReseller(UUID resellerId, tUser user, float currentBalance) {
         this.resellerId = resellerId;
         this.user = user;
         this.currentBalance = currentBalance;
@@ -87,7 +89,7 @@ public class tReseller implements Serializable {
      * @return resellerId's id.
      */
 
-    public int getResellerId() {
+    public UUID getResellerId() {
 
         return resellerId;
     }
@@ -95,7 +97,7 @@ public class tReseller implements Serializable {
     /**
      * @param resellerId the id to set to.
      */
-    public void setResellerId(int resellerId) {
+    public void setResellerId(UUID resellerId) {
         this.resellerId = resellerId;}
 
     /**

@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
@@ -26,19 +27,19 @@ public class tUserRoleRepository {
         repository.save(userRole);
     }
 
-    public void deleteUserRoleById(int userRoleId){
+    public void deleteUserRoleById(UUID userRoleId){
         repository.deleteById(userRoleId);
     }
 
-    public tUserRole findByUserIdAndUserTypeId(int userId, int userTypeId){
+    public tUserRole findByUserIdAndUserTypeId(UUID userId, UUID userTypeId){
         return repository.findByUser_UserIdAndUserType_UserTypeId(userId,userTypeId);
     }
 
-    public long countByUserIdAndUserTypeId(int userId, int userTypeId){
+    public long countByUserIdAndUserTypeId(UUID userId, UUID userTypeId){
         return repository.countByUser_UserIdAndUserType_UserTypeId(userId,userTypeId);
     }
 
-    public List<tUserRole> findAllRolesByUserId(int userId){
+    public List<tUserRole> findAllRolesByUserId(UUID userId){
         return repository.findByUser_UserId(userId);
     }
 

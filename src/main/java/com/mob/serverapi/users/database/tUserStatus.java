@@ -1,19 +1,21 @@
 package com.mob.serverapi.users.database;
 
 import com.mob.serverapi.reseller.database.tResellerAssociation;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "userStatus")
 public class tUserStatus implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userStatusId", unique = true, nullable = false)
-    private int userStatusId;
+    @GeneratedValue
+    @Column(name = "userStatusId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID userStatusId;
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -33,7 +35,7 @@ public class tUserStatus implements Serializable {
     public tUserStatus() {
     }
 
-    public tUserStatus(int userStatusId, String description) {
+    public tUserStatus(UUID userStatusId, String description) {
         this.userStatusId = userStatusId;
         this.description = description;
     }
@@ -41,14 +43,14 @@ public class tUserStatus implements Serializable {
     /**
      * @return the userStatusId.
      */
-    public int getUserStatusId() {
+    public UUID getUserStatusId() {
         return userStatusId;
     }
 
     /**
      * @param userStatusId to set to.
      */
-    public void setUserStatusId(int userStatusId) {
+    public void setUserStatusId(UUID userStatusId) {
         this.userStatusId = userStatusId;
     }
 

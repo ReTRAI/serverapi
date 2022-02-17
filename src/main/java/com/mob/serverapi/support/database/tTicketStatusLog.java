@@ -1,19 +1,21 @@
 package com.mob.serverapi.support.database;
 
 import com.mob.serverapi.users.database.tUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "ticketStatusLog")
 public class tTicketStatusLog implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticketStatusLogId", unique = true, nullable = false)
-    public int ticketStatusLogId;
+    @GeneratedValue
+    @Column(name = "ticketStatusLogId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    public UUID ticketStatusLogId;
 
     @Column(name = "action", nullable = false)
     public String action;
@@ -39,7 +41,7 @@ public class tTicketStatusLog implements Serializable {
     public tTicketStatusLog() {
     }
 
-    public tTicketStatusLog(int ticketStatusLogId, String action, tUser user, tTicketStatus ticketStatus,
+    public tTicketStatusLog(UUID ticketStatusLogId, String action, tUser user, tTicketStatus ticketStatus,
                             LocalDateTime alterationDate, String alterationDetail) {
         this.ticketStatusLogId = ticketStatusLogId;
         this.action = action;
@@ -51,13 +53,13 @@ public class tTicketStatusLog implements Serializable {
     /**
      * @return the deviceStatusId.
      */
-    public int getTicketStatusLogId() {
+    public UUID getTicketStatusLogId() {
         return ticketStatusLogId;
     }
     /**
      * @param ticketStatusLogId to set to.
      */
-    public void setTicketStatusLogId(int ticketStatusLogId) {
+    public void setTicketStatusLogId(UUID ticketStatusLogId) {
         this.ticketStatusLogId = ticketStatusLogId;
     }
     /**

@@ -1,19 +1,22 @@
 package com.mob.serverapi.device.database;
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "deviceUser")
 public class tDeviceUser implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deviceUserId", unique = true, nullable = false)
-    public int deviceUserId;
+    @GeneratedValue
+    @Column(name = "deviceUserId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    public UUID deviceUserId;
 
     @Column(name = "nickname", nullable = false)
     public String nickname;
@@ -44,7 +47,7 @@ public class tDeviceUser implements Serializable {
 
 
 
-    public tDeviceUser(int deviceUserId, String nickname, LocalDateTime creationDate, String userActivationPassword,
+    public tDeviceUser(UUID deviceUserId, String nickname, LocalDateTime creationDate, String userActivationPassword,
                        tDevice device) {
         this.deviceUserId = deviceUserId;
         this.nickname = nickname;
@@ -56,14 +59,14 @@ public class tDeviceUser implements Serializable {
     /**
      * @return the deviceUserId.
      */
-    public int getDeviceUserId() {
+    public UUID getDeviceUserId() {
         return deviceUserId;
     }
 
     /**
      * @param deviceUserId to set to.
      */
-    public void setDeviceUserId(int deviceUserId) {
+    public void setDeviceUserId(UUID deviceUserId) {
         this.deviceUserId = deviceUserId;
     }
 

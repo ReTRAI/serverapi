@@ -1,17 +1,20 @@
 package com.mob.serverapi.users.database;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "userLog")
 public class tUserLog implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userLogId", unique = true, nullable = false)
-    public int userLogId;
+    @GeneratedValue
+    @Column(name = "userLogId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    public UUID userLogId;
 
     @Column(name = "action", nullable = false)
     public String action;
@@ -37,7 +40,7 @@ public class tUserLog implements Serializable {
     public tUserLog() {
     }
 
-    public tUserLog(int userLogId, String action, tUser actionUser,
+    public tUserLog(UUID userLogId, String action, tUser actionUser,
                     tUser alteredUser, LocalDateTime alterationDate, String alterationDetail) {
         this.userLogId = userLogId;
         this.action = action;
@@ -50,14 +53,14 @@ public class tUserLog implements Serializable {
     /**
      * @return the userLogId.
      */
-    public int getUserLogId() {
+    public UUID getUserLogId() {
         return userLogId;
     }
 
     /**
      * @param userLogId to set to.
      */
-    public void setUserLogId(int userLogId) {
+    public void setUserLogId(UUID userLogId) {
         this.userLogId = userLogId;
     }
 

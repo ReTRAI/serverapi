@@ -4,7 +4,9 @@ import com.mob.serverapi.users.database.tUserStatus;
 import com.mob.serverapi.users.database.tUserType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface ItUserStatusRepository extends JpaRepository<tUserStatus,Integer> {
+import java.util.UUID;
+
+interface ItUserStatusRepository extends JpaRepository<tUserStatus, UUID> {
 
     tUserStatus findByDescription(String description);
 }

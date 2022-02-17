@@ -2,19 +2,21 @@ package com.mob.serverapi.reseller.database;
 
 
 import com.mob.serverapi.users.database.tUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "resellerLog")
 public class tResellerLog implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "resellerLogId", unique = true, nullable = false)
-    public int resellerLogId;
+    @GeneratedValue
+    @Column(name = "resellerLogId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    public UUID resellerLogId;
 
     @Column(name = "action", nullable = false)
     public String action;
@@ -40,7 +42,7 @@ public class tResellerLog implements Serializable {
     public tResellerLog() {
     }
 
-    public tResellerLog(int resellerLogId, String action, tUser user,
+    public tResellerLog(UUID resellerLogId, String action, tUser user,
                     tReseller reseller, LocalDateTime alterationDate, String alterationDetail) {
         this.resellerLogId = resellerLogId;
         this.action = action;
@@ -53,14 +55,14 @@ public class tResellerLog implements Serializable {
     /**
      * @return the userLogId.
      */
-    public int getResellerLogId() {
+    public UUID getResellerLogId() {
         return resellerLogId;
     }
 
     /**
      * @param resellerLogId to set to.
      */
-    public void setResellerLogId(int resellerLogId) {
+    public void setResellerLogId(UUID resellerLogId) {
         this.resellerLogId = resellerLogId;
     }
 

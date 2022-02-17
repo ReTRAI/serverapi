@@ -2,19 +2,21 @@ package com.mob.serverapi.device.database;
 
 
 import com.mob.serverapi.users.database.tUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "deviceStatusLog")
 public class tDeviceStatusLog implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deviceStatusLogId", unique = true, nullable = false)
-    public int deviceStatusLogId;
+    @GeneratedValue
+    @Column(name = "deviceStatusLogId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    public UUID deviceStatusLogId;
 
     @Column(name = "action", nullable = false)
     public String action;
@@ -40,7 +42,7 @@ public class tDeviceStatusLog implements Serializable {
     public tDeviceStatusLog() {
     }
 
-    public tDeviceStatusLog(int deviceStatusLogId, String action, tUser user,
+    public tDeviceStatusLog(UUID deviceStatusLogId, String action, tUser user,
                       tDeviceStatus deviceStatus, LocalDateTime alterationDate, String alterationDetail) {
         this.deviceStatusLogId = deviceStatusLogId;
         this.action = action;
@@ -53,14 +55,14 @@ public class tDeviceStatusLog implements Serializable {
     /**
      * @return the deviceStatusLogId.
      */
-    public int getDeviceLogId() {
+    public UUID getDeviceLogId() {
         return deviceStatusLogId;
     }
 
     /**
      * @param deviceStatusLogId to set to.
      */
-    public void setDeviceLogId(int deviceStatusLogId) {
+    public void setDeviceLogId(UUID deviceStatusLogId) {
         this.deviceStatusLogId = deviceStatusLogId;
     }
 

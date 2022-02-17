@@ -1,17 +1,20 @@
 package com.mob.serverapi.support.database;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "supportNotification")
 public class tSupportNotification implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "supportNotificationId", unique = true, nullable = false)
-    private int supportNotificationId;
+    @GeneratedValue
+    @Column(name = "supportNotificationId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID supportNotificationId;
 
     @Column(name = "creationDate", nullable = false)
     private LocalDateTime creationDate;
@@ -35,7 +38,7 @@ public class tSupportNotification implements Serializable {
     public tSupportNotification() {
     }
 
-    public tSupportNotification(int supportNotificationId, LocalDateTime creationDate, String detail,
+    public tSupportNotification(UUID supportNotificationId, LocalDateTime creationDate, String detail,
                                 boolean checked, LocalDateTime checkedDate, tSupport support) {
         this.supportNotificationId = supportNotificationId;
         this.creationDate = creationDate;
@@ -47,13 +50,13 @@ public class tSupportNotification implements Serializable {
     /**
      * @return the supportNotificationId.
      */
-    public int getSupportNotificationId() {
+    public UUID getSupportNotificationId() {
         return supportNotificationId;
     }
     /**
      * @param supportNotificationId to set to.
      */
-    public void setSupportNotificationId(int supportNotificationId) {
+    public void setSupportNotificationId(UUID supportNotificationId) {
         this.supportNotificationId = supportNotificationId;
     }
     /**

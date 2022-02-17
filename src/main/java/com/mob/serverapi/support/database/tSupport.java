@@ -2,19 +2,21 @@ package com.mob.serverapi.support.database;
 
 import com.mob.serverapi.reseller.database.tResellerLog;
 import com.mob.serverapi.users.database.tUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "support")
 public class tSupport implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "supportId", unique = true, nullable = false)
-    private int supportId;
+    @GeneratedValue
+    @Column(name = "supportId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID supportId;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
@@ -40,7 +42,7 @@ public class tSupport implements Serializable {
     public tSupport() {
     }
 
-    public tSupport(int supportId, tUser user) {
+    public tSupport(UUID supportId, tUser user) {
         this.supportId = supportId;
         this.user = user;
     }
@@ -49,13 +51,13 @@ public class tSupport implements Serializable {
      * @return supportId.
      */
 
-    public int getSupportId() {
+    public UUID getSupportId() {
         return supportId;
     }
     /**
      * @param supportId  to set to.
      */
-    public void setSupportId(int supportId) {
+    public void setSupportId(UUID supportId) {
         this.supportId = supportId;
     }
     /**

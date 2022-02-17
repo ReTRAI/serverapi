@@ -4,28 +4,29 @@ import com.mob.serverapi.users.base.User;
 import com.mob.serverapi.users.base.UserRole;
 
 import java.util.List;
+import java.util.UUID;
 
 
 interface IUserRepository {
 
-    User getUserById(int userId);
+    User getUserById(UUID userId);
 
     User userLogin(String userEmail, String userPassword);
 
-    User setUser(String userName, String userEmail, String userPassword, int actionUserId);
+    User setUser(String userName, String userEmail, String userPassword, UUID actionUserId);
 
-    boolean unblockUser(int userId, int actionUserId);
+    boolean unblockUser(UUID userId, UUID actionUserId);
 
-    boolean blockUser(int userId);
+    boolean blockUser(UUID userId);
 
-    boolean changeUserPw(int userId, String newPassword, int actionUserId);
+    boolean changeUserPw(UUID userId, String newPassword, UUID actionUserId);
 
-    boolean inactivateUser(int userId, int actionUserId);
+    boolean inactivateUser(UUID userId, UUID actionUserId);
 
-    boolean changeLangPreference(int userId, String lang, int actionUserId);
+    boolean changeLangPreference(UUID userId, String lang, UUID actionUserId);
 
-    boolean changeThemePreference(int userId, String theme, int actionUserId);
+    boolean changeThemePreference(UUID userId, String theme, UUID actionUserId);
 
-    List<UserRole> getUserRolesByUserById (int userId);
+    List<UserRole> getUserRolesByUserById (UUID userId);
 
 }

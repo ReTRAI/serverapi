@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-interface ItUserLoginLogRepository extends JpaRepository<tUserLoginLog,Integer> {
+interface ItUserLoginLogRepository extends JpaRepository<tUserLoginLog,UUID> {
 
     tUserLoginLog findFirstByUser_UserIdAndValidAuthenticationOrderByLoginDateDesc(UUID userId, boolean validAuthentication);
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 public class tResellerLogRepository {
@@ -34,7 +35,7 @@ public class tResellerLogRepository {
     }
 
     @Transactional
-    public void deleteResellerLogByResellerId(int resellerId){
+    public void deleteResellerLogByResellerId(UUID resellerId){
 
         repository.deleteByReseller_ResellerId(resellerId);
     }

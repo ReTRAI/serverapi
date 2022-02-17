@@ -1,18 +1,20 @@
 package com.mob.serverapi.support.database;
 
 import com.mob.serverapi.users.database.tUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "ticketDetail")
 public class tTicketDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticketDetailId", unique = true, nullable = false)
-    private int ticketDetailId;
+    @GeneratedValue
+    @Column(name = "ticketDetailId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID ticketDetailId;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table ticket, column ticketId
@@ -38,7 +40,7 @@ public class tTicketDetail {
     public tTicketDetail() {
     }
 
-    public tTicketDetail(int ticketDetailId, tTicket ticket, String detail, tUser user,
+    public tTicketDetail(UUID ticketDetailId, tTicket ticket, String detail, tUser user,
                          LocalDateTime responseDate) {
         this.ticketDetailId = ticketDetailId;
         this.ticket = ticket;
@@ -50,13 +52,13 @@ public class tTicketDetail {
     /**
      * @return the ticketDetailId.
      */
-    public int getTicketDetailId() {
+    public UUID getTicketDetailId() {
         return ticketDetailId;
     }
     /**
      * @param ticketDetailId to set to.
      */
-    public void setTicketDetailId(int ticketDetailId) {
+    public void setTicketDetailId(UUID ticketDetailId) {
         this.ticketDetailId = ticketDetailId;
     }
     /**

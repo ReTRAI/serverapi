@@ -1,17 +1,20 @@
 package com.mob.serverapi.reseller.database;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "resellerBalance")
 public class tResellerBalance implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "resellerBalanceId", unique = true, nullable = false)
-    private int resellerBalanceId;
+    @GeneratedValue
+    @Column(name = "resellerBalanceId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID resellerBalanceId;
 
     @Column(name = "debitCredit", nullable = false)
     private String debitCredit;
@@ -30,7 +33,7 @@ public class tResellerBalance implements Serializable {
 
     protected tResellerBalance() {}
 
-    public tResellerBalance(int resellerBalanceId, String DebitCredit, float movementValue, tReseller reseller) {
+    public tResellerBalance(UUID resellerBalanceId, String DebitCredit, float movementValue, tReseller reseller) {
         this.resellerBalanceId = resellerBalanceId;
         this.debitCredit = DebitCredit;
         this.movementValue = movementValue;
@@ -41,14 +44,14 @@ public class tResellerBalance implements Serializable {
      * @return the ResellerBalanceId.
      */
 
-    public int getResellerBalanceId() {
+    public UUID getResellerBalanceId() {
         return resellerBalanceId;
     }
 
     /**
      * @param resellerBalanceId the id to set to.
      */
-    public void setResellerBalanceId(int resellerBalanceId) {
+    public void setResellerBalanceId(UUID resellerBalanceId) {
         this.resellerBalanceId = resellerBalanceId;
     }
 

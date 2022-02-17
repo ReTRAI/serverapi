@@ -4,6 +4,8 @@ import com.mob.serverapi.device.database.tDevice;
 import com.mob.serverapi.device.repositories.database.tDeviceRepository;
 import com.mob.serverapi.reseller.base.Reseller;
 import com.mob.serverapi.reseller.database.tReseller;
+import com.mob.serverapi.reseller.database.tResellerAssociation;
+import com.mob.serverapi.reseller.repositories.database.tResellerAssociationRepository;
 import com.mob.serverapi.reseller.repositories.database.tResellerLogRepository;
 import com.mob.serverapi.reseller.repositories.database.tResellerRepository;
 import com.mob.serverapi.servicefault.ServiceFault;
@@ -24,6 +26,7 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class ResellerRepository implements IResellerRepository {
@@ -34,6 +37,8 @@ public class ResellerRepository implements IResellerRepository {
     protected tResellerRepository resellerRepository = new tResellerRepository();
     @Autowired
     protected tResellerLogRepository resellerLogRepository = new tResellerLogRepository();
+    @Autowired
+    protected tResellerAssociationRepository resellerAssociationRepository = new tResellerAssociationRepository();
     @Autowired
     protected tUserRepository userRepository = new tUserRepository();
     @Autowired
@@ -47,7 +52,7 @@ public class ResellerRepository implements IResellerRepository {
 
 
     @Override
-    public Reseller getResellerById(int resellerId) {
+    public Reseller getResellerById(UUID resellerId) {
 
         Reseller resellerToReturn = new Reseller();
 
@@ -69,7 +74,7 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public List<Reseller> getResellerFiltered(@Nullable int resellerId, @Nullable String resellerName,
+    public List<Reseller> getResellerFiltered(@Nullable String resellerId, @Nullable String resellerName,
                                               boolean onlyChildren, @Nullable String field,
                                               @Nullable String orderField, int offset, int numberRecords) {
 
@@ -78,7 +83,7 @@ public class ResellerRepository implements IResellerRepository {
         try {
 
 
-            Integer localResellerId = resellerId == 0 ? null : resellerId;
+            UUID localResellerId = resellerId.equals("") ? null : UUID.fromString(resellerId);
             String localResellerName = resellerName.equals("") ? null : resellerName;
             String localField = field.equals("") ? null : field;
             String localOrderField = orderField.equals("") ? null : orderField;
@@ -103,7 +108,7 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public Reseller setReseller(int userId, int actionUserId) {
+    public Reseller setReseller(UUID userId, UUID actionUserId) {
 
         Reseller reseller = new Reseller();
 
@@ -159,7 +164,7 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public boolean removeReseller(int resellerId, int actionUserId) {
+    public boolean removeReseller(UUID resellerId, UUID actionUserId) {
         boolean val = false;
 
         try {
@@ -205,5 +210,45 @@ public class ResellerRepository implements IResellerRepository {
 
         return val;
     }
+
+    @Override
+    public boolean setResellerAssociation(UUID parentResellerId, UUID childResellerId) {
+        boolean val = false;
+
+        try {
+
+            boolean exists = resellerAssociationRepository.associationExists(parentResellerId,childResellerId);
+
+            if(!exists){
+
+                tReseller parent = resellerRepository.findById(parentResellerId);
+                tReseller child = resellerRepository.findById(childResellerId);
+
+                if(parent!= null && child != null){
+                    tResellerAssociation assoc = new tResellerAssociation();
+                    assoc.setParentReseller(parent);
+                    assoc.setChildReseller(child);
+
+                    resellerAssociationRepository.saveResellerAssociation(assoc);
+                }
+                else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                }
+            }
+            else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_ALREADY_EXISTS", ""));
+            }
+
+
+            val = true;
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("SET_RESELLER_ASSOCIATION", ex.getMessage()));
+        }
+        return val;
+    }
+
 }
 

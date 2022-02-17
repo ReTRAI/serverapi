@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
@@ -32,24 +33,24 @@ public class tResellerRepository {
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired
-    protected tResellerAssociationRepository deviceAssociationRepository = new tResellerAssociationRepository();
+    protected tResellerAssociationRepository resellerAssociationRepository = new tResellerAssociationRepository();
 
     public tReseller saveReseller(tReseller reseller){
 
         return repository.save(reseller);
     }
 
-    public void deleteResellerById(int resellerId){
+    public void deleteResellerById(UUID resellerId){
 
         repository.deleteById(resellerId);
     }
 
-    public tReseller findById(int resellerId){
+    public tReseller findById(UUID resellerId){
 
         return repository.findById(resellerId).orElse(null);
     }
 
-    public List<tReseller> getResellerFiltered(@Nullable Integer resellerId, @Nullable String resellerName,
+    public List<tReseller> getResellerFiltered(@Nullable UUID resellerId, @Nullable String resellerName,
                                                boolean onlyChildren, @Nullable String field,
                                                @Nullable String orderField, int offset, int numberRecords){
 
@@ -70,8 +71,8 @@ public class tResellerRepository {
 
         if (resellerId != null && onlyChildren){
 
-            List<Integer> childrenIds = new ArrayList<>();
-            List<tResellerAssociation> associationsLevel1 = deviceAssociationRepository.getAssociationByParentResellerId(resellerId);
+            List<UUID> childrenIds = new ArrayList<>();
+            List<tResellerAssociation> associationsLevel1 = resellerAssociationRepository.getAssociationByParentResellerId(resellerId);
             for (tResellerAssociation ra: associationsLevel1) { childrenIds.add(ra.getChildReseller().getResellerId()); }
 
             List<Integer> children = new ArrayList<>();

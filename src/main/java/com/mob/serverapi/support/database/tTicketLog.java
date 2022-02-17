@@ -1,18 +1,20 @@
 package com.mob.serverapi.support.database;
 
 import com.mob.serverapi.users.database.tUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "ticketLog")
 public class tTicketLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticketLogId", unique = true, nullable = false)
-    public int ticketLogId;
+    @GeneratedValue
+    @Column(name = "ticketLogId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    public UUID ticketLogId;
 
     @Column(name = "action", nullable = false)
     public String action;
@@ -38,7 +40,7 @@ public class tTicketLog {
     public tTicketLog() {
     }
 
-    public tTicketLog(int ticketLogId, String action, tUser user, tTicket ticket,
+    public tTicketLog(UUID ticketLogId, String action, tUser user, tTicket ticket,
                       LocalDateTime alterationDate, String alterationDetail) {
         this.ticketLogId = ticketLogId;
         this.action = action;
@@ -50,13 +52,13 @@ public class tTicketLog {
     /**
      * @return the ticketLogId.
      */
-    public int getTicketLogId() {
+    public UUID getTicketLogId() {
         return ticketLogId;
     }
     /**
      * @param ticketLogId to set to.
      */
-    public void setTicketLogId(int ticketLogId) {
+    public void setTicketLogId(UUID ticketLogId) {
         this.ticketLogId = ticketLogId;
     }
     /**

@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="resellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="parentResselerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="childResselerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +37,63 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "resellerId"
+    "parentResselerId",
+    "childResselerId"
 })
-@XmlRootElement(name = "getResellerByIdRequest")
-public class GetResellerByIdRequest {
+@XmlRootElement(name = "setResellerAssociationRequest")
+public class SetResellerAssociationRequest {
 
     @XmlElement(required = true)
-    protected String resellerId;
+    protected String parentResselerId;
+    @XmlElement(required = true)
+    protected String childResselerId;
 
     /**
-     * Gets the value of the resellerId property.
+     * Gets the value of the parentResselerId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getResellerId() {
-        return resellerId;
+    public String getParentResselerId() {
+        return parentResselerId;
     }
 
     /**
-     * Sets the value of the resellerId property.
+     * Sets the value of the parentResselerId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setResellerId(String value) {
-        this.resellerId = value;
+    public void setParentResselerId(String value) {
+        this.parentResselerId = value;
+    }
+
+    /**
+     * Gets the value of the childResselerId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getChildResselerId() {
+        return childResselerId;
+    }
+
+    /**
+     * Sets the value of the childResselerId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setChildResselerId(String value) {
+        this.childResselerId = value;
     }
 
 }

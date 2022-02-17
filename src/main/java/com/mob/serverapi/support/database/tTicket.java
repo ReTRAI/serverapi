@@ -1,20 +1,22 @@
 package com.mob.serverapi.support.database;
 
 import com.mob.serverapi.users.database.tUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "ticket")
 public class tTicket implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticketId", unique = true, nullable = false)
-    private int ticketId;
+    @GeneratedValue
+    @Column(name = "ticketId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID ticketId;
 
     @Column(name = "openDate", nullable = false)
     private LocalDateTime openDate;
@@ -54,7 +56,7 @@ public class tTicket implements Serializable {
     public tTicket() {
     }
 
-    public tTicket(int ticketId, LocalDateTime openDate, tUser openUser,
+    public tTicket(UUID ticketId, LocalDateTime openDate, tUser openUser,
                    tTicketStatus ticketStatus, tUser assignedUser) {
         this.ticketId = ticketId;
         this.openDate = openDate;
@@ -66,13 +68,13 @@ public class tTicket implements Serializable {
     /**
      * @return the ticketId.
      */
-    public int getTicketId() {
+    public UUID getTicketId() {
         return ticketId;
     }
     /**
      * @param ticketId  to set to.
      */
-    public void setTicketId(int ticketId) {
+    public void setTicketId(UUID ticketId) {
         this.ticketId = ticketId;
     }
 

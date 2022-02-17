@@ -1,17 +1,20 @@
 package com.mob.serverapi.device.database;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "deviceStatus")
 public class tDeviceStatus implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deviceStatusId", unique = true, nullable = false)
-    private int deviceStatusId;
+    @GeneratedValue
+    @Column(name = "deviceStatusId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID deviceStatusId;
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -40,7 +43,7 @@ public class tDeviceStatus implements Serializable {
     public tDeviceStatus() {
     }
 
-    public tDeviceStatus(int deviceStatusId, String description) {
+    public tDeviceStatus(UUID deviceStatusId, String description) {
         this.deviceStatusId = deviceStatusId;
         this.description = description;
     }
@@ -48,14 +51,14 @@ public class tDeviceStatus implements Serializable {
     /**
      * @return the deviceStatusId.
      */
-    public int getDeviceStatusId() {
+    public UUID getDeviceStatusId() {
         return deviceStatusId;
     }
 
     /**
      * @param deviceStatusId to set to.
      */
-    public void setDeviceStatusId(int deviceStatusId) {
+    public void setDeviceStatusId(UUID deviceStatusId) {
         this.deviceStatusId = deviceStatusId;
     }
 

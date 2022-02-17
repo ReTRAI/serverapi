@@ -2,20 +2,22 @@ package com.mob.serverapi.apps.database;
 
 import com.mob.serverapi.device.database.tDeviceApp;
 import com.mob.serverapi.users.database.tUser;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "app")
 public class tApp implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "appId", unique = true, nullable = false)
-    private int appId;
+    @GeneratedValue
+    @Column(name = "appId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID appId;
 
     @Column(name = "name", length = 255, nullable = false)
     private String name;
@@ -55,7 +57,7 @@ public class tApp implements Serializable {
     public tApp() {
     }
 
-    public tApp(int appId, String name, String alias, String thumbnailPath, String apkPath,
+    public tApp(UUID appId, String name, String alias, String thumbnailPath, String apkPath,
                 LocalDateTime creationDate, LocalDateTime updatedDate, String version) {
         this.appId = appId;
         this.name = name;
@@ -70,13 +72,13 @@ public class tApp implements Serializable {
     /**
      * @return the appId.
      */
-    public int getAppId() {
+    public UUID getAppId() {
         return appId;
     }
     /**
      * @param appId to set to.
      */
-    public void setAppId(int appId) {
+    public void setAppId(UUID appId) {
         this.appId = appId;
     }
 

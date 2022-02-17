@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class tDeviceRepository {
@@ -17,7 +18,7 @@ public class tDeviceRepository {
         repository.save(device);
     }
 
-    public List<tDevice> getAllDevicesByResellerId(int resellerId){
+    public List<tDevice> getAllDevicesByResellerId(UUID resellerId){
 
         return repository.findByReseller_ResellerId(resellerId);
     }

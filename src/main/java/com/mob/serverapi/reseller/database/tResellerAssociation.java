@@ -1,16 +1,19 @@
 package com.mob.serverapi.reseller.database;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table(name = "resellerAssociation")
 public class tResellerAssociation implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "resellerAssociationId", unique = true, nullable = false)
-    private int resellerAssociationId;
+    @GeneratedValue
+    @JoinColumn(name = "resellerAssociationId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID resellerAssociationId;
 
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
@@ -24,9 +27,9 @@ public class tResellerAssociation implements Serializable {
             foreignKey = @ForeignKey(name="FK_RESELLER_CHILDID"))
     private tReseller childReseller;
 
-    protected tResellerAssociation() {}
+    public tResellerAssociation() {}
 
-    public tResellerAssociation(int resellerAssociationId, tReseller parentReseller, tReseller childReseller) {
+    public tResellerAssociation(UUID resellerAssociationId, tReseller parentReseller, tReseller childReseller) {
         this.resellerAssociationId = resellerAssociationId;
         this.parentReseller = parentReseller;
         this.childReseller = childReseller;
@@ -37,14 +40,14 @@ public class tResellerAssociation implements Serializable {
      * @return the ResellerAssociationId.
      */
 
-    public int getResellerAssociationId() {
+    public UUID getResellerAssociationId() {
         return resellerAssociationId;
     }
 
     /**
      * @param resellerAssociationId the id to set to.
      */
-    public void setResellerAssociationId(int resellerAssociationId) {
+    public void setResellerAssociationId(UUID resellerAssociationId) {
         this.resellerAssociationId = resellerAssociationId;
     }
 

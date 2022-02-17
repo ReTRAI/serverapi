@@ -1,21 +1,23 @@
 package com.mob.serverapi.device.database;
 
 import com.mob.serverapi.reseller.database.tReseller;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "device")
 public class tDevice implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deviceId", unique = true, nullable = false)
-    private int deviceId;
+    @GeneratedValue
+    @Column(name = "deviceId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID deviceId;
 
     @Column(name = "brand", nullable = false)
     private String brand;
@@ -112,7 +114,7 @@ public class tDevice implements Serializable {
     public tDevice() {
     }
 
-    public tDevice(int deviceId, String brand, tReseller reseller, String serialNumber,
+    public tDevice(UUID deviceId, String brand, tReseller reseller, String serialNumber,
                    String imeiNumber, String simNumber, String androidId, String firstSimNumber,
                    String tunnelIP, LocalDateTime creationDevice, LocalDateTime lastConnection,
                    LocalDateTime lastBackup, tDeviceStatus deviceStatus, LocalDateTime activationDate,
@@ -142,14 +144,14 @@ public class tDevice implements Serializable {
     /**
      * @return the deviceId.
      */
-    public int getDeviceId() {
+    public UUID getDeviceId() {
         return deviceId;
     }
 
     /**
      * @param deviceId to set to.
      */
-    public void setDeviceId(int deviceId) {
+    public void setDeviceId(UUID deviceId) {
         this.deviceId = deviceId;
     }
 

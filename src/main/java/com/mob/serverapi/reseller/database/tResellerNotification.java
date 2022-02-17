@@ -1,17 +1,20 @@
 package com.mob.serverapi.reseller.database;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "resellerNotification")
 public class tResellerNotification implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "resellerNotificationId", unique = true, nullable = false)
-    private int resellerNotificationId;
+    @GeneratedValue
+    @Column(name = "resellerNotificationId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID resellerNotificationId;
 
     @Column(name = "creationDate", nullable = false)
     private LocalDateTime creationDate;
@@ -34,7 +37,7 @@ public class tResellerNotification implements Serializable {
 
     protected tResellerNotification() {}
 
-    public tResellerNotification(int resellerNotificationId, LocalDateTime creationDate,
+    public tResellerNotification(UUID resellerNotificationId, LocalDateTime creationDate,
                                  String detail,boolean checked,
                                  LocalDateTime checkedDate, tReseller reseller) {
         this.resellerNotificationId = resellerNotificationId;
@@ -48,14 +51,14 @@ public class tResellerNotification implements Serializable {
     /**
      * @return the resellerNotificationId.
      */
-    public int getResellerNotificationId() {
+    public UUID getResellerNotificationId() {
         return resellerNotificationId;
     }
 
     /**
      * @param resellerNotificationId to set to.
      */
-    public void setResellerNotificationId(int resellerNotificationId) {
+    public void setResellerNotificationId(UUID resellerNotificationId) {
         this.resellerNotificationId = resellerNotificationId;
     }
 

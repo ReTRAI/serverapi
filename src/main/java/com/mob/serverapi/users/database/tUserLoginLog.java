@@ -1,16 +1,19 @@
 package com.mob.serverapi.users.database;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "userLoginLog")
 public class tUserLoginLog {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userLoginLogId", unique = true, nullable = false)
-    private int userLoginLogId;
+    @GeneratedValue
+    @Column(name = "userLoginLogId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID userLoginLogId;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
@@ -30,7 +33,7 @@ public class tUserLoginLog {
     public tUserLoginLog() {
     }
 
-    public tUserLoginLog(int userLoginLogId, tUser user, LocalDateTime loginDate,
+    public tUserLoginLog(UUID userLoginLogId, tUser user, LocalDateTime loginDate,
                          boolean validAuthentication, String authenticationDetail) {
         this.userLoginLogId = userLoginLogId;
         this.user = user;
@@ -42,13 +45,13 @@ public class tUserLoginLog {
     /**
      * @return the userLoginLogId.
      */
-    public int getUserLoginLogId() {
+    public UUID getUserLoginLogId() {
         return userLoginLogId;
     }
     /**
      * @param userLoginLogId to set to.
      */
-    public void setUserLoginLogId(int userLoginLogId) {
+    public void setUserLoginLogId(UUID userLoginLogId) {
         this.userLoginLogId = userLoginLogId;
     }
     /**

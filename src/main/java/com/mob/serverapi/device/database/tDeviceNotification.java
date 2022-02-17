@@ -1,17 +1,20 @@
 package com.mob.serverapi.device.database;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "deviceNotification")
 public class tDeviceNotification implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deviceNotificationId", unique = true, nullable = false)
-    private int deviceNotificationId;
+    @GeneratedValue
+    @Column(name = "deviceNotificationId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    private UUID deviceNotificationId;
 
     @Column(name = "creationDate", nullable = false)
     private LocalDateTime creationDate;
@@ -34,7 +37,7 @@ public class tDeviceNotification implements Serializable {
 
     protected tDeviceNotification() {}
 
-    public tDeviceNotification(int deviceNotificationId, LocalDateTime creationDate,
+    public tDeviceNotification(UUID deviceNotificationId, LocalDateTime creationDate,
                                  String detail,boolean checked,
                                  LocalDateTime checkedDate, tDevice device) {
         this.deviceNotificationId = deviceNotificationId;
@@ -48,14 +51,14 @@ public class tDeviceNotification implements Serializable {
     /**
      * @return the deviceNotificationId.
      */
-    public int getDeviceNotificationId() {
+    public UUID getDeviceNotificationId() {
         return deviceNotificationId;
     }
 
     /**
      * @param deviceNotificationId to set to.
      */
-    public void setDeviceNotificationId(int deviceNotificationId) {
+    public void setDeviceNotificationId(UUID deviceNotificationId) {
         this.deviceNotificationId = deviceNotificationId;
     }
 
