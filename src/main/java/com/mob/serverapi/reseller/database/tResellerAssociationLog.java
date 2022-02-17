@@ -38,7 +38,7 @@ public class tResellerAssociationLog implements Serializable {
     @Column(name = "alterationDetail", nullable = false)
     private String alterationDetail;
 
-    private tResellerAssociationLog() {
+    public tResellerAssociationLog() {
     }
 
     public tResellerAssociationLog(UUID resellerAssociationLogId, String action, tUser user,

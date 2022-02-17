@@ -11,7 +11,11 @@ interface ItResellerAssociationRepository extends JpaRepository<tResellerAssocia
 
     List<tResellerAssociation> findDistinctByParentReseller_ResellerId(UUID resellerId);
 
-    boolean existsByParentReseller_ResellerIdAndChildReseller_ResellerId(UUID resellerId, UUID resellerId1);
+    tResellerAssociation findByParentReseller_ResellerIdAndChildReseller_ResellerId(UUID resellerId, UUID resellerId1);
+
+    long countByChildReseller_ResellerId(UUID resellerId);
+
+    long deleteByParentReseller_ResellerIdAndChildReseller_ResellerId(UUID resellerId, UUID resellerId1);
 
 
 }

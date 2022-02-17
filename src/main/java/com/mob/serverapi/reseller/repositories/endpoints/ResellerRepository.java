@@ -2,9 +2,9 @@ package com.mob.serverapi.reseller.repositories.endpoints;
 
 import com.mob.serverapi.device.database.tDevice;
 import com.mob.serverapi.device.repositories.database.tDeviceRepository;
-import com.mob.serverapi.reseller.base.Reseller;
 import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.database.tResellerAssociation;
+import com.mob.serverapi.reseller.repositories.database.tResellerAssociationLogRepository;
 import com.mob.serverapi.reseller.repositories.database.tResellerAssociationRepository;
 import com.mob.serverapi.reseller.repositories.database.tResellerLogRepository;
 import com.mob.serverapi.reseller.repositories.database.tResellerRepository;
@@ -20,6 +20,7 @@ import com.mob.serverapi.users.repositories.database.tUserTypeRepository;
 import com.mob.serverapi.utils.ResellerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import com.mob.serverapi.reseller.base.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -39,6 +40,8 @@ public class ResellerRepository implements IResellerRepository {
     protected tResellerLogRepository resellerLogRepository = new tResellerLogRepository();
     @Autowired
     protected tResellerAssociationRepository resellerAssociationRepository = new tResellerAssociationRepository();
+    @Autowired
+    protected tResellerAssociationLogRepository resellerAssociationLogRepository = new tResellerAssociationLogRepository();
     @Autowired
     protected tUserRepository userRepository = new tUserRepository();
     @Autowired
@@ -212,35 +215,46 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public boolean setResellerAssociation(UUID parentResellerId, UUID childResellerId) {
+    public boolean setResellerAssociation(UUID parentResellerId, UUID childResellerId, UUID actionUserId) {
         boolean val = false;
 
         try {
+            tUser actionUser = userRepository.findById(actionUserId);
 
-            boolean exists = resellerAssociationRepository.associationExists(parentResellerId,childResellerId);
-
-            if(!exists){
+            if (actionUser != null) {
 
                 tReseller parent = resellerRepository.findById(parentResellerId);
                 tReseller child = resellerRepository.findById(childResellerId);
 
-                if(parent!= null && child != null){
-                    tResellerAssociation assoc = new tResellerAssociation();
-                    assoc.setParentReseller(parent);
-                    assoc.setChildReseller(child);
+                if (parent != null && child != null) {
+                    long exists = resellerAssociationRepository.countAssociationByChildResellerId(parentResellerId);
 
-                    resellerAssociationRepository.saveResellerAssociation(assoc);
-                }
-                else {
+                    if (exists == 0) {
+
+
+                        tResellerAssociation assoc = new tResellerAssociation();
+                        assoc.setParentReseller(parent);
+                        assoc.setChildReseller(child);
+
+                        tResellerAssociation saved = resellerAssociationRepository.saveResellerAssociation(assoc);
+
+                        resellerLogRepository.insertResellerLog(actionUser, parent, "ADD_RESELLER_ASSOCIATION", "ADD CHILD ID: " + child.getResellerId());
+                        resellerLogRepository.insertResellerLog(actionUser, child, "ADD_RESELLER_ASSOCIATION", "ADD PARENT ID: " + parent.getResellerId());
+                        resellerAssociationLogRepository.insertResellerAssociationLog(actionUser, saved, "ADD_RESELLER_ASSOCIATION",
+                                "ADD CHILD ID: " + child.getResellerId() + " TO PARENT ID: " + parent.getResellerId());
+
+                        val = true;
+
+                    } else {
+                        throw new ServiceFaultException("ERROR", new ServiceFault("CHILD_RESELLER_ALREADY_ASSOCIATED", ""));
+                    }
+                } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
                 }
-            }
-            else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_ALREADY_EXISTS", ""));
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
             }
 
-
-            val = true;
 
         } catch (ServiceFaultException se) {
             throw se;
@@ -250,5 +264,81 @@ public class ResellerRepository implements IResellerRepository {
         return val;
     }
 
+    @Override
+    public boolean removeResellerAssociation(UUID parentResellerId, UUID childResellerId, UUID actionUserId) {
+        boolean val = false;
+
+        try {
+            tUser actionUser = userRepository.findById(actionUserId);
+
+            if (actionUser != null) {
+                tReseller parent = resellerRepository.findById(parentResellerId);
+                tReseller child = resellerRepository.findById(childResellerId);
+
+                if (parent != null && child != null) {
+                    tResellerAssociation assoc = resellerAssociationRepository.getAssociation(parentResellerId, childResellerId);
+
+                    if (assoc != null) {
+
+                        resellerAssociationLogRepository.deleteResellerAssociationLogByResellerId(assoc.getResellerAssociationId());
+                        resellerAssociationRepository.deleteAssociation(parentResellerId, childResellerId);
+
+                        resellerLogRepository.insertResellerLog(actionUser, parent, "REMOVE_RESELLER_ASSOCIATION", "ADD CHILD ID: " + child.getResellerId());
+                        resellerLogRepository.insertResellerLog(actionUser, child, "REMOVE_RESELLER_ASSOCIATION", "ADD PARENT ID: " + parent.getResellerId());
+
+                        val = true;
+
+                    } else {
+                        throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXIST", ""));
+                    }
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                }
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("SET_RESELLER_ASSOCIATION", ex.getMessage()));
+        }
+        return val;
+    }
+
+    @Override
+    public ResellerAssociation getResellerAssociation(UUID parentResellerId, UUID childResellerId) {
+        ResellerAssociation assoc = new ResellerAssociation();
+
+        try {
+
+            tReseller parent = resellerRepository.findById(parentResellerId);
+            tReseller child = resellerRepository.findById(childResellerId);
+
+            if (parent != null && child != null) {
+
+                tResellerAssociation saved = resellerAssociationRepository.getAssociation(parentResellerId, childResellerId);
+
+                if (saved != null) {
+
+                    assoc = ResellerUtils.transformResellerAssociation(saved);
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXISTS", ""));
+                }
+
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+            }
+
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("SET_RESELLER_ASSOCIATION", ex.getMessage()));
+        }
+        return assoc;
+    }
 }
 

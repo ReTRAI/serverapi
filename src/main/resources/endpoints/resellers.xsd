@@ -40,6 +40,22 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- getResellerAssociation-->
+    <xs:element name="getResellerAssociationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="parentResellerId"  type="xs:string"/>
+                <xs:element name="childResellerId"  type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getResellerAssociationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resellerAssociation" type="tns:resellerAssociation"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <!-- setReseller-->
     <xs:element name="setResellerRequest">
@@ -58,12 +74,15 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- setAssociationReseller-->
+
+
+    <!-- setResellerAssociation-->
     <xs:element name="setResellerAssociationRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="parentResselerId" type="xs:string"/>
                 <xs:element name="childResselerId" type="xs:string"/>
+                <xs:element name="actionUserId" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -92,6 +111,24 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- removeResellerAssociation-->
+    <xs:element name="removeResellerAssociationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="parentResellerId" type="xs:string"/>
+                <xs:element name="childResellerId" type="xs:string"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="removeResellerAssociationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- Endpoint Reseller Object-->
     <xs:complexType name="reseller">
         <xs:sequence>
@@ -103,6 +140,15 @@
             <xs:element name="activeDevices" type="xs:int"/>
             <xs:element name="inactiveDevices" type="xs:int"/>
             <xs:element name="freeDevices" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Endpoint ResellerAssociation Object-->
+    <xs:complexType name="resellerAssociation">
+        <xs:sequence>
+            <xs:element name="resellerAssociationId"  type="xs:string"/>
+            <xs:element name="parentResellerId" type="xs:string"/>
+            <xs:element name="childResellerId" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

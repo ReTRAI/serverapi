@@ -56,13 +56,24 @@ public class ResellerEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerAssociationRequest")
+    @ResponsePayload
+    public GetResellerAssociationResponse getResellerById(@RequestPayload GetResellerAssociationRequest request) {
+
+        GetResellerAssociationResponse response = new GetResellerAssociationResponse();
+        response.setResellerAssociation(resellerRepository.getResellerAssociation(UUID.fromString(request.getParentResellerId()),
+                UUID.fromString(request.getChildResellerId())));
+
+        return response;
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerAssociationRequest")
     @ResponsePayload
     public SetResellerAssociationResponse setResellerAssociation (@RequestPayload SetResellerAssociationRequest request) {
 
         SetResellerAssociationResponse response = new SetResellerAssociationResponse();
         response.setResult(resellerRepository.setResellerAssociation(UUID.fromString(request.getParentResselerId()),
-                UUID.fromString(request.getChildResselerId())));
+                UUID.fromString(request.getChildResselerId()), UUID.fromString(request.getActionUserId())));
 
         return response;
     }
@@ -73,6 +84,18 @@ public class ResellerEndpoint {
 
         RemoveResellerResponse response = new RemoveResellerResponse();
         response.setResult(resellerRepository.removeReseller(UUID.fromString(request.getResellerId()),
+                UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeResellerAssociationRequest")
+    @ResponsePayload
+    public RemoveResellerAssociationResponse removeResellerAssociation (@RequestPayload RemoveResellerAssociationRequest request) {
+
+        RemoveResellerAssociationResponse response = new RemoveResellerAssociationResponse();
+        response.setResult(resellerRepository.removeResellerAssociation(UUID.fromString(request.getParentResellerId()),
+                UUID.fromString(request.getChildResellerId()),
                 UUID.fromString(request.getActionUserId())));
 
         return response;

@@ -162,6 +162,38 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- existUserName-->
+    <xs:element name="existUserNameRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userName" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="existUserNameResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- existUserEmail-->
+    <xs:element name="existUserEmailRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userEmail" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="existUserEmailResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- Endpoint User Object-->
     <xs:complexType name="user">
         <xs:sequence>

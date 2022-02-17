@@ -1,13 +1,14 @@
 package com.mob.serverapi.utils;
 
 
-import com.mob.serverapi.reseller.base.Reseller;
 import com.mob.serverapi.reseller.database.tReseller;
+import com.mob.serverapi.reseller.database.tResellerAssociation;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.mob.serverapi.reseller.base.*;
 
 public  class ResellerUtils {
 
@@ -36,6 +37,28 @@ public  class ResellerUtils {
 
         return rs;
     }
+
+    public static ResellerAssociation transformResellerAssociation(tResellerAssociation resellerAssociation){
+
+        ResellerAssociation r = new ResellerAssociation();
+        r.setResellerAssociationId(resellerAssociation.getResellerAssociationId().toString());
+        r.setParentResellerId(resellerAssociation.getParentReseller().getResellerId().toString());
+        r.setChildResellerId(resellerAssociation.getChildReseller().getResellerId().toString());
+        return r;
+    }
+
+    public static List<ResellerAssociation> transformResellerResellerAssociationList(List<tResellerAssociation> resellerAssociations){
+
+        List<ResellerAssociation> rs= new ArrayList<ResellerAssociation>();
+
+        for (tResellerAssociation r: resellerAssociations) {
+            ResellerAssociation newResellerAssoc = transformResellerAssociation(r);
+            rs.add(newResellerAssoc);
+        }
+
+        return rs;
+    }
+
 
     public static int getResellerTotalDevices(UUID resellerId){
         return 0;

@@ -11,23 +11,22 @@ package com.mob.serverapi.reseller.base;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for resellerAssociation complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType>
+ * &lt;complexType name="resellerAssociation">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="parentResselerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="childResselerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="actionUserId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="resellerAssociationId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="parentResellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="childResellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,91 +36,90 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "parentResselerId",
-    "childResselerId",
-    "actionUserId"
+@XmlType(name = "resellerAssociation", propOrder = {
+    "resellerAssociationId",
+    "parentResellerId",
+    "childResellerId"
 })
-@XmlRootElement(name = "setResellerAssociationRequest")
-public class SetResellerAssociationRequest {
+public class ResellerAssociation {
 
     @XmlElement(required = true)
-    protected String parentResselerId;
+    protected String resellerAssociationId;
     @XmlElement(required = true)
-    protected String childResselerId;
+    protected String parentResellerId;
     @XmlElement(required = true)
-    protected String actionUserId;
+    protected String childResellerId;
 
     /**
-     * Gets the value of the parentResselerId property.
+     * Gets the value of the resellerAssociationId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getParentResselerId() {
-        return parentResselerId;
+    public String getResellerAssociationId() {
+        return resellerAssociationId;
     }
 
     /**
-     * Sets the value of the parentResselerId property.
+     * Sets the value of the resellerAssociationId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setParentResselerId(String value) {
-        this.parentResselerId = value;
+    public void setResellerAssociationId(String value) {
+        this.resellerAssociationId = value;
     }
 
     /**
-     * Gets the value of the childResselerId property.
+     * Gets the value of the parentResellerId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getChildResselerId() {
-        return childResselerId;
+    public String getParentResellerId() {
+        return parentResellerId;
     }
 
     /**
-     * Sets the value of the childResselerId property.
+     * Sets the value of the parentResellerId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setChildResselerId(String value) {
-        this.childResselerId = value;
+    public void setParentResellerId(String value) {
+        this.parentResellerId = value;
     }
 
     /**
-     * Gets the value of the actionUserId property.
+     * Gets the value of the childResellerId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getActionUserId() {
-        return actionUserId;
+    public String getChildResellerId() {
+        return childResellerId;
     }
 
     /**
-     * Sets the value of the actionUserId property.
+     * Sets the value of the childResellerId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setActionUserId(String value) {
-        this.actionUserId = value;
+    public void setChildResellerId(String value) {
+        this.childResellerId = value;
     }
 
 }

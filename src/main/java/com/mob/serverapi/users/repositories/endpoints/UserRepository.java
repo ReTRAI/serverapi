@@ -121,49 +121,55 @@ public class UserRepository implements IUserRepository {
 
         try {
 
-            tUser userExist = userRepository.findByEmail(userEmail);
+            tUser userExistByName = userRepository.findByUserName(userName);
+            if (userExistByName == null) {
+                tUser userExist = userRepository.findByEmail(userEmail);
 
-            if (userExist == null) {
-                tUser actionUser = userRepository.findById(actionUserId);
+                if (userExist == null) {
+                    tUser actionUser = userRepository.findById(actionUserId);
 
-                if (actionUserId.equals("") || actionUser != null) {
+                    if (actionUserId.equals("") || actionUser != null) {
 
-                    String langPref = "EN";
-                    String themePref = "L";
-                    LocalDateTime creationDate = LocalDateTime.now();
-                    tUserStatus userStatusVal = userStatusRepository.
-                            findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
-                    byte[] passwdSalt = UserUtils.createPasswordSalt();
-                    byte[] passwdHash = UserUtils.hashPassword(passwdSalt, userPassword);
+                        String langPref = "EN";
+                        String themePref = "L";
+                        LocalDateTime creationDate = LocalDateTime.now();
+                        tUserStatus userStatusVal = userStatusRepository.
+                                findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
+                        byte[] passwdSalt = UserUtils.createPasswordSalt();
+                        byte[] passwdHash = UserUtils.hashPassword(passwdSalt, userPassword);
 
-                    tUser userToCreate = new tUser();
-                    userToCreate.setUserName(userName);
-                    userToCreate.setUserEmail(userEmail);
-                    userToCreate.setPasswordSalt(passwdSalt);
-                    userToCreate.setPasswordHash(passwdHash);
-                    userToCreate.setCreationDate(creationDate);
-                    userToCreate.setThemePreference(themePref);
-                    userToCreate.setLanguagePreference(langPref);
+                        tUser userToCreate = new tUser();
+                        userToCreate.setUserName(userName);
+                        userToCreate.setUserEmail(userEmail);
+                        userToCreate.setPasswordSalt(passwdSalt);
+                        userToCreate.setPasswordHash(passwdHash);
+                        userToCreate.setCreationDate(creationDate);
+                        userToCreate.setThemePreference(themePref);
+                        userToCreate.setLanguagePreference(langPref);
 
-                    userToCreate.setUserStatus(userStatusVal);
+                        userToCreate.setUserStatus(userStatusVal);
 
-                    tUser saved = userRepository.saveUser(userToCreate);
+                        tUser saved = userRepository.saveUser(userToCreate);
 
-                    if (saved != null)
-                        createdUser = UserUtils.transformUser(saved);
+                        if (saved != null)
+                            createdUser = UserUtils.transformUser(saved);
 
-                    if (actionUserId.equals("")) {
-                        actionUserId = saved.getUserId();
-                        actionUser = userRepository.findById(actionUserId);
+                        if (actionUserId.equals("")) {
+                            actionUserId = saved.getUserId();
+                            actionUser = userRepository.findById(actionUserId);
+                        }
+
+
+                        userLogRepository.insertUserLog(actionUser, saved, "CREATE", "CREATE NEW USER");
+                    } else {
+                        throw new ServiceFaultException("ERROR", new ServiceFault("INVALID_ACTION_USER", ""));
                     }
-
-
-                    userLogRepository.insertUserLog(actionUser, saved, "CREATE", "CREATE NEW USER");
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("INVALID_ACTION_USER", ""));
+                    throw new ServiceFaultException("ERROR", new ServiceFault("EMAIL ALREADY EXISTS", ""));
+
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("EMAIL ALREADY EXISTS", ""));
+                throw new ServiceFaultException("ERROR", new ServiceFault("USERNAME ALREADY EXISTS", ""));
 
             }
         } catch (ServiceFaultException se) {
@@ -349,6 +355,44 @@ public class UserRepository implements IUserRepository {
             throw new ServiceFaultException("ERROR", new ServiceFault("CHANGE_THEME", ex.getMessage()));
         }
         return val;
+    }
+
+    @Override
+    public boolean existUserName(String userName) {
+        boolean val = false;
+        try {
+
+            boolean exist = userRepository.userExistsUserName(userName);
+
+            if(exist)
+                val=true;
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("EXIST_USER_NAME", ex.getMessage()));
+        }
+        return val;
+
+    }
+
+    @Override
+    public boolean existUserEmail(String userEmail) {
+        boolean val = false;
+        try {
+
+            boolean exist = userRepository.userExistsUserEmail(userEmail);
+
+            if(exist)
+                val=true;
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("EXIST_USER_NAME", ex.getMessage()));
+        }
+        return val;
+
     }
 
     @Override

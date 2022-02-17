@@ -11,4 +11,12 @@ interface ItUserRepository extends JpaRepository<tUser, UUID> {
 
     tUser findByUserEmail(String userEmail);
 
+    tUser findByUserName(String userName);
+
+    boolean existsByUserName(String userName);
+
+    boolean existsByUserEmail(String userEmail);
+
+
+
 }

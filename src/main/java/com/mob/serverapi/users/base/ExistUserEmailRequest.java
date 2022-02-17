@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="userEmail" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "userId"
+    "userEmail"
 })
-@XmlRootElement(name = "getUserByIdRequest")
-public class GetUserByIdRequest {
+@XmlRootElement(name = "existUserEmailRequest")
+public class ExistUserEmailRequest {
 
     @XmlElement(required = true)
-    protected String userId;
+    protected String userEmail;
 
     /**
-     * Gets the value of the userId property.
+     * Gets the value of the userEmail property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
     /**
-     * Sets the value of the userId property.
+     * Sets the value of the userEmail property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserId(String value) {
-        this.userId = value;
+    public void setUserEmail(String value) {
+        this.userEmail = value;
     }
 
 }

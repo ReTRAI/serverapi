@@ -27,6 +27,10 @@ interface IUserRepository {
 
     boolean changeThemePreference(UUID userId, String theme, UUID actionUserId);
 
+    boolean existUserName(String userName);
+
+    boolean existUserEmail(String userEmail);
+
     List<UserRole> getUserRolesByUserById (UUID userId);
 
 }

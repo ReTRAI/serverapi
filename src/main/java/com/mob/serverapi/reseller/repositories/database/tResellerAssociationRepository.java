@@ -26,8 +26,15 @@ public class tResellerAssociationRepository {
         return repository.findDistinctByParentReseller_ResellerId(resellerId);
     }
 
-    public boolean associationExists (UUID parentResellerId, UUID childResellerId){
-        return repository.existsByParentReseller_ResellerIdAndChildReseller_ResellerId(parentResellerId, childResellerId);
+    public long countAssociationByChildResellerId (UUID resellerId){
+        return repository.countByChildReseller_ResellerId(resellerId);
     }
 
+    public tResellerAssociation getAssociation (UUID parentResellerId, UUID childResellerId){
+        return repository.findByParentReseller_ResellerIdAndChildReseller_ResellerId(parentResellerId, childResellerId);
+    }
+
+    public long deleteAssociation (UUID parentResellerId, UUID childResellerId){
+        return repository.deleteByParentReseller_ResellerIdAndChildReseller_ResellerId(parentResellerId, childResellerId);
+    }
 }

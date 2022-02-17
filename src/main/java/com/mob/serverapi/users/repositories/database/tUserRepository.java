@@ -42,6 +42,22 @@ public class tUserRepository {
         return repository.findByUserEmail(email);
     }
 
+    public tUser findByUserName(String userName) {
+
+        return repository.findByUserName(userName);
+    }
+
+    public boolean userExistsUserName(String userName) {
+
+        return repository.existsByUserName(userName);
+    }
+
+    public boolean userExistsUserEmail(String userEmail) {
+
+        return repository.existsByUserEmail(userEmail);
+    }
+
+
     public boolean userExistsByField(tUser user, String field) {
 
         boolean exists = false;

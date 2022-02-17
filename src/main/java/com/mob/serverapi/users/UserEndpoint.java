@@ -125,4 +125,24 @@ public class UserEndpoint {
 
         return response;
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "existUserNameRequest")
+    @ResponsePayload
+    public ExistUserNameResponse existUserName (@RequestPayload ExistUserNameRequest request) {
+
+        ExistUserNameResponse response = new ExistUserNameResponse();
+        response.setResult(userRepository.existUserName(request.getUserName()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "existUserEmailRequest")
+    @ResponsePayload
+    public ExistUserEmailResponse existUserEmail (@RequestPayload ExistUserEmailRequest request) {
+
+        ExistUserEmailResponse response = new ExistUserEmailResponse();
+        response.setResult(userRepository.existUserEmail(request.getUserEmail()));
+
+        return response;
+    }
 }

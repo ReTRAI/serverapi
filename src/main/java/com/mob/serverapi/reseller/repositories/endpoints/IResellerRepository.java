@@ -1,7 +1,7 @@
 package com.mob.serverapi.reseller.repositories.endpoints;
 
 
-import com.mob.serverapi.reseller.base.Reseller;
+import com.mob.serverapi.reseller.base.*;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
@@ -19,5 +19,9 @@ interface IResellerRepository {
 
     boolean removeReseller(UUID resellerId, UUID actionUserId);
 
-    boolean setResellerAssociation(UUID parentResellerId, UUID childResellerId);
+    boolean setResellerAssociation(UUID parentResellerId, UUID childResellerId, UUID actionUserId);
+
+    boolean removeResellerAssociation(UUID parentResellerId, UUID childResellerId, UUID actionUserId);
+
+    ResellerAssociation getResellerAssociation(UUID parentResellerId, UUID childResellerId);
 }
