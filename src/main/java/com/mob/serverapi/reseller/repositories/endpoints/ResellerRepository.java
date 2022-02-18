@@ -1,13 +1,16 @@
 package com.mob.serverapi.reseller.repositories.endpoints;
 
 import com.mob.serverapi.device.database.tDevice;
+import com.mob.serverapi.device.database.tDeviceUser;
 import com.mob.serverapi.device.repositories.database.tDeviceRepository;
+import com.mob.serverapi.device.repositories.database.tDeviceUserRepository;
+import com.mob.serverapi.reseller.base.Reseller;
+import com.mob.serverapi.reseller.base.ResellerAssociation;
+import com.mob.serverapi.reseller.base.ResellerBalance;
 import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.database.tResellerAssociation;
-import com.mob.serverapi.reseller.repositories.database.tResellerAssociationLogRepository;
-import com.mob.serverapi.reseller.repositories.database.tResellerAssociationRepository;
-import com.mob.serverapi.reseller.repositories.database.tResellerLogRepository;
-import com.mob.serverapi.reseller.repositories.database.tResellerRepository;
+import com.mob.serverapi.reseller.database.tResellerBalance;
+import com.mob.serverapi.reseller.repositories.database.*;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.database.tUser;
@@ -20,7 +23,6 @@ import com.mob.serverapi.users.repositories.database.tUserTypeRepository;
 import com.mob.serverapi.utils.ResellerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
-import com.mob.serverapi.reseller.base.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +39,8 @@ public class ResellerRepository implements IResellerRepository {
     @Autowired
     protected tResellerRepository resellerRepository = new tResellerRepository();
     @Autowired
+    protected tResellerBalanceRepository resellerBalanceRepository = new tResellerBalanceRepository();
+    @Autowired
     protected tResellerLogRepository resellerLogRepository = new tResellerLogRepository();
     @Autowired
     protected tResellerAssociationRepository resellerAssociationRepository = new tResellerAssociationRepository();
@@ -52,6 +56,8 @@ public class ResellerRepository implements IResellerRepository {
     protected tUserLogRepository userLogRepository = new tUserLogRepository();
     @Autowired
     protected tDeviceRepository deviceRepository = new tDeviceRepository();
+    @Autowired
+    protected tDeviceUserRepository deviceUserRepository = new tDeviceUserRepository();
 
 
     @Override
@@ -66,6 +72,64 @@ public class ResellerRepository implements IResellerRepository {
                 resellerToReturn = ResellerUtils.transformReseller(u);
             } else {
                 throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BY_ID", ex.getMessage()));
+        }
+
+        return resellerToReturn;
+    }
+
+    @Override
+    public Reseller getResellerByUserId(UUID userId) {
+
+        Reseller resellerToReturn = new Reseller();
+
+        try {
+            tReseller u = resellerRepository.findByUserId(userId);
+
+            if (u != null) {
+                resellerToReturn = ResellerUtils.transformReseller(u);
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BY_ID", ex.getMessage()));
+        }
+
+        return resellerToReturn;
+    }
+
+    @Override
+    public Reseller getResellerByUserDeviceName(String userDeviceName) {
+
+        Reseller resellerToReturn = new Reseller();
+
+        try {
+
+            tDeviceUser du = deviceUserRepository.findByNickname(userDeviceName);
+            if (du != null) {
+
+                tDevice d = deviceRepository.findById(du.getDevice().getDeviceId());
+                if (du != null) {
+
+                    tReseller r = resellerRepository.findById(d.getReseller().getResellerId());
+                    if (r != null) {
+
+                        resellerToReturn = ResellerUtils.transformReseller(r);
+
+                    } else {
+                        throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                    }
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                }
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USERDEVICE_DONT_EXIST", ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
@@ -111,6 +175,29 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
+    public long getCountResellerFiltered(@Nullable String resellerId, @Nullable String resellerName,
+                                         boolean onlyChildren) {
+
+        try {
+
+
+            UUID localResellerId = resellerId.equals("") ? null : UUID.fromString(resellerId);
+            String localResellerName = resellerName.equals("") ? null : resellerName;
+
+
+            long countResellers = resellerRepository.getCountResellerFiltered(localResellerId, localResellerName,
+                    onlyChildren);
+
+            return countResellers;
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_RESELLER_FILTERED", ex.getMessage()));
+        }
+    }
+
+    @Override
     public Reseller setReseller(UUID userId, UUID actionUserId) {
 
         Reseller reseller = new Reseller();
@@ -144,8 +231,8 @@ public class ResellerRepository implements IResellerRepository {
                         role.setUserType(userTypeVal);
 
                         userRoleRepository.saveUserRole(role);
-                        userLogRepository.insertUserLog(associatedUser, actionUser, "ADD_RESELLER_ROLE", "RESELLER_ID:" + saved.getResellerId());
-                        resellerLogRepository.insertResellerLog(associatedUser, saved, "ADD_RESELLER", "");
+                        userLogRepository.insertUserLog(actionUser, associatedUser, "ADD_RESELLER_ROLE", "RESELLER_ID:" + saved.getResellerId());
+                        resellerLogRepository.insertResellerLog(actionUser, saved, "ADD_RESELLER", "");
                     }
 
                     if (saved != null)
@@ -164,6 +251,83 @@ public class ResellerRepository implements IResellerRepository {
         }
 
         return reseller;
+    }
+
+    @Override
+    public boolean setResellerBalanceMovement(UUID resellerId, String debitCredit, float movementValue,
+                                              UUID actionUserId) {
+
+        boolean val = false;
+
+        try {
+            tUser actionUser = userRepository.findById(actionUserId);
+
+            if (actionUser != null) {
+
+                LocalDateTime localMovementDate = LocalDateTime.now();
+
+                tReseller u = resellerRepository.findById(resellerId);
+
+                if (u != null) {
+
+                    tResellerBalance rBalance = new tResellerBalance();
+                    rBalance.setReseller(u);
+                    rBalance.setMovementDate(localMovementDate);
+                    rBalance.setDebitCredit(debitCredit);
+                    rBalance.setMovementValue(movementValue);
+
+                    resellerBalanceRepository.saveResellerBalance(rBalance);
+
+                    u.setCurrentBalance(resellerBalanceRepository.getCurrentBalance(resellerId));
+                    resellerRepository.saveReseller(u);
+
+                    resellerLogRepository.insertResellerLog(actionUser, u, "ADD_RESELLER_BALANCE_MOVEMENT", "");
+
+                    val = true;
+
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                }
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("ADD_RESELLER_BALANCE_MOVEMENT", ex.getMessage()));
+        }
+
+        return val;
+
+    }
+
+    @Override
+    public List<ResellerBalance> getResellerBalanceMovements(UUID resellerId) {
+
+        List<ResellerBalance> returnList = new ArrayList<>();
+
+        try {
+            tReseller u = resellerRepository.findById(resellerId);
+
+            if (u != null) {
+
+                List<tResellerBalance> listBalance = resellerBalanceRepository.getAllBalanceMovements(resellerId);
+
+                if (listBalance != null) {
+                    returnList = ResellerUtils.transformResellerBalanceList(listBalance);
+                }
+
+            } else {
+                throw new ServiceFaultException("WARNING", new ServiceFault("RESELLER_DONT_EXIST", ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BALANCE_MOVEMENTS", ex.getMessage()));
+        }
+        return returnList;
     }
 
     @Override
@@ -191,7 +355,7 @@ public class ResellerRepository implements IResellerRepository {
                         resellerLogRepository.deleteResellerLogByResellerId(resellerValidation.getResellerId());
                         resellerRepository.deleteResellerById(resellerValidation.getResellerId());
 
-                        userLogRepository.insertUserLog(associatedUser, actionUser, "REMOVE_RESELLER_ROLE", "");
+                        userLogRepository.insertUserLog(actionUser, associatedUser, "REMOVE_RESELLER_ROLE", "");
 
                         val = true;
                     } else {

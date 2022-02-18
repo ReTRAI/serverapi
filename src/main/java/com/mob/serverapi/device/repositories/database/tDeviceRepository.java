@@ -22,4 +22,9 @@ public class tDeviceRepository {
 
         return repository.findByReseller_ResellerId(resellerId);
     }
+
+    public tDevice findById (UUID deviceId){
+
+        return repository.findById(deviceId).orElse(null);
+    }
 }

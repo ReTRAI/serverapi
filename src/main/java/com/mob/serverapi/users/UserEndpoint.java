@@ -1,6 +1,10 @@
 package com.mob.serverapi.users;
 
 
+import com.mob.serverapi.reseller.base.GetCountResellerFilteredRequest;
+import com.mob.serverapi.reseller.base.GetCountResellerFilteredResponse;
+import com.mob.serverapi.reseller.base.GetResellerFilteredRequest;
+import com.mob.serverapi.reseller.base.GetResellerFilteredResponse;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.base.*;
@@ -142,6 +146,32 @@ public class UserEndpoint {
 
         ExistUserEmailResponse response = new ExistUserEmailResponse();
         response.setResult(userRepository.existUserEmail(request.getUserEmail()));
+
+        return response;
+    }
+
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserFilteredRequest")
+    @ResponsePayload
+    public GetUserFilteredResponse getUserFiltered(@RequestPayload GetUserFilteredRequest request) {
+
+        GetUserFilteredResponse response = new GetUserFilteredResponse();
+        response.getUser().addAll(userRepository.getUserFiltered(request.getUserId(),request.getUserName(),
+                request.getUserStatus(),request.getUserEmail(),request.getStartCreationDate(),
+                request.getEndCreationDate(),request.getField(),request.getOrderField(),
+                request.getOffset(),request.getNumberRecords()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountUserFilteredRequest")
+    @ResponsePayload
+    public GetCountUserFilteredResponse getCountUserFiltered(@RequestPayload GetCountUserFilteredRequest request) {
+
+        GetCountUserFilteredResponse response = new GetCountUserFilteredResponse();
+        response.setResult(userRepository.getCountUserFiltered(request.getUserId(),request.getUserName(),
+                request.getUserStatus(),request.getUserEmail(),request.getStartCreationDate(),
+                request.getEndCreationDate()));
 
         return response;
     }

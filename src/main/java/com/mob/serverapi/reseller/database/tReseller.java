@@ -29,16 +29,16 @@ public class tReseller implements Serializable {
     private float currentBalance;
 
     @Column(name = "totalDevices", nullable = false)
-    private float totalDevices;
+    private long totalDevices;
 
     @Column(name = "activeDevices", nullable = false)
-    private float activeDevices;
+    private long activeDevices;
 
     @Column(name = "inactiveDevices", nullable = false)
-    private float inactiveDevices;
+    private long inactiveDevices;
 
     @Column(name = "freeDevices", nullable = false)
-    private float freeDevices;
+    private long freeDevices;
 
     @Column(name = "creationDate", nullable = false)
     private LocalDateTime creationDate;
@@ -137,14 +137,14 @@ public class tReseller implements Serializable {
     /**
      * @return the totalDevices.
      */
-    public float getTotalDevices() {
+    public long getTotalDevices() {
         return totalDevices;
     }
 
     /**
      * @param totalDevices  to set to.
      */
-    public void setTotalDevices(float totalDevices) {
+    public void setTotalDevices(long totalDevices) {
         this.totalDevices = totalDevices;
     }
 
@@ -165,42 +165,42 @@ public class tReseller implements Serializable {
     /**
      * @return the activeDevices.
      */
-    public float getActiveDevices() {
+    public long getActiveDevices() {
         return activeDevices;
     }
 
     /**
      * @param activeDevices  to set to.
      */
-    public void setActiveDevices(float activeDevices) {
+    public void setActiveDevices(long activeDevices) {
         this.activeDevices = activeDevices;
     }
 
     /**
      * @return the inactiveDevices .
      */
-    public float getInactiveDevices() {
+    public long getInactiveDevices() {
         return inactiveDevices;
     }
 
     /**
      * @param inactiveDevices  to set to.
      */
-    public void setInactiveDevices(float inactiveDevices) {
+    public void setInactiveDevices(long inactiveDevices) {
         this.inactiveDevices = inactiveDevices;
     }
 
     /**
      * @return the freeDevices .
      */
-    public float getFreeDevices() {
+    public long getFreeDevices() {
         return freeDevices;
     }
 
     /**
      * @param freeDevices  to set to.
      */
-    public void setFreeDevices(float freeDevices) {
+    public void setFreeDevices(long freeDevices) {
         this.freeDevices = freeDevices;
     }
 }

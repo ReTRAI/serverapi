@@ -11,11 +11,22 @@ interface IResellerRepository {
 
     Reseller getResellerById(UUID resellerId);
 
+    Reseller getResellerByUserId(UUID userId);
+
+    Reseller getResellerByUserDeviceName(String userDeviceName);
+
     List<Reseller> getResellerFiltered(@Nullable String resellerId, @Nullable String resellerName,
                                        boolean recursive, @Nullable String field, @Nullable String orderField,
                                        int offset, int numberRecords);
 
+    long getCountResellerFiltered(@Nullable String resellerId, @Nullable String resellerName,
+                                       boolean recursive);
+
+    List<ResellerBalance> getResellerBalanceMovements(UUID resellerId);
+
     Reseller setReseller(UUID userId, UUID actionUserId);
+
+    boolean setResellerBalanceMovement(UUID resellerId, String debitCredit, float movementValue, UUID actionUserId);
 
     boolean removeReseller(UUID resellerId, UUID actionUserId);
 

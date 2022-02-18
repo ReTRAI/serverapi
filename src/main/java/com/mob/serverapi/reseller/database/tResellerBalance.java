@@ -31,7 +31,7 @@ public class tResellerBalance implements Serializable {
             foreignKey = @ForeignKey(name="FK_RESELLERBALANCE_RESELLERID"))
     private tReseller reseller;
 
-    protected tResellerBalance() {}
+    public tResellerBalance() {}
 
     public tResellerBalance(UUID resellerBalanceId, String DebitCredit, float movementValue, tReseller reseller) {
         this.resellerBalanceId = resellerBalanceId;
@@ -67,7 +67,7 @@ public class tResellerBalance implements Serializable {
      * @param debitCredit  to set to.
      */
     public void setDebitCredit(String debitCredit) {
-        debitCredit = debitCredit;
+        this.debitCredit = debitCredit;
     }
 
     /**

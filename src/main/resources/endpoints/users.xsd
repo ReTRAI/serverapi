@@ -34,6 +34,52 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- getUserFiltered-->
+    <xs:element name="getUserFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId"  type="xs:string" />
+                <xs:element name="userName"  type="xs:string" />
+                <xs:element name="userStatus"  type="xs:string" />
+                <xs:element name="userEmail"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+                <xs:element name="field"  type="xs:string" />
+                <xs:element name="orderField"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="tns:user" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getCountUserFiltered-->
+    <xs:element name="getCountUserFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId"  type="xs:string" />
+                <xs:element name="userName"  type="xs:string" />
+                <xs:element name="userStatus"  type="xs:string" />
+                <xs:element name="userEmail"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountUserFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- userLogin-->
     <xs:element name="userLoginRequest">
         <xs:complexType>
@@ -203,6 +249,7 @@
             <xs:element name="userStatus" type="xs:string"/>
             <xs:element name="languagePreference" type="xs:string"/>
             <xs:element name="themePreference" type="xs:string"/>
+            <xs:element name="creationDate" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 

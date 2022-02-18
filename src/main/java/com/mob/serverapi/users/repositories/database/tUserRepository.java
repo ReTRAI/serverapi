@@ -2,17 +2,24 @@ package com.mob.serverapi.users.repositories.database;
 
 import com.mob.serverapi.users.database.tUser;
 import com.mob.serverapi.users.database.tUserStatus;
+import com.mob.serverapi.users.database.tUser_;
 import com.mob.serverapi.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.*;
+import javax.persistence.metamodel.Metamodel;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
@@ -49,12 +56,12 @@ public class tUserRepository {
 
     public boolean userExistsUserName(String userName) {
 
-        return repository.existsByUserName(userName);
+        return repository.existsByUserNameIgnoreCase(userName);
     }
 
     public boolean userExistsUserEmail(String userEmail) {
 
-        return repository.existsByUserEmail(userEmail);
+        return repository.existsByUserEmailIgnoreCase(userEmail);
     }
 
 
@@ -101,5 +108,114 @@ public class tUserRepository {
 
             tUser saved = saveUser(userToCreate);
         }
+    }
+
+    public List<tUser> getUserFiltered(@Nullable UUID userId, @Nullable String userName,
+                                       @Nullable String userStatus, @Nullable String userEmail,
+                                       @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate,
+                                       @Nullable String field, @Nullable String orderField, int offset, int numberRecords){
+
+        List<tUser> finalList = new ArrayList<>();
+
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<tUser> query = cb.createQuery(tUser.class);
+
+        Metamodel m = entityManager.getMetamodel();
+        Root<tUser> root = query.from(tUser.class);
+        Join<tUser, tUserStatus> status = root.join(tUser_.userStatus);
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        if (userId != null)
+            predicates.add(cb.equal(root.get("userId"), userId));
+        if (userName != null)
+            predicates.add(cb.like(root.get("userName"), "%"+userName+"%"));
+        if (userEmail != null)
+            predicates.add(cb.equal(root.get("userEmail"), userEmail));
+        if (userStatus != null)
+            predicates.add(cb.equal(status.<String>get("description"), userStatus));
+        if (userEmail != null)
+            predicates.add(cb.equal(root.get("userEmail"), userEmail));
+        if (startCreationDate != null && endCreationDate!= null)
+            predicates.add(cb.between(root.get("creationDate"), startCreationDate, endCreationDate));
+        if (startCreationDate != null && endCreationDate== null)
+            predicates.add(cb.greaterThanOrEqualTo(root.get("creationDate"), startCreationDate));
+        if (startCreationDate == null && endCreationDate != null)
+            predicates.add(cb.lessThanOrEqualTo(root.get("creationDate"), endCreationDate));
+
+        Predicate[] predArray = new Predicate[predicates.size()];
+        predicates.toArray(predArray);
+        query.where(predArray);
+
+        List<Order> orders = new ArrayList<Order>(2);
+        if (field != null) {
+            if(field.equals("userId") || field.equals("userName") ||
+                    field.equals("userEmail") || field.equals("creationDate"))
+            {
+                if (orderField.toUpperCase(Locale.ROOT).equals("ASC"))
+                    orders.add(cb.asc(root.get(field)));
+                if (orderField.toUpperCase(Locale.ROOT).equals("DESC"))
+                    orders.add(cb.desc(root.get(field)));
+            }
+            if(field.equals("userStatus")) {
+                if (orderField.toUpperCase(Locale.ROOT).equals("ASC"))
+                    orders.add(cb.asc(status.get("description")));
+                if (orderField.toUpperCase(Locale.ROOT).equals("DESC"))
+                    orders.add(cb.desc(status.get("description")));
+            }
+        }
+
+        query.orderBy(orders);
+
+        List<tUser> result = entityManager.createQuery(query)
+                .setMaxResults(numberRecords)
+                .setFirstResult(offset)
+                .getResultList();
+
+        for (tUser r: result) { finalList.add(r); }
+
+        return finalList;
+    }
+
+    public long getCountUserFiltered(@Nullable UUID userId, @Nullable String userName,
+                                     @Nullable String userStatus, @Nullable String userEmail,
+                                     @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate){
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<tUser> query = cb.createQuery(tUser.class);
+
+        Metamodel m = entityManager.getMetamodel();
+        Root<tUser> root = query.from(tUser.class);
+        Join<tUser, tUserStatus> status = root.join(tUser_.userStatus);
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+
+        if (userId != null)
+            predicates.add(cb.equal(root.get("userId"), userId));
+        if (userName != null)
+            predicates.add(cb.like(root.get("userName"), "%"+userName+"%"));
+        if (userEmail != null)
+            predicates.add(cb.equal(root.get("userEmail"), userEmail));
+        if (userStatus != null)
+            predicates.add(cb.equal(status.<String>get("description"), userStatus));
+        if (userEmail != null)
+            predicates.add(cb.equal(root.get("userEmail"), userEmail));
+        if (startCreationDate != null && endCreationDate!= null)
+            predicates.add(cb.between(root.get("creationDate"), startCreationDate, endCreationDate));
+        if (startCreationDate != null && endCreationDate== null)
+            predicates.add(cb.greaterThanOrEqualTo(root.get("creationDate"), startCreationDate));
+        if (startCreationDate == null && endCreationDate != null)
+            predicates.add(cb.lessThanOrEqualTo(root.get("creationDate"), endCreationDate));
+
+        Predicate[] predArray = new Predicate[predicates.size()];
+        predicates.toArray(predArray);
+        query.where(predArray);
+
+        long result = entityManager.createQuery(query)
+                .getResultList()
+                .size();
+
+        return result;
     }
 }

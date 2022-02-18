@@ -14,5 +14,6 @@ import java.util.UUID;
 
 interface ItResellerRepository extends JpaRepository<tReseller, UUID>, JpaSpecificationExecutor<tReseller> {
 
+    tReseller findByUser_UserId(UUID userId);
 
 }

@@ -5,10 +5,12 @@ import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.database.tResellerAssociation;
 
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import com.mob.serverapi.reseller.base.*;
+import com.mob.serverapi.reseller.database.tResellerBalance;
 
 public  class ResellerUtils {
 
@@ -18,11 +20,11 @@ public  class ResellerUtils {
         r.setResellerId(reseller.getResellerId().toString());
         r.setUserId(reseller.getUserId().getUserId().toString());
         r.setResellerName(reseller.getUserId().getUserName());
-        r.setCurrentBalance(BigDecimal.valueOf(reseller.getCurrentBalance()));
-        r.setTotalDevices(getResellerTotalDevices(reseller.getResellerId()));
-        r.setActiveDevices(getResellerActiveDevices(reseller.getResellerId()));
-        r.setInactiveDevices(getResellerInactiveDevices(reseller.getResellerId()));
-        r.setFreeDevices(getResellerFreeDevices(reseller.getResellerId()));
+        r.setCurrentBalance(reseller.getCurrentBalance());
+        r.setTotalDevices(reseller.getTotalDevices());
+        r.setActiveDevices(reseller.getActiveDevices());
+        r.setInactiveDevices(reseller.getInactiveDevices());
+        r.setFreeDevices(reseller.getFreeDevices());
         return r;
     }
 
@@ -47,7 +49,7 @@ public  class ResellerUtils {
         return r;
     }
 
-    public static List<ResellerAssociation> transformResellerResellerAssociationList(List<tResellerAssociation> resellerAssociations){
+    public static List<ResellerAssociation> transformResellerAssociationList(List<tResellerAssociation> resellerAssociations){
 
         List<ResellerAssociation> rs= new ArrayList<ResellerAssociation>();
 
@@ -59,20 +61,29 @@ public  class ResellerUtils {
         return rs;
     }
 
+    public static ResellerBalance transformResellerBalance(tResellerBalance resellerBalance){
 
-    public static int getResellerTotalDevices(UUID resellerId){
-        return 0;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        ResellerBalance r = new ResellerBalance();
+        r.setResellerBalanceId(resellerBalance.getResellerBalanceId().toString());
+        r.setDebitCredit(resellerBalance.getDebitCredit());
+        r.setMovementDate(resellerBalance.getMovementDate().format(formatter));
+        r.setMovementValue(resellerBalance.getMovementValue());
+        return r;
     }
 
-    public static int getResellerActiveDevices(UUID resellerId){
-        return 0;
+    public static List<ResellerBalance> transformResellerBalanceList(List<tResellerBalance> resellerBalances){
+
+        List<ResellerBalance> rs= new ArrayList<ResellerBalance>();
+
+        for (tResellerBalance r: resellerBalances) {
+            ResellerBalance newResellerBalance = transformResellerBalance(r);
+            rs.add(newResellerBalance);
+        }
+
+        return rs;
     }
 
-    public static int getResellerInactiveDevices(UUID resellerId){
-        return 0;
-    }
 
-    public static int getResellerFreeDevices(UUID resellerId){
-        return 0;
-    }
 }

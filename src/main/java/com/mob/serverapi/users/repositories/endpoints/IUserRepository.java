@@ -2,7 +2,9 @@ package com.mob.serverapi.users.repositories.endpoints;
 
 import com.mob.serverapi.users.base.User;
 import com.mob.serverapi.users.base.UserRole;
+import org.springframework.lang.Nullable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,5 +34,15 @@ interface IUserRepository {
     boolean existUserEmail(String userEmail);
 
     List<UserRole> getUserRolesByUserById (UUID userId);
+
+    List<User> getUserFiltered(@Nullable String userId, @Nullable String userName,
+                               @Nullable String userStatus, @Nullable String userEmail,
+                               @Nullable String startCreationDate, @Nullable String endCreationDate,
+                               @Nullable String field,
+                               @Nullable String orderField, int offset, int numberRecords);
+
+    long getCountUserFiltered(@Nullable String userId, @Nullable String userName,
+                                     @Nullable String userStatus, @Nullable String userEmail,
+                              @Nullable String startCreationDate, @Nullable String endCreationDate);
 
 }

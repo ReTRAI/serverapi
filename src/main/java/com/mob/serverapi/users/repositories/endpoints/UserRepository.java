@@ -11,10 +11,12 @@ import com.mob.serverapi.users.database.tUserStatus;
 import com.mob.serverapi.users.repositories.database.*;
 import com.mob.serverapi.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -364,8 +366,8 @@ public class UserRepository implements IUserRepository {
 
             boolean exist = userRepository.userExistsUserName(userName);
 
-            if(exist)
-                val=true;
+            if (exist)
+                val = true;
 
         } catch (ServiceFaultException se) {
             throw se;
@@ -383,8 +385,8 @@ public class UserRepository implements IUserRepository {
 
             boolean exist = userRepository.userExistsUserEmail(userEmail);
 
-            if(exist)
-                val=true;
+            if (exist)
+                val = true;
 
         } catch (ServiceFaultException se) {
             throw se;
@@ -416,6 +418,80 @@ public class UserRepository implements IUserRepository {
         return userRoles;
     }
 
+    @Override
+    public List<User> getUserFiltered(@Nullable String userId, @Nullable String userName,
+                                      @Nullable String userStatus, @Nullable String userEmail,
+                                      @Nullable String startCreationDate, @Nullable String endCreationDate,
+                                      @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
 
+        List<User> returnList = new ArrayList<>();
+
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+
+            UUID localUserId = userId.equals("") ? null : UUID.fromString(userId);
+            String localUserName = userName.equals("") ? null : userName;
+            String localUserStatus = userStatus.equals("") ? null : userStatus;
+            String localUserEmail = userEmail.equals("") ? null : userEmail;
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
+                    LocalDateTime.parse(startCreationDate,formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
+                    LocalDateTime.parse(endCreationDate,formatter);
+
+            String localField = field.equals("") ? null : field;
+            String localOrderField = orderField.equals("") ? null : orderField;
+
+
+            List<tUser> users = userRepository.getUserFiltered(localUserId, localUserName,
+                    localUserStatus, localUserEmail, localStartCreationDate, localEndCreationDate,
+                    localField, localOrderField, offset, numberRecords);
+
+            if (users != null) {
+                returnList = UserUtils.transformUserList(users);
+
+            } else {
+                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_USER_LIST", ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_USER_FILTERED", ex.getMessage()));
+        }
+        return returnList;
+    }
+
+    @Override
+    public long getCountUserFiltered(@Nullable String userId, @Nullable String userName,
+                                     @Nullable String userStatus, @Nullable String userEmail,
+                                     @Nullable String startCreationDate, @Nullable String endCreationDate) {
+
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            UUID localUserId = userId.equals("") ? null : UUID.fromString(userId);
+            String localUserName = userName.equals("") ? null : userName;
+            String localUserStatus = userStatus.equals("") ? null : userStatus;
+            String localUserEmail = userEmail.equals("") ? null : userEmail;
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
+                    LocalDateTime.parse(startCreationDate,formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
+                    LocalDateTime.parse(endCreationDate,formatter);
+
+
+            long countUsers = userRepository.getCountUserFiltered(localUserId, localUserName, localUserStatus,
+                    localUserEmail, localStartCreationDate, localEndCreationDate);
+
+            return countUsers;
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_USERS_FILTERED", ex.getMessage()));
+        }
+    }
 }
 

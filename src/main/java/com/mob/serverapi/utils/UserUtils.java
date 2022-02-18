@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,8 @@ public  class UserUtils {
 
     public static  User transformUser(tUser user){
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
         User u = new User();
         u.setUserId(user.getUserId().toString());
         u.setUserName(user.getUserName());
@@ -26,6 +29,7 @@ public  class UserUtils {
         u.setUserStatus(user.getUserStatus().getDescription());
         u.setLanguagePreference(user.getLanguagePreference());
         u.setThemePreference(user.getThemePreference());
+        u.setCreationDate(user.getCreationDate().format(formatter));
         return  u;
     }
 

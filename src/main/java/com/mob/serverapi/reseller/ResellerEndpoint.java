@@ -33,6 +33,27 @@ public class ResellerEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerByUserIdRequest")
+    @ResponsePayload
+    public GetResellerByUserIdResponse getResellerByUserId(@RequestPayload GetResellerByUserIdRequest request) {
+
+        GetResellerByUserIdResponse response = new GetResellerByUserIdResponse();
+        response.setReseller(resellerRepository.getResellerByUserId(UUID.fromString(request.getUserId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerByUserDeviceNameRequest")
+    @ResponsePayload
+    public GetResellerByUserDeviceNameResponse getResellerByUserDeviceName (@RequestPayload GetResellerByUserDeviceNameRequest request) {
+
+        GetResellerByUserDeviceNameResponse response = new GetResellerByUserDeviceNameResponse();
+        response.setReseller(resellerRepository.getResellerByUserDeviceName(request.getUserDeviceName()));
+
+        return response;
+    }
+
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerFilteredRequest")
     @ResponsePayload
     public GetResellerFilteredResponse getResellerFiltered(@RequestPayload GetResellerFilteredRequest request) {
@@ -45,6 +66,28 @@ public class ResellerEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerBalanceMovementsRequest")
+    @ResponsePayload
+    public GetResellerBalanceMovementsResponse getResellerBalanceMovements(@RequestPayload GetResellerBalanceMovementsRequest request) {
+
+        GetResellerBalanceMovementsResponse response = new GetResellerBalanceMovementsResponse();
+        response.getResellerBalance().addAll(resellerRepository.getResellerBalanceMovements
+                (UUID.fromString(request.getResellerId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountResellerFilteredRequest")
+    @ResponsePayload
+    public GetCountResellerFilteredResponse getCountResellerFiltered(@RequestPayload GetCountResellerFilteredRequest request) {
+
+        GetCountResellerFilteredResponse response = new GetCountResellerFilteredResponse();
+        response.setResult(resellerRepository.getCountResellerFiltered(request.getResellerId(),
+                request.getResellerName(),request.isOnlyChildren()));
+
+        return response;
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerRequest")
     @ResponsePayload
     public SetResellerResponse setReseller (@RequestPayload SetResellerRequest request) {
@@ -52,6 +95,17 @@ public class ResellerEndpoint {
         SetResellerResponse response = new SetResellerResponse();
         response.setReseller(resellerRepository.setReseller(UUID.fromString(request.getUserId()),
                 UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerBalanceMovementRequest")
+    @ResponsePayload
+    public SetResellerBalanceMovementResponse setResellerBalanceMovement (@RequestPayload SetResellerBalanceMovementRequest request) {
+
+        SetResellerBalanceMovementResponse response = new SetResellerBalanceMovementResponse();
+        response.setResult(resellerRepository.setResellerBalanceMovement(UUID.fromString(request.getResellerId()),
+                request.getDebitCredit(),request.getMovementValue(),UUID.fromString(request.getActionUserId())));
 
         return response;
     }
