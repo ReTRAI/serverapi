@@ -6,8 +6,10 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.support.base;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="user" type="{http://www.mob.com/serverapi/users/base}user"/>
+ *         &lt;element name="ticket" type="{http://www.mob.com/serverapi/support/base}ticket" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "user"
+    "ticket"
 })
-@XmlRootElement(name = "getUserByIdResponse")
-public class GetUserByIdResponse {
+@XmlRootElement(name = "getTicketFilteredResponse")
+public class GetTicketFilteredResponse {
 
     @XmlElement(required = true)
-    protected User user;
+    protected List<Ticket> ticket;
 
     /**
-     * Gets the value of the user property.
+     * Gets the value of the ticket property.
      * 
-     * @return
-     *     possible object is
-     *     {@link User }
-     *     
-     */
-    public User getUser() {
-        return user;
-    }
-
-    /**
-     * Sets the value of the user property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the ticket property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link User }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getTicket().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Ticket }
+     * 
+     * 
      */
-    public void setUser(User value) {
-        this.user = value;
+    public List<Ticket> getTicket() {
+        if (ticket == null) {
+            ticket = new ArrayList<Ticket>();
+        }
+        return this.ticket;
     }
 
 }

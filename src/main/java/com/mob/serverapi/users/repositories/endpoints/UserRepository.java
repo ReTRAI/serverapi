@@ -438,7 +438,7 @@ public class UserRepository implements IUserRepository {
             LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
                     LocalDateTime.parse(startCreationDate,formatter);
             LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate,formatter);
+                    LocalDateTime.parse(endCreationDate,formatter).plusDays(1);
 
             String localField = field.equals("") ? null : field;
             String localOrderField = orderField.equals("") ? null : orderField;
@@ -479,7 +479,7 @@ public class UserRepository implements IUserRepository {
             LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
                     LocalDateTime.parse(startCreationDate,formatter);
             LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate,formatter);
+                    LocalDateTime.parse(endCreationDate,formatter).plusDays(1);
 
 
             long countUsers = userRepository.getCountUserFiltered(localUserId, localUserName, localUserStatus,

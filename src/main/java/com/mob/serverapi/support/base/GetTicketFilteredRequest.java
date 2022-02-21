@@ -25,9 +25,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="supportId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="supportName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="onlyChildren" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="ticketId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="ticketStatus" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="startCreationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="endCreationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="field" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="orderField" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}int"/>
@@ -42,22 +43,26 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "supportId",
-    "supportName",
-    "onlyChildren",
+    "ticketId",
+    "ticketStatus",
+    "startCreationDate",
+    "endCreationDate",
     "field",
     "orderField",
     "offset",
     "numberRecords"
 })
-@XmlRootElement(name = "getSupportFilteredRequest")
-public class GetSupportFilteredRequest {
+@XmlRootElement(name = "getTicketFilteredRequest")
+public class GetTicketFilteredRequest {
 
     @XmlElement(required = true)
-    protected String supportId;
+    protected String ticketId;
     @XmlElement(required = true)
-    protected String supportName;
-    protected boolean onlyChildren;
+    protected String ticketStatus;
+    @XmlElement(required = true)
+    protected String startCreationDate;
+    @XmlElement(required = true)
+    protected String endCreationDate;
     @XmlElement(required = true)
     protected String field;
     @XmlElement(required = true)
@@ -66,67 +71,99 @@ public class GetSupportFilteredRequest {
     protected int numberRecords;
 
     /**
-     * Gets the value of the supportId property.
+     * Gets the value of the ticketId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSupportId() {
-        return supportId;
+    public String getTicketId() {
+        return ticketId;
     }
 
     /**
-     * Sets the value of the supportId property.
+     * Sets the value of the ticketId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSupportId(String value) {
-        this.supportId = value;
+    public void setTicketId(String value) {
+        this.ticketId = value;
     }
 
     /**
-     * Gets the value of the supportName property.
+     * Gets the value of the ticketStatus property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSupportName() {
-        return supportName;
+    public String getTicketStatus() {
+        return ticketStatus;
     }
 
     /**
-     * Sets the value of the supportName property.
+     * Sets the value of the ticketStatus property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSupportName(String value) {
-        this.supportName = value;
+    public void setTicketStatus(String value) {
+        this.ticketStatus = value;
     }
 
     /**
-     * Gets the value of the onlyChildren property.
+     * Gets the value of the startCreationDate property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public boolean isOnlyChildren() {
-        return onlyChildren;
+    public String getStartCreationDate() {
+        return startCreationDate;
     }
 
     /**
-     * Sets the value of the onlyChildren property.
+     * Sets the value of the startCreationDate property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setOnlyChildren(boolean value) {
-        this.onlyChildren = value;
+    public void setStartCreationDate(String value) {
+        this.startCreationDate = value;
+    }
+
+    /**
+     * Gets the value of the endCreationDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEndCreationDate() {
+        return endCreationDate;
+    }
+
+    /**
+     * Sets the value of the endCreationDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEndCreationDate(String value) {
+        this.endCreationDate = value;
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.mob.serverapi.support.repositories.database;
 
-import com.mob.serverapi.reseller.database.tResellerAssociationLog;
 import com.mob.serverapi.support.database.tSupportAssociationLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;

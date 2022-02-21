@@ -3,6 +3,7 @@ package com.mob.serverapi.support;
 
 import com.mob.serverapi.support.base.*;
 import com.mob.serverapi.support.repositories.endpoints.SupportRepository;
+import com.mob.serverapi.users.base.GetCountUserFilteredRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -62,6 +63,29 @@ public class SupportEndpoint {
         GetCountSupportFilteredResponse response = new GetCountSupportFilteredResponse();
         response.setResult(supportRepository.getCountSupportFiltered(request.getSupportId(),
                 request.getSupportName(), request.isOnlyChildren()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getTicketFilteredRequest")
+    @ResponsePayload
+    public GetTicketFilteredResponse getTicketFiltered(@RequestPayload GetTicketFilteredRequest request) {
+
+        GetTicketFilteredResponse response = new GetTicketFilteredResponse();
+        response.getTicket().addAll(supportRepository.getTicketFiltered(request.getTicketId(),
+                request.getTicketStatus(),request.getStartCreationDate(),request.getEndCreationDate(),
+                request.getField(),request.getOrderField(),request.getOffset(),request.getNumberRecords()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountTicketFilteredRequest")
+    @ResponsePayload
+    public GetCountTicketFilteredResponse getCountTicketFiltered(@RequestPayload GetCountTicketFilteredRequest request) {
+
+        GetCountTicketFilteredResponse response = new GetCountTicketFilteredResponse();
+        response.setResult(supportRepository.getCountTicketFiltered(request.getTicketId(),request.getTicketStatus(),
+                request.getStartCreationDate(), request.getEndCreationDate()));
 
         return response;
     }

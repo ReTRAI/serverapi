@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.support.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -37,8 +37,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "result"
 })
-@XmlRootElement(name = "getCountUserFilteredResponse")
-public class GetCountUserFilteredResponse {
+@XmlRootElement(name = "getCountTicketFilteredResponse")
+public class GetCountTicketFilteredResponse {
 
     protected long result;
 

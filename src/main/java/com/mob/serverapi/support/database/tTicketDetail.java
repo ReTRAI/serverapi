@@ -22,11 +22,12 @@ public class tTicketDetail {
             foreignKey = @ForeignKey(name="FK_TICKETDETAIL_TICKETID"))
     private tTicket ticket;
 
-
     @Lob
     @Column(name = "detail", nullable = false)
     private String detail;
 
+    @Column(name = "originalMessage", nullable = false)
+    private boolean originalMessage;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table User, column userId
@@ -100,5 +101,19 @@ public class tTicketDetail {
      */
     public void setResponseDate(LocalDateTime responseDate) {
         this.responseDate = responseDate;
+    }
+
+    /**
+     * @return the originalMessage.
+     */
+    public boolean isOriginalMessage() {
+        return originalMessage;
+    }
+
+    /**
+     * @param originalMessage to set to.
+     */
+    public void setOriginalMessage(boolean originalMessage) {
+        this.originalMessage = originalMessage;
     }
 }

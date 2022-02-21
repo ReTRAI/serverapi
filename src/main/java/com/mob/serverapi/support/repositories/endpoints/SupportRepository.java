@@ -3,9 +3,12 @@ package com.mob.serverapi.support.repositories.endpoints;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.support.base.Support;
+import com.mob.serverapi.support.base.Ticket;
 import com.mob.serverapi.support.database.tSupport;
+import com.mob.serverapi.support.database.tTicket;
 import com.mob.serverapi.support.repositories.database.tSupportLogRepository;
 import com.mob.serverapi.support.repositories.database.tSupportRepository;
+import com.mob.serverapi.support.repositories.database.tTicketRepository;
 import com.mob.serverapi.users.database.tUser;
 import com.mob.serverapi.users.database.tUserRole;
 import com.mob.serverapi.users.database.tUserType;
@@ -20,6 +23,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +45,8 @@ public class SupportRepository implements ISupportRepository {
     protected tUserLogRepository userLogRepository = new tUserLogRepository();
     @Autowired
     protected tSupportLogRepository supportLogRepository = new tSupportLogRepository();
+    @Autowired
+    protected tTicketRepository ticketRepository = new tTicketRepository();
 
     @Override
     public Support getSupportById(UUID supportId) {
@@ -191,13 +197,13 @@ public class SupportRepository implements ISupportRepository {
         try {
 
 
-            UUID localResellerId = supportId.equals("") ? null : UUID.fromString(supportId);
-            String localResellerName = supportName.equals("") ? null : supportName;
+            UUID localSupportId = supportId.equals("") ? null : UUID.fromString(supportId);
+            String localSupportName = supportName.equals("") ? null : supportName;
             String localField = field.equals("") ? null : field;
             String localOrderField = orderField.equals("") ? null : orderField;
 
 
-            List<tSupport> support = supportRepository.getSupportFiltered(localResellerId, localResellerName,
+            List<tSupport> support = supportRepository.getSupportFiltered(localSupportId, localSupportName,
                     onlyChildren, localField, localOrderField, offset, numberRecords);
 
             if (support != null) {
@@ -222,19 +228,88 @@ public class SupportRepository implements ISupportRepository {
         try {
 
 
-            UUID localResellerId = supportId.equals("") ? null : UUID.fromString(supportId);
-            String localResellerName = supportName.equals("") ? null : supportName;
+            UUID localSupportId = supportId.equals("") ? null : UUID.fromString(supportId);
+            String localSupportName = supportName.equals("") ? null : supportName;
 
 
-            long countResellers = supportRepository.getCountSupportFiltered(localResellerId, localResellerName,
+            long countSupport = supportRepository.getCountSupportFiltered(localSupportId, localSupportName,
                     onlyChildren);
 
-            return countResellers;
+            return countSupport;
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
             throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_SUPPORT_FILTERED", ex.getMessage()));
+        }
+    }
+
+
+    @Override
+    public List<Ticket> getTicketFiltered(@Nullable String ticketId, @Nullable String status,
+                                          @Nullable String startCreationDate, @Nullable String endCreationDate,
+                                          @Nullable String field, @Nullable String orderField,
+                                          int offset, int numberRecords) {
+
+        List<Ticket> returnList = new ArrayList<>();
+
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            UUID localTicketId = ticketId.equals("") ? null : UUID.fromString(ticketId);
+            String localStatus = status.equals("") ? null : status;
+            String localField = field.equals("") ? null : field;
+            String localOrderField = orderField.equals("") ? null : orderField;
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
+                    LocalDateTime.parse(startCreationDate,formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
+                    LocalDateTime.parse(endCreationDate,formatter).plusDays(1);
+
+            List<tTicket> ticket = ticketRepository.getTicketFiltered(localTicketId, localStatus,
+                    localStartCreationDate, localEndCreationDate,
+                    localField, localOrderField, offset, numberRecords);
+
+            if (ticket != null) {
+                returnList = SupportUtils.transformTicketList(ticket);
+
+            } else {
+                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_TICKET_LIST", ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_TICKET_FILTERED", ex.getMessage()));
+        }
+        return returnList;
+    }
+
+    @Override
+    public long getCountTicketFiltered(@Nullable String ticketId, @Nullable String status,
+                                  @Nullable String startCreationDate, @Nullable String endCreationDate){
+
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            UUID localTicketId = ticketId.equals("") ? null : UUID.fromString(ticketId);
+            String localStatus = status.equals("") ? null : status;
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
+                    LocalDateTime.parse(startCreationDate,formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
+                    LocalDateTime.parse(endCreationDate,formatter).plusDays(1);
+
+
+            long countSupport = ticketRepository.getCountTicketFiltered(localTicketId, localStatus,
+                    localStartCreationDate, localEndCreationDate);
+
+            return countSupport;
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_TICKET_FILTERED", ex.getMessage()));
         }
     }
 }

@@ -56,6 +56,29 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- getTicketFiltered-->
+    <xs:element name="getTicketFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ticketId"  type="xs:string" />
+                <xs:element name="ticketStatus"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+                <xs:element name="field"  type="xs:string" />
+                <xs:element name="orderField"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getTicketFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ticket" type="tns:ticket" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- getCountSupportFiltered-->
     <xs:element name="getCountSupportFilteredRequest">
         <xs:complexType>
@@ -67,6 +90,25 @@
         </xs:complexType>
     </xs:element>
     <xs:element name="getCountSupportFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getCountTicketFiltered-->
+    <xs:element name="getCountTicketFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ticketId"  type="xs:string" />
+                <xs:element name="ticketStatus"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountTicketFilteredResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long"/>
@@ -117,4 +159,14 @@
         </xs:sequence>
     </xs:complexType>
 
+    <!-- Endpoint Ticket Object-->
+    <xs:complexType name="ticket">
+        <xs:sequence>
+            <xs:element name="ticketId"  type="xs:string"/>
+            <xs:element name="status" type="xs:string"/>
+            <xs:element name="creationDate" type="xs:string"/>
+            <xs:element name="creationUserId" type="xs:string"/>
+            <xs:element name="assignedUserId" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>

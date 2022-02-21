@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.support.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,10 +25,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userStatus" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userEmail" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="ticketId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="ticketStatus" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="startCreationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="endCreationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
@@ -41,123 +39,69 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "userId",
-    "userName",
-    "userStatus",
-    "userEmail",
+    "ticketId",
+    "ticketStatus",
     "startCreationDate",
     "endCreationDate"
 })
-@XmlRootElement(name = "getCountUserFilteredRequest")
-public class GetCountUserFilteredRequest {
+@XmlRootElement(name = "getCountTicketFilteredRequest")
+public class GetCountTicketFilteredRequest {
 
     @XmlElement(required = true)
-    protected String userId;
+    protected String ticketId;
     @XmlElement(required = true)
-    protected String userName;
-    @XmlElement(required = true)
-    protected String userStatus;
-    @XmlElement(required = true)
-    protected String userEmail;
+    protected String ticketStatus;
     @XmlElement(required = true)
     protected String startCreationDate;
     @XmlElement(required = true)
     protected String endCreationDate;
 
     /**
-     * Gets the value of the userId property.
+     * Gets the value of the ticketId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserId() {
-        return userId;
+    public String getTicketId() {
+        return ticketId;
     }
 
     /**
-     * Sets the value of the userId property.
+     * Sets the value of the ticketId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserId(String value) {
-        this.userId = value;
+    public void setTicketId(String value) {
+        this.ticketId = value;
     }
 
     /**
-     * Gets the value of the userName property.
+     * Gets the value of the ticketStatus property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserName() {
-        return userName;
+    public String getTicketStatus() {
+        return ticketStatus;
     }
 
     /**
-     * Sets the value of the userName property.
+     * Sets the value of the ticketStatus property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserName(String value) {
-        this.userName = value;
-    }
-
-    /**
-     * Gets the value of the userStatus property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUserStatus() {
-        return userStatus;
-    }
-
-    /**
-     * Sets the value of the userStatus property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUserStatus(String value) {
-        this.userStatus = value;
-    }
-
-    /**
-     * Gets the value of the userEmail property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    /**
-     * Sets the value of the userEmail property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUserEmail(String value) {
-        this.userEmail = value;
+    public void setTicketStatus(String value) {
+        this.ticketStatus = value;
     }
 
     /**
