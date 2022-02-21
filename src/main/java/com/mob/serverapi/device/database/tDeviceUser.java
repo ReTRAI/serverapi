@@ -46,16 +46,6 @@ public class tDeviceUser implements Serializable {
     }
 
 
-
-    public tDeviceUser(UUID deviceUserId, String nickname, LocalDateTime creationDate, String userActivationPassword,
-                       tDevice device) {
-        this.deviceUserId = deviceUserId;
-        this.nickname = nickname;
-        this.creationDate = creationDate;
-        this.userActivationPassword = userActivationPassword;
-        this.device = device;
-    }
-
     /**
      * @return the deviceUserId.
      */

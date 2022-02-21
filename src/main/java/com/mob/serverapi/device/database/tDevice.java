@@ -114,32 +114,6 @@ public class tDevice implements Serializable {
     public tDevice() {
     }
 
-    public tDevice(UUID deviceId, String brand, tReseller reseller, String serialNumber,
-                   String imeiNumber, String simNumber, String androidId, String firstSimNumber,
-                   String tunnelIP, LocalDateTime creationDevice, LocalDateTime lastConnection,
-                   LocalDateTime lastBackup, tDeviceStatus deviceStatus, LocalDateTime activationDate,
-                   LocalDateTime expireDate, float currentBalance, Time currentMinutes, String notes,
-                   String osVersion) {
-        this.deviceId = deviceId;
-        this.brand = brand;
-        this.reseller = reseller;
-        this.serialNumber = serialNumber;
-        this.imeiNumber = imeiNumber;
-        this.simNumber = simNumber;
-        this.androidId = androidId;
-        this.firstSimNumber = firstSimNumber;
-        this.tunnelIP = tunnelIP;
-        this.creationDevice = creationDevice;
-        this.lastConnection = lastConnection;
-        this.lastBackup = lastBackup;
-        this.deviceStatus = deviceStatus;
-        this.activationDate = activationDate;
-        this.expireDate = expireDate;
-        this.currentBalance = currentBalance;
-        this.currentMinutes = currentMinutes;
-        this.notes = notes;
-        this.osVersion = osVersion;
-    }
 
     /**
      * @return the deviceId.

@@ -41,15 +41,6 @@ public class tAppLog implements Serializable {
     public tAppLog() {
     }
 
-    public tAppLog(UUID appLogId, String action, tUser user, tApp app,
-                   LocalDateTime alterationDate, String alterationDetail) {
-        this.appLogId = appLogId;
-        this.action = action;
-        this.user = user;
-        this.app = app;
-        this.alterationDate = alterationDate;
-        this.alterationDetail = alterationDetail;
-    }
 
     /**
      * @return the appLogId.

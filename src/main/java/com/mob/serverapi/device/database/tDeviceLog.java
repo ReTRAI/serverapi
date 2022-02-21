@@ -42,15 +42,6 @@ public class tDeviceLog implements Serializable {
     public tDeviceLog() {
     }
 
-    public tDeviceLog(UUID deviceLogId, String action, tUser user,
-                        tDevice device, LocalDateTime alterationDate, String alterationDetail) {
-        this.deviceLogId = deviceLogId;
-        this.action = action;
-        this.user = user;
-        this.device = device;
-        this.alterationDate = alterationDate;
-        this.alterationDetail = alterationDetail;
-    }
 
     /**
      * @return the deviceLogId.

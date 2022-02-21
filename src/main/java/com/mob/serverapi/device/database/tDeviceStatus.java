@@ -43,10 +43,6 @@ public class tDeviceStatus implements Serializable {
     public tDeviceStatus() {
     }
 
-    public tDeviceStatus(UUID deviceStatusId, String description) {
-        this.deviceStatusId = deviceStatusId;
-        this.description = description;
-    }
 
     /**
      * @return the deviceStatusId.

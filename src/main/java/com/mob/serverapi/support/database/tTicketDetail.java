@@ -40,14 +40,6 @@ public class tTicketDetail {
     public tTicketDetail() {
     }
 
-    public tTicketDetail(UUID ticketDetailId, tTicket ticket, String detail, tUser user,
-                         LocalDateTime responseDate) {
-        this.ticketDetailId = ticketDetailId;
-        this.ticket = ticket;
-        this.detail = detail;
-        this.user = user;
-        this.responseDate = responseDate;
-    }
 
     /**
      * @return the ticketDetailId.

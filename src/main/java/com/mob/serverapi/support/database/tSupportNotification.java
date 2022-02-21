@@ -38,15 +38,7 @@ public class tSupportNotification implements Serializable {
     public tSupportNotification() {
     }
 
-    public tSupportNotification(UUID supportNotificationId, LocalDateTime creationDate, String detail,
-                                boolean checked, LocalDateTime checkedDate, tSupport support) {
-        this.supportNotificationId = supportNotificationId;
-        this.creationDate = creationDate;
-        this.detail = detail;
-        this.checked = checked;
-        this.checkedDate = checkedDate;
-        this.support = support;
-    }
+
     /**
      * @return the supportNotificationId.
      */

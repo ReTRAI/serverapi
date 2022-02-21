@@ -41,15 +41,6 @@ public class tSupportLog implements Serializable {
     public tSupportLog() {
     }
 
-    public tSupportLog(UUID supportLogId, String action, tUser user, tSupport support,
-                       LocalDateTime alterationDate, String alterationDetail) {
-        this.supportLogId = supportLogId;
-        this.action = action;
-        this.user = user;
-        this.support = support;
-        this.alterationDate = alterationDate;
-        this.alterationDetail = alterationDetail;
-    }
 
     /**
      * @return the supportLogId.

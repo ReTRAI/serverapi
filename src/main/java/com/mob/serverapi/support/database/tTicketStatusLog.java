@@ -41,15 +41,6 @@ public class tTicketStatusLog implements Serializable {
     public tTicketStatusLog() {
     }
 
-    public tTicketStatusLog(UUID ticketStatusLogId, String action, tUser user, tTicketStatus ticketStatus,
-                            LocalDateTime alterationDate, String alterationDetail) {
-        this.ticketStatusLogId = ticketStatusLogId;
-        this.action = action;
-        this.user = user;
-        this.ticketStatus = ticketStatus;
-        this.alterationDate = alterationDate;
-        this.alterationDetail = alterationDetail;
-    }
     /**
      * @return the deviceStatusId.
      */

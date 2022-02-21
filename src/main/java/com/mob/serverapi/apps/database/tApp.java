@@ -57,17 +57,6 @@ public class tApp implements Serializable {
     public tApp() {
     }
 
-    public tApp(UUID appId, String name, String alias, String thumbnailPath, String apkPath,
-                LocalDateTime creationDate, LocalDateTime updatedDate, String version) {
-        this.appId = appId;
-        this.name = name;
-        this.alias = alias;
-        this.thumbnailPath = thumbnailPath;
-        this.apkPath = apkPath;
-        this.creationDate = creationDate;
-        this.updatedDate = updatedDate;
-        this.version = version;
-    }
 
     /**
      * @return the appId.

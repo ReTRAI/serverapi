@@ -33,15 +33,6 @@ public class tUserLoginLog {
     public tUserLoginLog() {
     }
 
-    public tUserLoginLog(UUID userLoginLogId, tUser user, LocalDateTime loginDate,
-                         boolean validAuthentication, String authenticationDetail) {
-        this.userLoginLogId = userLoginLogId;
-        this.user = user;
-        this.loginDate = loginDate;
-        this.validAuthentication = validAuthentication;
-        this.authenticationDetail = authenticationDetail;
-    }
-
     /**
      * @return the userLoginLogId.
      */

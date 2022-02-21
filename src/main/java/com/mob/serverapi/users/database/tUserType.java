@@ -33,10 +33,6 @@ public class tUserType implements Serializable {
 
     public tUserType() {}
 
-    public tUserType(UUID userTypeId, String description) {
-        this.userTypeId = userTypeId;
-        this.description = description;
-    }
 
     /**
      * @return the userTypeId.

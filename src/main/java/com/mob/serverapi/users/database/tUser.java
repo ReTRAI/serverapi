@@ -179,21 +179,6 @@ public class tUser implements Serializable {
     public tUser() {
     }
 
-    public tUser(UUID userId, String userName, String userEmail, byte[] passwordHash, byte[] passwordSalt,
-                 LocalDateTime creationDate,
-                 String languagePreference, String themePreference, tUserStatus userStatus,
-                 LocalDateTime inactivationDate) {
-        this.userId = userId;
-        this.userName = userName;
-        this.userEmail = userEmail;
-        this.passwordHash = passwordHash;
-        this.passwordSalt = passwordSalt;
-        this.creationDate = creationDate;
-        this.languagePreference = languagePreference;
-        this.themePreference = themePreference;
-        this.userStatus = userStatus;
-        this.inactivationDate = inactivationDate;
-    }
 
     /**
      * @return the userId.

@@ -33,12 +33,6 @@ public class tResellerBalance implements Serializable {
 
     public tResellerBalance() {}
 
-    public tResellerBalance(UUID resellerBalanceId, String DebitCredit, float movementValue, tReseller reseller) {
-        this.resellerBalanceId = resellerBalanceId;
-        this.debitCredit = DebitCredit;
-        this.movementValue = movementValue;
-        this.reseller = reseller;
-    }
 
     /**
      * @return the ResellerBalanceId.

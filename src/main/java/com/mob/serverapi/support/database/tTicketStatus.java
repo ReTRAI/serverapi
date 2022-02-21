@@ -35,10 +35,6 @@ public class tTicketStatus implements Serializable {
     public tTicketStatus() {
     }
 
-    public tTicketStatus(UUID ticketStatusId, String description) {
-        this.ticketStatusId = ticketStatusId;
-        this.description = description;
-    }
     /**
      * @return the ticketStatusId.
      */

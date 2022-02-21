@@ -41,16 +41,6 @@ public class tResellerAssociationLog implements Serializable {
     public tResellerAssociationLog() {
     }
 
-    public tResellerAssociationLog(UUID resellerAssociationLogId, String action, tUser user,
-                        tResellerAssociation resellerAssociation, LocalDateTime alterationDate, String alterationDetail) {
-        this.resellerAssociationLogId = resellerAssociationLogId;
-        this.action = action;
-        this.user = user;
-        this.resellerAssociation = resellerAssociation;
-        this.alterationDate = alterationDate;
-        this.alterationDetail = alterationDetail;
-    }
-
     /**
      * @return the resellerAssociationLogId.
      */

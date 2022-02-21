@@ -52,16 +52,6 @@ public class tDeviceApp implements Serializable {
     public tDeviceApp() {
     }
 
-    public tDeviceApp(UUID deviceAppId, String currentVersion, LocalDateTime installationDate,
-                      LocalDateTime lastUpdateDate, boolean active, tDevice device, tApp app) {
-        this.deviceAppId = deviceAppId;
-        this.currentVersion = currentVersion;
-        this.installationDate = installationDate;
-        this.lastUpdateDate = lastUpdateDate;
-        this.active = active;
-        this.device = device;
-        this.app = app;
-    }
 
     /**
      * @return the deviceAppId.

@@ -37,16 +37,6 @@ public class tResellerNotification implements Serializable {
 
     protected tResellerNotification() {}
 
-    public tResellerNotification(UUID resellerNotificationId, LocalDateTime creationDate,
-                                 String detail,boolean checked,
-                                 LocalDateTime checkedDate, tReseller reseller) {
-        this.resellerNotificationId = resellerNotificationId;
-        this.creationDate = creationDate;
-        this.detail = detail;
-        this.checked = checked;
-        this.checkedDate = checkedDate;
-        this.reseller = reseller;
-    }
 
     /**
      * @return the resellerNotificationId.

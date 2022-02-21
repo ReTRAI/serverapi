@@ -40,15 +40,6 @@ public class tUserLog implements Serializable {
     public tUserLog() {
     }
 
-    public tUserLog(UUID userLogId, String action, tUser actionUser,
-                    tUser alteredUser, LocalDateTime alterationDate, String alterationDetail) {
-        this.userLogId = userLogId;
-        this.action = action;
-        this.actionUser = actionUser;
-        this.alteredUser = alteredUser;
-        this.alterationDate = alterationDate;
-        this.alterationDetail = alterationDetail;
-    }
 
     /**
      * @return the userLogId.

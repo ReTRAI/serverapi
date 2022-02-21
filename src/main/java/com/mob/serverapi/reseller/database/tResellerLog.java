@@ -42,15 +42,6 @@ public class tResellerLog implements Serializable {
     public tResellerLog() {
     }
 
-    public tResellerLog(UUID resellerLogId, String action, tUser user,
-                    tReseller reseller, LocalDateTime alterationDate, String alterationDetail) {
-        this.resellerLogId = resellerLogId;
-        this.action = action;
-        this.user = user;
-        this.reseller = reseller;
-        this.alterationDate = alterationDate;
-        this.alterationDetail = alterationDetail;
-    }
 
     /**
      * @return the userLogId.

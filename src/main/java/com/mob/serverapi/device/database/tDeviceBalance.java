@@ -34,12 +34,6 @@ public class tDeviceBalance implements Serializable {
 
     protected tDeviceBalance() {}
 
-    public tDeviceBalance(UUID deviceBalanceId, String DebitCredit, float movementValue, tDevice device) {
-        this.deviceBalanceId = deviceBalanceId;
-        this.debitCredit = DebitCredit;
-        this.movementValue = movementValue;
-        this.device = device;
-    }
 
     /**
      * @return the deviceBalanceId.

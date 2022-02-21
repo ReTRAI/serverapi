@@ -40,15 +40,6 @@ public class tTicketLog {
     public tTicketLog() {
     }
 
-    public tTicketLog(UUID ticketLogId, String action, tUser user, tTicket ticket,
-                      LocalDateTime alterationDate, String alterationDetail) {
-        this.ticketLogId = ticketLogId;
-        this.action = action;
-        this.user = user;
-        this.ticket = ticket;
-        this.alterationDate = alterationDate;
-        this.alterationDetail = alterationDetail;
-    }
     /**
      * @return the ticketLogId.
      */

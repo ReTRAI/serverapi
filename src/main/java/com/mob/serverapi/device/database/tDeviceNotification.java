@@ -37,16 +37,6 @@ public class tDeviceNotification implements Serializable {
 
     protected tDeviceNotification() {}
 
-    public tDeviceNotification(UUID deviceNotificationId, LocalDateTime creationDate,
-                                 String detail,boolean checked,
-                                 LocalDateTime checkedDate, tDevice device) {
-        this.deviceNotificationId = deviceNotificationId;
-        this.creationDate = creationDate;
-        this.detail = detail;
-        this.checked = checked;
-        this.checkedDate = checkedDate;
-        this.device = device;
-    }
 
     /**
      * @return the deviceNotificationId.

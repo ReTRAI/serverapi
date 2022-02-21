@@ -35,10 +35,6 @@ public class tUserStatus implements Serializable {
     public tUserStatus() {
     }
 
-    public tUserStatus(UUID userStatusId, String description) {
-        this.userStatusId = userStatusId;
-        this.description = description;
-    }
 
     /**
      * @return the userStatusId.

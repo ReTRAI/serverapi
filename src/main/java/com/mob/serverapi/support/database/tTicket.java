@@ -56,14 +56,6 @@ public class tTicket implements Serializable {
     public tTicket() {
     }
 
-    public tTicket(UUID ticketId, LocalDateTime openDate, tUser openUser,
-                   tTicketStatus ticketStatus, tUser assignedUser) {
-        this.ticketId = ticketId;
-        this.openDate = openDate;
-        this.openUser = openUser;
-        this.ticketStatus = ticketStatus;
-        this.assignedUser = assignedUser;
-    }
 
     /**
      * @return the ticketId.

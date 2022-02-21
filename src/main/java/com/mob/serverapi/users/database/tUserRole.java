@@ -28,11 +28,6 @@ public class tUserRole implements Serializable {
     public tUserRole() {
     }
 
-    public tUserRole(UUID userRoleId, tUser user, tUserType userType) {
-        this.userRoleId = userRoleId;
-        this.user = user;
-        this.userType = userType;
-    }
 
     /**
      * @return the userRoleId.

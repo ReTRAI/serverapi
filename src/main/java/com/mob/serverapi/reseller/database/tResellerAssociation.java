@@ -29,13 +29,6 @@ public class tResellerAssociation implements Serializable {
 
     public tResellerAssociation() {}
 
-    public tResellerAssociation(UUID resellerAssociationId, tReseller parentReseller, tReseller childReseller) {
-        this.resellerAssociationId = resellerAssociationId;
-        this.parentReseller = parentReseller;
-        this.childReseller = childReseller;
-
-    }
-
     /**
      * @return the ResellerAssociationId.
      */
