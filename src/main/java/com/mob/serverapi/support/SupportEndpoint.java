@@ -1,10 +1,7 @@
 package com.mob.serverapi.support;
 
 
-import com.mob.serverapi.support.base.GetSupportByIdRequest;
-import com.mob.serverapi.support.base.GetSupportByIdResponse;
-import com.mob.serverapi.support.base.GetSupportByUserIdRequest;
-import com.mob.serverapi.support.base.GetSupportByUserIdResponse;
+import com.mob.serverapi.support.base.*;
 import com.mob.serverapi.support.repositories.endpoints.SupportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -42,6 +39,51 @@ public class SupportEndpoint {
 
         GetSupportByUserIdResponse response = new GetSupportByUserIdResponse();
         response.setSupport(supportRepository.getSupportByUserId(UUID.fromString(request.getUserId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getSupportFilteredRequest")
+    @ResponsePayload
+    public GetSupportFilteredResponse getSupportFiltered(@RequestPayload GetSupportFilteredRequest request) {
+
+        GetSupportFilteredResponse response = new GetSupportFilteredResponse();
+        response.getSupport().addAll(supportRepository.getSupportFiltered(request.getSupportId(),
+                request.getSupportName(), request.isOnlyChildren(), request.getField(), request.getOrderField(),
+                request.getOffset(), request.getNumberRecords()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountSupportFilteredRequest")
+    @ResponsePayload
+    public GetCountSupportFilteredResponse getCountSupportFiltered(@RequestPayload GetCountSupportFilteredRequest request) {
+
+        GetCountSupportFilteredResponse response = new GetCountSupportFilteredResponse();
+        response.setResult(supportRepository.getCountSupportFiltered(request.getSupportId(),
+                request.getSupportName(), request.isOnlyChildren()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setSupportRequest")
+    @ResponsePayload
+    public SetSupportResponse setSupport(@RequestPayload SetSupportRequest request) {
+
+        SetSupportResponse response = new SetSupportResponse();
+        response.setSupport(supportRepository.setSupport(UUID.fromString(request.getUserId()),
+                UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeSupportRequest")
+    @ResponsePayload
+    public RemoveSupportResponse removeSupport(@RequestPayload RemoveSupportRequest request) {
+
+        RemoveSupportResponse response = new RemoveSupportResponse();
+        response.setResult(supportRepository.removeSupport(UUID.fromString(request.getSupportId()),
+                UUID.fromString(request.getActionUserId())));
 
         return response;
     }

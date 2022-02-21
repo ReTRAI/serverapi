@@ -78,12 +78,6 @@ public class tReseller implements Serializable {
 
     public tReseller() {}
 
-    public tReseller(UUID resellerId, tUser user, float currentBalance) {
-        this.resellerId = resellerId;
-        this.user = user;
-        this.currentBalance = currentBalance;
-
-    }
 
     /**
      * @return resellerId's id.

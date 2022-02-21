@@ -138,6 +138,12 @@ public class tUser implements Serializable {
     private Set<tSupportLog> supportLog;
 
     /**
+     * FK from SUPPORTAssociationLog to user
+     */
+    @OneToMany(targetEntity = tSupportAssociationLog.class, mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<tSupportAssociationLog> supportAssociationLog;
+
+    /**
      * FK from ticketStatusLog to user
      */
     @OneToMany(targetEntity = tTicketStatusLog.class, mappedBy = "user", fetch = FetchType.LAZY)
