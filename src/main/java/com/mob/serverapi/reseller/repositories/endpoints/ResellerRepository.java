@@ -98,7 +98,7 @@ public class ResellerRepository implements IResellerRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BY_ID", ex.getMessage()));
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BY_USER_ID", ex.getMessage()));
         }
 
         return resellerToReturn;

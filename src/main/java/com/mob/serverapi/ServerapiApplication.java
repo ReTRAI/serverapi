@@ -1,7 +1,7 @@
 package com.mob.serverapi;
 
 import com.mob.serverapi.device.repositories.database.tDeviceStatusRepository;
-import com.mob.serverapi.support.repositories.tTicketStatusRepository;
+import com.mob.serverapi.support.repositories.database.tTicketStatusRepository;
 import com.mob.serverapi.users.repositories.database.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

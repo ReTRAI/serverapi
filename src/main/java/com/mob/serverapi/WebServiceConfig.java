@@ -3,6 +3,7 @@ package com.mob.serverapi;
 import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
 import com.mob.serverapi.servicefault.DetailSoapFaultDefinitionExceptionResolver;
 import com.mob.serverapi.servicefault.ServiceFaultException;
+import com.mob.serverapi.support.repositories.endpoints.SupportRepository;
 import com.mob.serverapi.users.repositories.endpoints.UserRepository;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -73,6 +74,16 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
+    @Bean(name = "support")
+    public DefaultWsdl11Definition supportWsdl11Definition(XsdSchema supportSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("SupportPort");
+        wsdl11Definition.setLocationUri("/");
+        wsdl11Definition.setTargetNamespace("http://www.mob.com/serverapi/support/base");
+        wsdl11Definition.setSchema(supportSchema);
+        return wsdl11Definition;
+    }
+
     /**
      * ENDPOINT BEANS
      */
@@ -86,6 +97,11 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("endpoints/resellers.xsd"));
     }
 
+    @Bean
+    public XsdSchema supportSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("endpoints/support.xsd"));
+    }
+
     /**
      * REPOSITORY BEANS
      */
@@ -97,5 +113,10 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     @Bean
     public ResellerRepository resellerRepository() {
         return new ResellerRepository();
+    }
+
+    @Bean
+    public SupportRepository supportRepository() {
+        return new SupportRepository();
     }
 }

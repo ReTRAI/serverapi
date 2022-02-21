@@ -1,4 +1,4 @@
-package com.mob.serverapi.support.repositories;
+package com.mob.serverapi.support.repositories.database;
 
 import com.mob.serverapi.support.database.tTicketStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
