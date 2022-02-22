@@ -391,7 +391,7 @@ public class ResellerRepository implements IResellerRepository {
                 tReseller child = resellerRepository.findById(childResellerId);
 
                 if (parent != null && child != null) {
-                    long exists = resellerAssociationRepository.countAssociationByChildResellerId(parentResellerId);
+                    long exists = resellerAssociationRepository.countAssociationByChildResellerId(childResellerId);
 
                     if (exists == 0) {
 

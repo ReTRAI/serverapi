@@ -34,7 +34,7 @@ public class tSupportAssociationLogRepository {
     }
 
     @Transactional
-    public void deleteSupportAssociationLogByResellerId(UUID supportAssociationId) {
+    public void deleteSupportAssociationLogBySupportAssociationId(UUID supportAssociationId) {
 
         repository.deleteBySupportAssociationLogId(supportAssociationId);
     }

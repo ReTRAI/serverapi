@@ -18,10 +18,13 @@ public class tTicketStatusRepository {
     @Autowired
     ItTicketStatusRepository repository;
 
-    public void savetTicketStatus(tTicketStatus ticketStatus){
+    public void saveTicketStatus(tTicketStatus ticketStatus){
         repository.save(ticketStatus);
     }
 
+    public tTicketStatus findTicketStatusByDescription(String description){
+        return repository.findByDescription(description);
+    }
     public void createDefaultTicketStatus(){
 
 
@@ -46,7 +49,7 @@ public class tTicketStatusRepository {
 
             if(!repository.exists(ticketStatus)) {
 
-                savetTicketStatus(t);
+                saveTicketStatus(t);
             }
 
         }

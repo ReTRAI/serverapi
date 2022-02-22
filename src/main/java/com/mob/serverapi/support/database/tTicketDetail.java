@@ -35,8 +35,8 @@ public class tTicketDetail {
             foreignKey = @ForeignKey(name="FK_TICKETDETAIL_RESPONCEUSERID"))
     private tUser user;
 
-    @Column(name = "responseDate", nullable = false)
-    private LocalDateTime responseDate;
+    @Column(name = "detailDate", nullable = false)
+    private LocalDateTime detailDate;
 
     public tTicketDetail() {
     }
@@ -93,14 +93,14 @@ public class tTicketDetail {
     /**
      * @return the responseDate.
      */
-    public LocalDateTime getResponseDate() {
-        return responseDate;
+    public LocalDateTime getDetailDate() {
+        return detailDate;
     }
     /**
-     * @param responseDate to set to.
+     * @param detailDate to set to.
      */
-    public void setResponseDate(LocalDateTime responseDate) {
-        this.responseDate = responseDate;
+    public void setDetailDate(LocalDateTime detailDate) {
+        this.detailDate = detailDate;
     }
 
     /**

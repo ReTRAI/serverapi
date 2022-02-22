@@ -22,11 +22,11 @@ public class tResellerLogRepository {
         return repository.save(resellerLog);
     }
 
-    public void insertResellerLog(tUser actionUser, tReseller alteredUser, String action, String detail) {
+    public void insertResellerLog(tUser actionUser, tReseller altered, String action, String detail) {
 
         tResellerLog log = new tResellerLog();
         log.setUser(actionUser);
-        log.setAlteredId(alteredUser);
+        log.setAlteredId(altered);
         log.setAction(action);
         log.setAlterationDate(LocalDateTime.now());
         log.setAlterationDetail(detail);

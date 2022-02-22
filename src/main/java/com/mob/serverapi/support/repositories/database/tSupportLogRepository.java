@@ -21,11 +21,11 @@ public class tSupportLogRepository {
         return repository.save(supportLog);
     }
 
-    public void insertSupportLog(tUser actionUser, tSupport alteredUser, String action, String detail) {
+    public void insertSupportLog(tUser actionUser, tSupport altered, String action, String detail) {
 
         tSupportLog log = new tSupportLog();
         log.setUser(actionUser);
-        log.setSupport(alteredUser);
+        log.setSupport(altered);
         log.setAction(action);
         log.setAlterationDate(LocalDateTime.now());
         log.setAlterationDetail(detail);
@@ -34,7 +34,7 @@ public class tSupportLogRepository {
     }
 
     @Transactional
-    public void deleteResellerLogBySupportId(UUID supportId) {
+    public void deleteSupportLogBySupportId(UUID supportId) {
 
         repository.deleteBySupport_SupportId(supportId);
     }

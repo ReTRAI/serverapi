@@ -26,7 +26,7 @@ public class tTicketRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public tTicket saveSupport(tTicket ticket) {
+    public tTicket saveTicket(tTicket ticket) {
 
         return repository.save(ticket);
     }

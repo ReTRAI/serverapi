@@ -112,7 +112,7 @@ public class ResellerEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerAssociationRequest")
     @ResponsePayload
-    public GetResellerAssociationResponse getResellerById(@RequestPayload GetResellerAssociationRequest request) {
+    public GetResellerAssociationResponse getResellerAssociation(@RequestPayload GetResellerAssociationRequest request) {
 
         GetResellerAssociationResponse response = new GetResellerAssociationResponse();
         response.setResellerAssociation(resellerRepository.getResellerAssociation(UUID.fromString(request.getParentResellerId()),

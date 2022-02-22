@@ -2,7 +2,9 @@ package com.mob.serverapi.support.repositories.endpoints;
 
 
 import com.mob.serverapi.support.base.Support;
+import com.mob.serverapi.support.base.SupportAssociation;
 import com.mob.serverapi.support.base.Ticket;
+import com.mob.serverapi.support.base.TicketDetail;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
@@ -34,4 +36,24 @@ interface ISupportRepository {
 
     long getCountTicketFiltered(@Nullable String ticketId, @Nullable String status,
                                  @Nullable String startCreationDate, @Nullable String endCreationDate);
+
+    List<TicketDetail> getTicketDetailFiltered(@Nullable String ticketId,
+                                         @Nullable String startCreationDate, @Nullable String endCreationDate,
+                                         @Nullable String field, @Nullable String orderField,
+                                         int offset, int numberRecords);
+
+    long getCountTicketDetailFiltered(@Nullable String ticketId,
+                                @Nullable String startCreationDate, @Nullable String endCreationDate);
+
+    boolean setSupportAssociation(UUID parentSupportId, UUID childSupportId, UUID actionUserId);
+
+    boolean removeSupportAssociation(UUID parentSupportId, UUID childSupportId, UUID actionUserId);
+
+    SupportAssociation getSupportAssociation(UUID parentSupportId, UUID childSupportId);
+
+    Ticket setTicket(String message,UUID creationUserId);
+
+    boolean updateTicket(UUID ticketId, @Nullable String status, @Nullable String assignedUserId, UUID actionUserId);
+
+    boolean setTicketDetail(UUID ticketId,String message,UUID actionUserId);
 }

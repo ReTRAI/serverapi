@@ -25,12 +25,7 @@ public class tTicketStatus implements Serializable {
         CANCELED,
         COMPLETED;
     }
-    /**
-     * FK from ticketStatusLog to ticketStatus
-     */
-    @OneToMany(targetEntity = tTicketStatusLog.class,mappedBy="ticketStatus" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private Set<tTicketStatusLog> ticketStatusLog;
+
 
     public tTicketStatus() {
     }
