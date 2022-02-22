@@ -10,7 +10,7 @@ public class tSupportAssociation implements Serializable {
 
     @Id
     @GeneratedValue
-    @JoinColumn(name = "supportAssociationId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    @Column(name = "supportAssociationId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
     private UUID supportAssociationId;
 
 

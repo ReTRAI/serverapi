@@ -15,7 +15,6 @@ interface ItResellerAssociationRepository extends JpaRepository<tResellerAssocia
 
     long countByChildReseller_ResellerId(UUID resellerId);
 
-    long deleteByParentReseller_ResellerIdAndChildReseller_ResellerId(UUID resellerId, UUID resellerId1);
 
 
 }

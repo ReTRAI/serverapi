@@ -449,7 +449,7 @@ public class SupportRepository implements ISupportRepository {
                     if (assoc != null) {
 
                         supportAssociationLogRepository.deleteSupportAssociationLogBySupportAssociationId(assoc.getSupportAssociationId());
-                        supportAssociationRepository.deleteAssociation(parentSupportId, childSupportId);
+                        supportAssociationRepository.deleteById(assoc.getSupportAssociationId());
 
                         supportLogRepository.insertSupportLog(actionUser, parent, "REMOVE_SUPPORT_ASSOCIATION", "ADD CHILD ID: " + child.getSupportId());
                         supportLogRepository.insertSupportLog(actionUser, child, "REMOVE_SUPPORT_ASSOCIATION", "ADD PARENT ID: " + parent.getSupportId());

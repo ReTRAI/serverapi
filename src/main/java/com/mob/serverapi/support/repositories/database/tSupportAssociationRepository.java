@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +35,8 @@ public class tSupportAssociationRepository {
         return repository.findByParentSupport_SupportIdAndChildSupport_SupportId(parentSupportId, childSupportId);
     }
 
-    public long deleteAssociation(UUID parentSupportId, UUID childSupportId) {
-        return repository.deleteByParentSupport_SupportIdAndChildSupport_SupportId(parentSupportId, childSupportId);
+    @Transactional
+    public void deleteById(UUID supportAssociationId) {
+        repository.deleteById(supportAssociationId);
     }
 }

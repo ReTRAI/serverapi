@@ -46,10 +46,10 @@ public class tReseller implements Serializable {
     /**
      * FK from ResellerAssociation to Reseller
      */
-    @OneToMany(targetEntity = tResellerAssociation.class,mappedBy="parentReseller" , fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = tResellerAssociation.class,mappedBy="parentReseller" , fetch = FetchType.EAGER)
     private Set<tResellerAssociation> resellerAssociationParent;
 
-    @OneToMany(targetEntity = tResellerAssociation.class,mappedBy="childReseller" , fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = tResellerAssociation.class,mappedBy="childReseller" , fetch = FetchType.EAGER)
     private Set<tResellerAssociation> resellerAssociationChild;
 
     /**

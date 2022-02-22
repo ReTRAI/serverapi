@@ -42,15 +42,13 @@ public class tTicket implements Serializable {
     /**
      * FK from ticketDetail to ticket
      */
-    @OneToMany(targetEntity = tTicketDetail.class,mappedBy="ticket" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tTicketDetail.class,mappedBy="ticket" , fetch = FetchType.LAZY)
     private Set<tTicketDetail> ticketDetail;
 
     /**
      * FK from TicketLog to user
      */
-    @OneToMany(targetEntity = tTicketLog.class,mappedBy="ticket" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tTicketLog.class,mappedBy="ticket" , fetch = FetchType.LAZY)
     private Set<tTicketLog> ticketLog;
 
     public tTicket() {

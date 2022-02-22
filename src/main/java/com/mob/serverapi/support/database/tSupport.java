@@ -29,16 +29,14 @@ public class tSupport implements Serializable {
     /**
      * FK from supportLog to support
      */
-    @OneToMany(targetEntity = tSupportLog.class,mappedBy="support" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tSupportLog.class,mappedBy="support" , fetch = FetchType.LAZY)
     private Set<tSupportLog> supportLog;
 
 
     /**
      * FK from support notification to support
      */
-    @OneToMany(targetEntity = tSupportNotification.class,mappedBy="support" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tSupportNotification.class,mappedBy="support" , fetch = FetchType.LAZY)
     private Set<tSupportNotification> supportNotification;
 
     @Column(name = "creationDate", nullable = false)

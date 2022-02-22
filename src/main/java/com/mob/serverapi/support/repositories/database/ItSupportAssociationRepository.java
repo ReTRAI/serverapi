@@ -3,6 +3,7 @@ package com.mob.serverapi.support.repositories.database;
 import com.mob.serverapi.support.database.tSupportAssociation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +15,8 @@ interface ItSupportAssociationRepository extends JpaRepository<tSupportAssociati
 
     long countByChildSupport_SupportId(UUID supportId);
 
-    long deleteByParentSupport_SupportIdAndChildSupport_SupportId(UUID supportId, UUID supportId1);
+
+    
 
 
 }

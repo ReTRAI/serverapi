@@ -445,7 +445,7 @@ public class ResellerRepository implements IResellerRepository {
                     if (assoc != null) {
 
                         resellerAssociationLogRepository.deleteResellerAssociationLogByResellerId(assoc.getResellerAssociationId());
-                        resellerAssociationRepository.deleteAssociation(parentResellerId, childResellerId);
+                        resellerAssociationRepository.deleteAssociationById(assoc.getResellerAssociationId());
 
                         resellerLogRepository.insertResellerLog(actionUser, parent, "REMOVE_RESELLER_ASSOCIATION", "ADD CHILD ID: " + child.getResellerId());
                         resellerLogRepository.insertResellerLog(actionUser, child, "REMOVE_RESELLER_ASSOCIATION", "ADD PARENT ID: " + parent.getResellerId());

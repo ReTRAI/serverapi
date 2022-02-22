@@ -36,8 +36,7 @@ public class tDeviceStatus implements Serializable {
     /**
      * FK from DeviceStatusLog to deviceStatus
      */
-    @OneToMany(targetEntity = tDeviceStatusLog.class,mappedBy="deviceStatus" , fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = tDeviceStatusLog.class,mappedBy="deviceStatus" , fetch = FetchType.LAZY)
     private Set<tDeviceStatusLog> deviceStatusLog;
 
     public tDeviceStatus() {
