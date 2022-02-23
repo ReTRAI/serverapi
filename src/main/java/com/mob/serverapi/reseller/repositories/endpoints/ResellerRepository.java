@@ -29,6 +29,7 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -214,7 +215,7 @@ public class ResellerRepository implements IResellerRepository {
 
                 if (nRole == 0) {
                     tReseller resellerToCreate = new tReseller();
-                    resellerToCreate.setUserId(associatedUser);
+                    resellerToCreate.setUser(associatedUser);
                     resellerToCreate.setCurrentBalance(0);
                     resellerToCreate.setTotalDevices(0);
                     resellerToCreate.setActiveDevices(0);
@@ -344,8 +345,8 @@ public class ResellerRepository implements IResellerRepository {
 
                     tUserType userTypeVal = userTypeRepository.
                             findUserTypeByDescription(tUserType.UserTypeEnum.RESELLER.name());
-                    tUser associatedUser = userRepository.findById(resellerValidation.getUserId().getUserId());
-                    tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(resellerValidation.getUserId().getUserId(), userTypeVal.getUserTypeId());
+                    tUser associatedUser = userRepository.findById(resellerValidation.getUser().getUserId());
+                    tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(resellerValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
 
                     List<tDevice> associatedDevices = deviceRepository.getAllDevicesByResellerId(resellerId);
 
@@ -444,11 +445,11 @@ public class ResellerRepository implements IResellerRepository {
 
                     if (assoc != null) {
 
-                        resellerAssociationLogRepository.deleteResellerAssociationLogByResellerId(assoc.getResellerAssociationId());
+                        resellerAssociationLogRepository.deleteResellerAssociationLogByAssociationId(assoc.getResellerAssociationId());
                         resellerAssociationRepository.deleteAssociationById(assoc.getResellerAssociationId());
 
-                        resellerLogRepository.insertResellerLog(actionUser, parent, "REMOVE_RESELLER_ASSOCIATION", "ADD CHILD ID: " + child.getResellerId());
-                        resellerLogRepository.insertResellerLog(actionUser, child, "REMOVE_RESELLER_ASSOCIATION", "ADD PARENT ID: " + parent.getResellerId());
+                        resellerLogRepository.insertResellerLog(actionUser, parent, "REMOVE_RESELLER_ASSOCIATION", "REMOVE CHILD ID: " + child.getResellerId());
+                        resellerLogRepository.insertResellerLog(actionUser, child, "REMOVE_RESELLER_ASSOCIATION", "REMOVE PARENT ID: " + parent.getResellerId());
 
                         val = true;
 

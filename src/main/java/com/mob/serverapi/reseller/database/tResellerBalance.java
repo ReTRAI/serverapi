@@ -1,5 +1,7 @@
 package com.mob.serverapi.reseller.database;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -7,6 +9,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "resellerBalance")
 public class tResellerBalance implements Serializable {
@@ -33,79 +37,4 @@ public class tResellerBalance implements Serializable {
 
     public tResellerBalance() {}
 
-
-    /**
-     * @return the ResellerBalanceId.
-     */
-
-    public UUID getResellerBalanceId() {
-        return resellerBalanceId;
-    }
-
-    /**
-     * @param resellerBalanceId the id to set to.
-     */
-    public void setResellerBalanceId(UUID resellerBalanceId) {
-        this.resellerBalanceId = resellerBalanceId;
-    }
-
-    /**
-     * @return the DebitCredit.
-     */
-
-    public String getDebitCredit() {
-        return debitCredit;
-    }
-
-    /**
-     * @param debitCredit  to set to.
-     */
-    public void setDebitCredit(String debitCredit) {
-        this.debitCredit = debitCredit;
-    }
-
-    /**
-     * @return the movementValue.
-     */
-
-    public float getMovementValue() {
-        return movementValue;
-    }
-
-    /**
-     * @param movementValue to set to.
-     */
-    public void setMovementValue(float movementValue) {
-        this.movementValue = movementValue;
-    }
-
-    /**
-     * @return the movementDate.
-     */
-
-    public LocalDateTime getMovementDate() {
-        return movementDate;
-    }
-
-    /**
-     * @param movementDate to set to.
-     */
-    public void setMovementDate(LocalDateTime movementDate) {
-        this.movementDate = movementDate;
-    }
-
-    /**
-     * @return the Reseller.
-     */
-
-    public tReseller getReseller() {
-        return reseller;
-    }
-
-    /**
-     * @param reseller to set to.
-     */
-    public void setReseller(tReseller reseller) {
-        this.reseller = reseller;
-    }
 }

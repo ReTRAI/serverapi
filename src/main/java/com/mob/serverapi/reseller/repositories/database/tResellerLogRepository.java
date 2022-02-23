@@ -26,7 +26,7 @@ public class tResellerLogRepository {
 
         tResellerLog log = new tResellerLog();
         log.setUser(actionUser);
-        log.setAlteredId(altered);
+        log.setReseller(altered);
         log.setAction(action);
         log.setAlterationDate(LocalDateTime.now());
         log.setAlterationDetail(detail);

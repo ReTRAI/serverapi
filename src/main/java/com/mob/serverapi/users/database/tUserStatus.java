@@ -1,6 +1,8 @@
 package com.mob.serverapi.users.database;
 
 import com.mob.serverapi.reseller.database.tResellerAssociation;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +10,9 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
+
+@Getter
+@Setter
 @Entity
 @Table(name = "userStatus")
 public class tUserStatus implements Serializable {
@@ -35,32 +40,4 @@ public class tUserStatus implements Serializable {
     public tUserStatus() {
     }
 
-
-    /**
-     * @return the userStatusId.
-     */
-    public UUID getUserStatusId() {
-        return userStatusId;
-    }
-
-    /**
-     * @param userStatusId to set to.
-     */
-    public void setUserStatusId(UUID userStatusId) {
-        this.userStatusId = userStatusId;
-    }
-
-    /**
-     * @return the description.
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description to set to.
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

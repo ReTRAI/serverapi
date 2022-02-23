@@ -1,6 +1,8 @@
 package com.mob.serverapi.device.database;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "deviceBalance")
 public class tDeviceBalance implements Serializable {
@@ -34,79 +38,4 @@ public class tDeviceBalance implements Serializable {
 
     protected tDeviceBalance() {}
 
-
-    /**
-     * @return the deviceBalanceId.
-     */
-
-    public UUID getDeviceBalanceId() {
-        return deviceBalanceId;
-    }
-
-    /**
-     * @param deviceBalanceId the id to set to.
-     */
-    public void setDeviceBalanceId(UUID deviceBalanceId) {
-        this.deviceBalanceId = deviceBalanceId;
-    }
-
-    /**
-     * @return the DebitCredit.
-     */
-
-    public String getDebitCredit() {
-        return debitCredit;
-    }
-
-    /**
-     * @param debitCredit  to set to.
-     */
-    public void setDebitCredit(String debitCredit) {
-        debitCredit = debitCredit;
-    }
-
-    /**
-     * @return the movementValue.
-     */
-
-    public float getMovementValue() {
-        return movementValue;
-    }
-
-    /**
-     * @param movementValue to set to.
-     */
-    public void setMovementValue(float movementValue) {
-        this.movementValue = movementValue;
-    }
-
-    /**
-     * @return the movementDate.
-     */
-
-    public LocalDateTime getMovementDate() {
-        return movementDate;
-    }
-
-    /**
-     * @param movementDate to set to.
-     */
-    public void setMovementDate(LocalDateTime movementDate) {
-        this.movementDate = movementDate;
-    }
-
-    /**
-     * @return the device.
-     */
-
-    public tDevice getDevice() {
-        return device;
-    }
-
-    /**
-     * @param device to set to.
-     */
-    public void setDevice(tDevice device) {
-        this.device = device;
-    }
 }

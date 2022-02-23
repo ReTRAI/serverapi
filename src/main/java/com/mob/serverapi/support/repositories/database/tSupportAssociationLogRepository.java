@@ -25,7 +25,7 @@ public class tSupportAssociationLogRepository {
 
         tSupportAssociationLog log = new tSupportAssociationLog();
         log.setUser(actionUser);
-        log.setAlteredId(alteredUser);
+        log.setSupportAssociation(alteredUser);
         log.setAction(action);
         log.setAlterationDate(LocalDateTime.now());
         log.setAlterationDetail(detail);
@@ -36,6 +36,6 @@ public class tSupportAssociationLogRepository {
     @Transactional
     public void deleteSupportAssociationLogBySupportAssociationId(UUID supportAssociationId) {
 
-        repository.deleteBySupportAssociationLogId(supportAssociationId);
+        repository.deleteBySupportAssociation_SupportAssociationId(supportAssociationId);
     }
 }

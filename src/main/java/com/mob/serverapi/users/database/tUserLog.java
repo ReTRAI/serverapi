@@ -1,5 +1,7 @@
 package com.mob.serverapi.users.database;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -7,6 +9,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "userLog")
 public class tUserLog implements Serializable {
@@ -41,87 +45,4 @@ public class tUserLog implements Serializable {
     }
 
 
-    /**
-     * @return the userLogId.
-     */
-    public UUID getUserLogId() {
-        return userLogId;
-    }
-
-    /**
-     * @param userLogId to set to.
-     */
-    public void setUserLogId(UUID userLogId) {
-        this.userLogId = userLogId;
-    }
-
-    /**
-     * @return the action.
-     */
-    public String getAction() {
-        return action;
-    }
-
-    /**
-     * @param action to set to.
-     */
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    /**
-     * @return the actionUserId.
-     */
-    public tUser getActionUser() {
-        return actionUser;
-    }
-
-    /**
-     * @param actionUser to set to.
-     */
-    public void setActionUser(tUser actionUser) {
-        this.actionUser = actionUser;
-    }
-
-    /**
-     * @return the alteredId.
-     */
-    public tUser getAlteredUser() {
-        return alteredUser;
-    }
-
-    /**
-     * @param alteredUser to set to.
-     */
-    public void setAlteredUser(tUser alteredUser) {
-        this.alteredUser = alteredUser;
-    }
-
-    /**
-     * @return the alterationDate.
-     */
-    public LocalDateTime getAlterationDate() {
-        return alterationDate;
-    }
-
-    /**
-     * @param alterationDate to set to.
-     */
-    public void setAlterationDate(LocalDateTime alterationDate) {
-        this.alterationDate = alterationDate;
-    }
-
-    /**
-     * @return the alterationDetail.
-     */
-    public String getAlterationDetail() {
-        return alterationDetail;
-    }
-
-    /**
-     * @param alterationDetail to set to.
-     */
-    public void setAlterationDetail(String alterationDetail) {
-        this.alterationDetail = alterationDetail;
-    }
 }

@@ -1,9 +1,14 @@
 package com.mob.serverapi.support.database;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "supportAssociation")
 public class tSupportAssociation implements Serializable {
@@ -28,51 +33,5 @@ public class tSupportAssociation implements Serializable {
     public tSupportAssociation() {
     }
 
-
-    /**
-     * @return the supportAssociationId.
-     */
-
-    public UUID getSupportAssociationId() {
-        return supportAssociationId;
-    }
-
-    /**
-     * @param supportAssociationId the id to set to.
-     */
-    public void setSupportAssociationId(UUID supportAssociationId) {
-        this.supportAssociationId = supportAssociationId;
-    }
-
-    /**
-     * @return the parentSupport.
-     */
-
-    public tSupport getParentSupport() {
-        return parentSupport;
-    }
-
-    /**
-     * @param parentSupport to set to.
-     */
-    public void setParentSupport(tSupport parentSupport) {
-        this.parentSupport = parentSupport;
-    }
-
-
-    /**
-     * @return the childSupport.
-     */
-
-    public tSupport getChildSupport() {
-        return childSupport;
-    }
-
-    /**
-     * @param childSupport to set to.
-     */
-    public void setChildSupport(tSupport childSupport) {
-        this.childSupport = childSupport;
-    }
 
 }

@@ -57,31 +57,10 @@ public class tSupportRepository {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tSupport> query = cb.createQuery(tSupport.class);
-
-        Metamodel m = entityManager.getMetamodel();
         Root<tSupport> root = query.from(tSupport.class);
         Join<tSupport, tUser> user = root.join(tSupport_.USER);
 
-        List<Predicate> predicates = new ArrayList<Predicate>();
-
-        if (supportId != null && !onlyChildren)
-            predicates.add(cb.equal(root.get("supportId"), supportId));
-
-        if (supportId != null && onlyChildren){
-
-            List<UUID> childrenIds = new ArrayList<>();
-            List<tSupportAssociation> associationsLevel1 = supportAssociationRepository.getAssociationByParentSupportId(supportId);
-            for (tSupportAssociation ra: associationsLevel1) { childrenIds.add(ra.getChildSupport().getSupportId()); }
-
-            List<Integer> children = new ArrayList<>();
-            predicates.add(root.get("supportId").in(childrenIds));
-        }
-        if (supportName != null)
-            predicates.add(cb.like(user.<String>get("userName"), "%"+supportName+"%"));
-
-        Predicate[] predArray = new Predicate[predicates.size()];
-        predicates.toArray(predArray);
-        query.where(predArray);
+        query = getPredicates(cb, query,root,user,  supportId,supportName,onlyChildren);
 
         List<Order> orders = new ArrayList<Order>(2);
         if (field != null) {
@@ -117,10 +96,23 @@ public class tSupportRepository {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tSupport> query = cb.createQuery(tSupport.class);
-
-        Metamodel m = entityManager.getMetamodel();
         Root<tSupport> root = query.from(tSupport.class);
         Join<tSupport, tUser> user = root.join(tSupport_.USER);
+
+        query = getPredicates(cb, query,root,user,  supportId,supportName,onlyChildren);
+
+        long result = entityManager.createQuery(query)
+                .getResultList()
+                .size();
+
+        return result;
+    }
+
+    private CriteriaQuery<tSupport> getPredicates(CriteriaBuilder cb, CriteriaQuery<tSupport> query, Root<tSupport> root ,
+                                                  Join<tSupport, tUser> user, @Nullable UUID supportId, @Nullable String supportName,
+                                                  boolean onlyChildren){
+
+        Metamodel m = entityManager.getMetamodel();
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
@@ -137,17 +129,14 @@ public class tSupportRepository {
             predicates.add(root.get("supportId").in(childrenIds));
         }
         if (supportName != null)
-            predicates.add(cb.like(user.<String>get("userName"), "%"+supportName+"%"));
+            predicates.add(cb.like(cb.lower(user.<String>get("userName")), "%"+supportName.toLowerCase()+"%"));
 
         Predicate[] predArray = new Predicate[predicates.size()];
         predicates.toArray(predArray);
         query.where(predArray);
 
-        long result = entityManager.createQuery(query)
-                .getResultList()
-                .size();
-
-        return result;
+        return query;
     }
+
 
 }

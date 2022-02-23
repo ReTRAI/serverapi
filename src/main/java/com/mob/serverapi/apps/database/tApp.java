@@ -2,6 +2,8 @@ package com.mob.serverapi.apps.database;
 
 import com.mob.serverapi.device.database.tDeviceApp;
 import com.mob.serverapi.users.database.tUser;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "app")
 public class tApp implements Serializable {
@@ -57,105 +61,6 @@ public class tApp implements Serializable {
     public tApp() {
     }
 
-
-    /**
-     * @return the appId.
-     */
-    public UUID getAppId() {
-        return appId;
-    }
-    /**
-     * @param appId to set to.
-     */
-    public void setAppId(UUID appId) {
-        this.appId = appId;
-    }
-
-    /**
-     * @return the name.
-     */
-    public String getName() {
-        return name;
-    }
-    /**
-     * @param name to set to.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-    /**
-     * @return the alias.
-     */
-    public String getAlias() {
-        return alias;
-    }
-    /**
-     * @param alias to set to.
-     */
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
-    /**
-     * @return the thumbnailPath.
-     */
-    public String getThumbnailPath() {
-        return thumbnailPath;
-    }
-    /**
-     * @param thumbnailPath to set to.
-     */
-    public void setThumbnailPath(String thumbnailPath) {
-        this.thumbnailPath = thumbnailPath;
-    }
-    /**
-     * @return the apkPath.
-     */
-    public String getApkPath() {
-        return apkPath;
-    }
-    /**
-     * @param apkPath to set to.
-     */
-    public void setApkPath(String apkPath) {
-        this.apkPath = apkPath;
-    }
-    /**
-     * @return the creationDate.
-     */
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-    /**
-     * @param creationDate to set to.
-     */
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-    /**
-     * @return the updatedDate.
-     */
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
-    }
-    /**
-     * @param updatedDate to set to.
-     */
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-    /**
-     * @return the version.
-     */
-    public String getVersion() {
-        return version;
-    }
-    /**
-     * @param version to set to.
-     */
-    public void setVersion(String version) {
-        this.version = version;
-    }
 
 
 }

@@ -2,6 +2,8 @@ package com.mob.serverapi.device.database;
 
 
 import com.mob.serverapi.users.database.tUser;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "deviceStatusLog")
 public class tDeviceStatusLog implements Serializable {
@@ -43,87 +47,4 @@ public class tDeviceStatusLog implements Serializable {
     }
 
 
-    /**
-     * @return the deviceStatusLogId.
-     */
-    public UUID getDeviceLogId() {
-        return deviceStatusLogId;
-    }
-
-    /**
-     * @param deviceStatusLogId to set to.
-     */
-    public void setDeviceLogId(UUID deviceStatusLogId) {
-        this.deviceStatusLogId = deviceStatusLogId;
-    }
-
-    /**
-     * @return the action.
-     */
-    public String getAction() {
-        return action;
-    }
-
-    /**
-     * @param action to set to.
-     */
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    /**
-     * @return the actionUserId.
-     */
-    public tUser getUser() {
-        return user;
-    }
-
-    /**
-     * @param user to set to.
-     */
-    public void setUser(tUser user) {
-        this.user = user;
-    }
-
-    /**
-     * @return the deviceStatus.
-     */
-    public tDeviceStatus getAlteredId() {
-        return deviceStatus;
-    }
-
-    /**
-     * @param deviceStatus to set to.
-     */
-    public void setAlteredId(tDeviceStatus deviceStatus) {
-        this.deviceStatus = deviceStatus;
-    }
-
-    /**
-     * @return the alterationDate.
-     */
-    public LocalDateTime getAlterationDate() {
-        return alterationDate;
-    }
-
-    /**
-     * @param alterationDate to set to.
-     */
-    public void setAlterationDate(LocalDateTime alterationDate) {
-        this.alterationDate = alterationDate;
-    }
-
-    /**
-     * @return the alterationDetail.
-     */
-    public String getAlterationDetail() {
-        return alterationDetail;
-    }
-
-    /**
-     * @param alterationDetail to set to.
-     */
-    public void setAlterationDetail(String alterationDetail) {
-        this.alterationDetail = alterationDetail;
-    }
 }

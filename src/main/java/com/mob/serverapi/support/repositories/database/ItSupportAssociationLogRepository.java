@@ -9,7 +9,8 @@ import java.util.UUID;
 interface ItSupportAssociationLogRepository extends JpaRepository<tSupportAssociationLog, UUID> {
 
     @Transactional
-    long deleteBySupportAssociationLogId(UUID supportAssociationLogId);
+    long deleteBySupportAssociation_SupportAssociationId(UUID supportAssociationId);
+
 
 
 }

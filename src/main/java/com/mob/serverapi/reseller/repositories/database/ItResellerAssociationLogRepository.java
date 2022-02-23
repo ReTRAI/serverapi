@@ -9,8 +9,8 @@ import java.util.UUID;
 interface ItResellerAssociationLogRepository extends JpaRepository<tResellerAssociationLog, UUID> {
 
 
-
     @Transactional
-    long deleteByResellerAssociationLogId(UUID resellerAssociationLogId);
+    long deleteByResellerAssociation_ResellerAssociationId(UUID resellerAssociationId);
+
 
 }

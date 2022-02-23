@@ -9,6 +9,8 @@ import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.database.tResellerAssociationLog;
 import com.mob.serverapi.reseller.database.tResellerLog;
 import com.mob.serverapi.support.database.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "user")
 public class tUser implements Serializable {
@@ -171,147 +175,6 @@ public class tUser implements Serializable {
     private Set<tTicketLog> ticketLog;
 
     public tUser() {
-    }
-
-
-    /**
-     * @return the userId.
-     */
-    public UUID getUserId() {
-        return userId;
-    }
-
-    /**
-     * @param userId to set to.
-     */
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * @return the userName.
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * @param userName to set to.
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    /**
-     * @return the userEmail.
-     */
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    /**
-     * @param userEmail to set to.
-     */
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    /**
-     * @return the passwordHash.
-     */
-    public byte[] getPasswordHash() {
-        return passwordHash;
-    }
-
-    /**
-     * @param passwordHash to set to.
-     */
-    public void setPasswordHash(byte[] passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    /**
-     * @return the passwordHash.
-     */
-    public byte[] getPasswordSalt() {
-        return passwordSalt;
-    }
-
-    /**
-     * @param passwordSalt to set to.
-     */
-    public void setPasswordSalt(byte[] passwordSalt) {
-        this.passwordSalt = passwordSalt;
-    }
-
-    /**
-     * @return the creationDate.
-     */
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    /**
-     * @param creationDate to set to.
-     */
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    /**
-     * @return the languagePreference.
-     */
-    public String getLanguagePreference() {
-        return languagePreference;
-    }
-
-    /**
-     * @param languagePreference to set to.
-     */
-    public void setLanguagePreference(String languagePreference) {
-        this.languagePreference = languagePreference;
-    }
-
-    /**
-     * @return the themePreference.
-     */
-    public String getThemePreference() {
-        return themePreference;
-    }
-
-    /**
-     * @param themePreference to set to.
-     */
-    public void setThemePreference(String themePreference) {
-        this.themePreference = themePreference;
-    }
-
-    /**
-     * @return the inactivationDate.
-     */
-    public LocalDateTime getInactivationDate() {
-        return inactivationDate;
-    }
-
-    /**
-     * @param inactivationDate to set to.
-     */
-    public void setInactivationDate(LocalDateTime inactivationDate) {
-        this.inactivationDate = inactivationDate;
-    }
-
-    /**
-     * @return the userStatus.
-     */
-    public tUserStatus getUserStatus() {
-        return userStatus;
-    }
-
-    /**
-     * @param userStatus to set to.
-     */
-    public void setUserStatus(tUserStatus userStatus) {
-        this.userStatus = userStatus;
     }
 
 

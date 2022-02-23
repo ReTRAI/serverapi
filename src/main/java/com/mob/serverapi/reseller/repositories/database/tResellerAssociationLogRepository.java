@@ -25,7 +25,7 @@ public class tResellerAssociationLogRepository {
 
         tResellerAssociationLog log = new tResellerAssociationLog();
         log.setUser(actionUser);
-        log.setAlteredId(alteredUser);
+        log.setResellerAssociation(alteredUser);
         log.setAction(action);
         log.setAlterationDate(LocalDateTime.now());
         log.setAlterationDetail(detail);
@@ -34,8 +34,8 @@ public class tResellerAssociationLogRepository {
     }
 
     @Transactional
-    public void deleteResellerAssociationLogByResellerId(UUID resellerAssociationId){
+    public void deleteResellerAssociationLogByAssociationId(UUID resellerAssociationId){
 
-        repository.deleteByResellerAssociationLogId(resellerAssociationId);
+        repository.deleteByResellerAssociation_ResellerAssociationId(resellerAssociationId);
     }
 }

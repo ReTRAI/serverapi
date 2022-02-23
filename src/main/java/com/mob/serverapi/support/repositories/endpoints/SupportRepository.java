@@ -323,7 +323,9 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public List<TicketDetail> getTicketDetailFiltered(String ticketId, String startCreationDate, String endCreationDate, String field, String orderField, int offset, int numberRecords) {
+    public List<TicketDetail> getTicketDetailFiltered(@Nullable String ticketId, @Nullable String startCreationDate, @Nullable String endCreationDate,
+                                                      @Nullable String field, @Nullable String orderField,
+                                                      int offset, int numberRecords) {
         List<TicketDetail> returnList = new ArrayList<>();
 
         try {
@@ -358,7 +360,7 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public long getCountTicketDetailFiltered(String ticketId, String startCreationDate, String endCreationDate) {
+    public long getCountTicketDetailFiltered(@Nullable String ticketId, @Nullable String startCreationDate, @Nullable String endCreationDate) {
         try {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -636,6 +638,7 @@ public class SupportRepository implements ISupportRepository {
                     ticketDetailRepository.saveTicketDetail(tickedDetailToSave);
                     ticketLogRepository.insertTicketLog(actionUser, ticket, "ADD TICKET DETAIL", "TICKET ID: " + ticket.getTicketId());
 
+                    val= true;
                 } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
                 }

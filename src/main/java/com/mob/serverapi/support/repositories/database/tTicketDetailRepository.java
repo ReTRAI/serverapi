@@ -37,29 +37,12 @@ public class tTicketDetailRepository {
 
         List<tTicketDetail> finalList = new ArrayList<>();
 
-
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tTicketDetail> query = cb.createQuery(tTicketDetail.class);
-
-        Metamodel m = entityManager.getMetamodel();
         Root<tTicketDetail> root = query.from(tTicketDetail.class);
         Join<tTicketDetail, tTicket> ticketJoin = root.join(tTicketDetail_.TICKET);
 
-        List<Predicate> predicates = new ArrayList<Predicate>();
-
-        if (ticketId != null)
-            predicates.add(cb.equal(ticketJoin.get("ticketId"), ticketId));
-        if (startCreationDate != null && endCreationDate != null)
-            predicates.add(cb.between(root.get("detailDate"), startCreationDate, endCreationDate));
-        if (startCreationDate != null && endCreationDate == null)
-            predicates.add(cb.greaterThanOrEqualTo(root.get("detailDate"), startCreationDate));
-        if (startCreationDate == null && endCreationDate != null)
-            predicates.add(cb.lessThanOrEqualTo(root.get("detailDate"), endCreationDate));
-
-
-        Predicate[] predArray = new Predicate[predicates.size()];
-        predicates.toArray(predArray);
-        query.where(predArray);
+        query = getPredicates(cb,query,root,ticketJoin,ticketId,startCreationDate,endCreationDate);
 
         List<Order> orders = new ArrayList<Order>(2);
         if (field != null) {
@@ -99,10 +82,22 @@ public class tTicketDetailRepository {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tTicketDetail> query = cb.createQuery(tTicketDetail.class);
-
-        Metamodel m = entityManager.getMetamodel();
         Root<tTicketDetail> root = query.from(tTicketDetail.class);
         Join<tTicketDetail, tTicket> ticketJoin = root.join(tTicketDetail_.TICKET);
+
+        query = getPredicates(cb,query,root,ticketJoin,ticketId,startCreationDate,endCreationDate);
+
+        long result = entityManager.createQuery(query)
+                .getResultList()
+                .size();
+
+
+        return result;
+    }
+
+    private CriteriaQuery<tTicketDetail> getPredicates(CriteriaBuilder cb , CriteriaQuery<tTicketDetail> query, Root<tTicketDetail> root,
+                                                       Join<tTicketDetail, tTicket> ticketJoin, @Nullable UUID ticketId,
+                                                       @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate){
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
@@ -120,13 +115,7 @@ public class tTicketDetailRepository {
         predicates.toArray(predArray);
         query.where(predArray);
 
-
-        long result = entityManager.createQuery(query)
-                .getResultList()
-                .size();
-
-
-        return result;
+        return query;
     }
 
 }

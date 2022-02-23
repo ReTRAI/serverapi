@@ -1,6 +1,8 @@
 package com.mob.serverapi.support.database;
 
 import com.mob.serverapi.users.database.tUser;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "ticket")
 public class tTicket implements Serializable {
@@ -54,66 +58,4 @@ public class tTicket implements Serializable {
     public tTicket() {
     }
 
-
-    /**
-     * @return the ticketId.
-     */
-    public UUID getTicketId() {
-        return ticketId;
-    }
-    /**
-     * @param ticketId  to set to.
-     */
-    public void setTicketId(UUID ticketId) {
-        this.ticketId = ticketId;
-    }
-
-    /**
-     * @return the openDate.
-     */
-    public LocalDateTime getOpenDate() {
-        return openDate;
-    }
-    /**
-     * @param openDate  to set to.
-     */
-    public void setOpenDate(LocalDateTime openDate) {
-        this.openDate = openDate;
-    }
-    /**
-     * @return the openUser.
-     */
-    public tUser getOpenUser() {
-        return openUser;
-    }
-    /**
-     * @param openUser  to set to.
-     */
-    public void setOpenUser(tUser openUser) {
-        this.openUser = openUser;
-    }
-    /**
-     * @return the ticketStatus.
-     */
-    public tTicketStatus getTicketStatus() {
-        return ticketStatus;
-    }
-    /**
-     * @param ticketStatus  to set to.
-     */
-    public void setTicketStatus(tTicketStatus ticketStatus) {
-        this.ticketStatus = ticketStatus;
-    }
-    /**
-     * @return the assignedUser.
-     */
-    public tUser getAssignedUser() {
-        return assignedUser;
-    }
-    /**
-     * @param assignedUser  to set to.
-     */
-    public void setAssignedUser(tUser assignedUser) {
-        this.assignedUser = assignedUser;
-    }
 }

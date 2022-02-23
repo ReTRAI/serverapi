@@ -18,8 +18,8 @@ public  class ResellerUtils {
 
         Reseller r = new Reseller();
         r.setResellerId(reseller.getResellerId().toString());
-        r.setUserId(reseller.getUserId().getUserId().toString());
-        r.setResellerName(reseller.getUserId().getUserName());
+        r.setUserId(reseller.getUser().getUserId().toString());
+        r.setResellerName(reseller.getUser().getUserName());
         r.setCurrentBalance(reseller.getCurrentBalance());
         r.setTotalDevices(reseller.getTotalDevices());
         r.setActiveDevices(reseller.getActiveDevices());

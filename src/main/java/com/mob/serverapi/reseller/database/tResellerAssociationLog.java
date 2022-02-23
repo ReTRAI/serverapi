@@ -1,6 +1,8 @@
 package com.mob.serverapi.reseller.database;
 
 import com.mob.serverapi.users.database.tUser;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "resellerAssociationLog")
 public class tResellerAssociationLog implements Serializable {
@@ -39,89 +43,5 @@ public class tResellerAssociationLog implements Serializable {
     private String alterationDetail;
 
     public tResellerAssociationLog() {
-    }
-
-    /**
-     * @return the resellerAssociationLogId.
-     */
-    public UUID getResellerLogId() {
-        return resellerAssociationLogId;
-    }
-
-    /**
-     * @param resellerAssociationLogId to set to.
-     */
-    public void setResellerLogId(UUID resellerAssociationLogId) {
-        this.resellerAssociationLogId = resellerAssociationLogId;
-    }
-
-    /**
-     * @return the action.
-     */
-    public String getAction() {
-        return action;
-    }
-
-    /**
-     * @param action to set to.
-     */
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    /**
-     * @return the actionUserId.
-     */
-    public tUser getUser() {
-        return user;
-    }
-
-    /**
-     * @param user to set to.
-     */
-    public void setUser(tUser user) {
-        this.user = user;
-    }
-
-    /**
-     * @return the resellerAssociation.
-     */
-    public tResellerAssociation getAlteredId() {
-        return resellerAssociation;
-    }
-
-    /**
-     * @param resellerAssociation to set to.
-     */
-    public void setAlteredId(tResellerAssociation resellerAssociation) {
-        this.resellerAssociation = resellerAssociation;
-    }
-
-    /**
-     * @return the alterationDate.
-     */
-    public LocalDateTime getAlterationDate() {
-        return alterationDate;
-    }
-
-    /**
-     * @param alterationDate to set to.
-     */
-    public void setAlterationDate(LocalDateTime alterationDate) {
-        this.alterationDate = alterationDate;
-    }
-
-    /**
-     * @return the alterationDetail.
-     */
-    public String getAlterationDetail() {
-        return alterationDetail;
-    }
-
-    /**
-     * @param alterationDetail to set to.
-     */
-    public void setAlterationDetail(String alterationDetail) {
-        this.alterationDetail = alterationDetail;
     }
 }

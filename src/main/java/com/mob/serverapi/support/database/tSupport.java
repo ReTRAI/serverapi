@@ -3,6 +3,8 @@ package com.mob.serverapi.support.database;
 import com.mob.serverapi.reseller.database.tResellerAssociation;
 import com.mob.serverapi.reseller.database.tResellerLog;
 import com.mob.serverapi.users.database.tUser;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "support")
 public class tSupport implements Serializable {
@@ -55,46 +59,4 @@ public class tSupport implements Serializable {
     public tSupport() {
     }
 
-    /**
-     * @return supportId.
-     */
-
-    public UUID getSupportId() {
-        return supportId;
-    }
-    /**
-     * @param supportId  to set to.
-     */
-    public void setSupportId(UUID supportId) {
-        this.supportId = supportId;
-    }
-    /**
-     * @return user.
-     */
-
-    public tUser getUser() {
-        return user;
-    }
-    /**
-     * @param user  to set to.
-     */
-    public void setUser(tUser user) {
-        this.user = user;
-    }
-
-
-    /**
-     * @return getCreationDate.
-     */
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    /**
-     * @param creationDate  to set to.
-     */
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
 }

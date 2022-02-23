@@ -1,5 +1,7 @@
 package com.mob.serverapi.device.database;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -7,6 +9,8 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "deviceStatus")
 public class tDeviceStatus implements Serializable {
@@ -41,33 +45,5 @@ public class tDeviceStatus implements Serializable {
 
     public tDeviceStatus() {
     }
-
-
-    /**
-     * @return the deviceStatusId.
-     */
-    public UUID getDeviceStatusId() {
-        return deviceStatusId;
-    }
-
-    /**
-     * @param deviceStatusId to set to.
-     */
-    public void setDeviceStatusId(UUID deviceStatusId) {
-        this.deviceStatusId = deviceStatusId;
-    }
-
-    /**
-     * @return the description.
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description to set to.
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    
 }

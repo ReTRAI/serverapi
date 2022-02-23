@@ -120,33 +120,10 @@ public class tUserRepository {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tUser> query = cb.createQuery(tUser.class);
-
-        Metamodel m = entityManager.getMetamodel();
         Root<tUser> root = query.from(tUser.class);
         Join<tUser, tUserStatus> status = root.join(tUser_.userStatus);
 
-        List<Predicate> predicates = new ArrayList<Predicate>();
-
-        if (userId != null)
-            predicates.add(cb.equal(root.get("userId"), userId));
-        if (userName != null)
-            predicates.add(cb.like(root.get("userName"), "%"+userName+"%"));
-        if (userEmail != null)
-            predicates.add(cb.equal(root.get("userEmail"), userEmail));
-        if (userStatus != null)
-            predicates.add(cb.equal(status.<String>get("description"), userStatus));
-        if (userEmail != null)
-            predicates.add(cb.equal(root.get("userEmail"), userEmail));
-        if (startCreationDate != null && endCreationDate!= null)
-            predicates.add(cb.between(root.get("creationDate"), startCreationDate, endCreationDate));
-        if (startCreationDate != null && endCreationDate== null)
-            predicates.add(cb.greaterThanOrEqualTo(root.get("creationDate"), startCreationDate));
-        if (startCreationDate == null && endCreationDate != null)
-            predicates.add(cb.lessThanOrEqualTo(root.get("creationDate"), endCreationDate));
-
-        Predicate[] predArray = new Predicate[predicates.size()];
-        predicates.toArray(predArray);
-        query.where(predArray);
+        query = getPredicates(cb,query,root,status,userId,userName,userStatus,userEmail,startCreationDate,endCreationDate);
 
         List<Order> orders = new ArrayList<Order>(2);
         if (field != null) {
@@ -184,23 +161,33 @@ public class tUserRepository {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tUser> query = cb.createQuery(tUser.class);
-
-        Metamodel m = entityManager.getMetamodel();
         Root<tUser> root = query.from(tUser.class);
         Join<tUser, tUserStatus> status = root.join(tUser_.userStatus);
+
+        query = getPredicates(cb,query,root,status,userId,userName,userStatus,userEmail,startCreationDate,endCreationDate);
+
+        long result = entityManager.createQuery(query)
+                .getResultList()
+                .size();
+
+        return result;
+    }
+
+    private CriteriaQuery<tUser> getPredicates(CriteriaBuilder cb, CriteriaQuery<tUser> query, Root<tUser> root,
+                                               Join<tUser, tUserStatus> status,@Nullable UUID userId, @Nullable String userName,
+                                               @Nullable String userStatus, @Nullable String userEmail,
+                                               @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate ){
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
         if (userId != null)
             predicates.add(cb.equal(root.get("userId"), userId));
         if (userName != null)
-            predicates.add(cb.like(root.get("userName"), "%"+userName+"%"));
+            predicates.add(cb.like(cb.lower(root.get("userName")), "%"+userName.toLowerCase()+"%"));
         if (userEmail != null)
-            predicates.add(cb.equal(root.get("userEmail"), userEmail));
+            predicates.add(cb.equal(cb.lower(root.get("userEmail")), userEmail.toLowerCase()));
         if (userStatus != null)
-            predicates.add(cb.equal(status.<String>get("description"), userStatus));
-        if (userEmail != null)
-            predicates.add(cb.equal(root.get("userEmail"), userEmail));
+            predicates.add(cb.equal(cb.lower(status.<String>get("description")), userStatus.toLowerCase()));
         if (startCreationDate != null && endCreationDate!= null)
             predicates.add(cb.between(root.get("creationDate"), startCreationDate, endCreationDate));
         if (startCreationDate != null && endCreationDate== null)
@@ -212,10 +199,7 @@ public class tUserRepository {
         predicates.toArray(predArray);
         query.where(predArray);
 
-        long result = entityManager.createQuery(query)
-                .getResultList()
-                .size();
+        return query;
 
-        return result;
     }
 }

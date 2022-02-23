@@ -61,28 +61,10 @@ public class tTicketRepository {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tTicket> query = cb.createQuery(tTicket.class);
-
-        Metamodel m = entityManager.getMetamodel();
         Root<tTicket> root = query.from(tTicket.class);
         Join<tTicket, tTicketStatus> statusJoin = root.join(tTicket_.TICKET_STATUS);
 
-        List<Predicate> predicates = new ArrayList<Predicate>();
-
-        if (ticketId != null)
-            predicates.add(cb.equal(root.get("ticketId"), ticketId));
-        if (status != null)
-            predicates.add(cb.like(statusJoin.get("description"), "%" + status + "%"));
-        if (startCreationDate != null && endCreationDate != null)
-            predicates.add(cb.between(root.get("creationDate"), startCreationDate, endCreationDate));
-        if (startCreationDate != null && endCreationDate == null)
-            predicates.add(cb.greaterThanOrEqualTo(root.get("creationDate"), startCreationDate));
-        if (startCreationDate == null && endCreationDate != null)
-            predicates.add(cb.lessThanOrEqualTo(root.get("creationDate"), endCreationDate));
-
-
-        Predicate[] predArray = new Predicate[predicates.size()];
-        predicates.toArray(predArray);
-        query.where(predArray);
+        query = getPredicates(cb,query,root,statusJoin,ticketId,status,startCreationDate,endCreationDate);
 
         List<Order> orders = new ArrayList<Order>(2);
         if (field != null) {
@@ -123,16 +105,30 @@ public class tTicketRepository {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tTicket> query = cb.createQuery(tTicket.class);
 
-        Metamodel m = entityManager.getMetamodel();
         Root<tTicket> root = query.from(tTicket.class);
         Join<tTicket, tTicketStatus> statusJoin = root.join(tTicket_.TICKET_STATUS);
+
+        query = getPredicates(cb,query,root,statusJoin,ticketId,status,startCreationDate,endCreationDate);
+
+
+        long result = entityManager.createQuery(query)
+                .getResultList()
+                .size();
+
+
+        return result;
+    }
+
+    private CriteriaQuery<tTicket> getPredicates(CriteriaBuilder cb, CriteriaQuery<tTicket> query, Root<tTicket> root,
+                                                 Join<tTicket, tTicketStatus> statusJoin, @Nullable UUID ticketId, @Nullable String status,
+                                                 @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate){
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
         if (ticketId != null)
             predicates.add(cb.equal(root.get("ticketId"), ticketId));
         if (status != null)
-            predicates.add(cb.like(statusJoin.get("description"), "%" + status + "%"));
+            predicates.add(cb.like(cb.lower(statusJoin.get("description")), "%" + status.toLowerCase() + "%"));
         if (startCreationDate != null && endCreationDate != null)
             predicates.add(cb.between(root.get("creationDate"), startCreationDate, endCreationDate));
         if (startCreationDate != null && endCreationDate == null)
@@ -143,15 +139,8 @@ public class tTicketRepository {
 
         Predicate[] predArray = new Predicate[predicates.size()];
         predicates.toArray(predArray);
-        query.where(predArray);
 
-
-        long result = entityManager.createQuery(query)
-                .getResultList()
-                .size();
-
-
-        return result;
+        return query;
     }
 
 }

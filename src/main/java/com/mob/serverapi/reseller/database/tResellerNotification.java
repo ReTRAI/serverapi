@@ -1,5 +1,7 @@
 package com.mob.serverapi.reseller.database;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -7,6 +9,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "resellerNotification")
 public class tResellerNotification implements Serializable {
@@ -37,88 +41,4 @@ public class tResellerNotification implements Serializable {
 
     protected tResellerNotification() {}
 
-
-    /**
-     * @return the resellerNotificationId.
-     */
-    public UUID getResellerNotificationId() {
-        return resellerNotificationId;
-    }
-
-    /**
-     * @param resellerNotificationId to set to.
-     */
-    public void setResellerNotificationId(UUID resellerNotificationId) {
-        this.resellerNotificationId = resellerNotificationId;
-    }
-
-    /**
-     * @return the creationDate.
-     */
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    /**
-     * @param creationDate to set to.
-     */
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    /**
-     * @return the detail.
-     */
-    public String getDetail() {
-        return detail;
-    }
-
-    /**
-     * @param detail to set to.
-     */
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    /**
-     * @return the checked.
-     */
-    public boolean isChecked() {
-        return checked;
-    }
-
-    /**
-     * @param checked to set to.
-     */
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
-
-    /**
-     * @return the checkedDate.
-     */
-    public LocalDateTime getCheckedDate() {
-        return checkedDate;
-    }
-
-    /**
-     * @param checkedDate to set to.
-     */
-    public void setCheckedDate(LocalDateTime checkedDate) {
-        this.checkedDate = checkedDate;
-    }
-
-    /**
-     * @return the reseller.
-     */
-    public tReseller getReseller() {
-        return reseller;
-    }
-
-    /**
-     * @param reseller to set to.
-     */
-    public void setReseller(tReseller reseller) {
-        this.reseller = reseller;
-    }
 }

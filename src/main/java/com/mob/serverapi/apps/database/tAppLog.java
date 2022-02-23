@@ -1,6 +1,8 @@
 package com.mob.serverapi.apps.database;
 
 import com.mob.serverapi.users.database.tUser;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "appLog")
 public class tAppLog implements Serializable {
@@ -42,76 +46,4 @@ public class tAppLog implements Serializable {
     }
 
 
-    /**
-     * @return the appLogId.
-     */
-    public UUID getAppLogId() {
-        return appLogId;
-    }
-    /**
-     * @param appLogId to set to.
-     */
-    public void setAppLogId(UUID appLogId) {
-        this.appLogId = appLogId;
-    }
-    /**
-     * @return the action.
-     */
-    public String getAction() {
-        return action;
-    }
-    /**
-     * @param action to set to.
-     */
-    public void setAction(String action) {
-        this.action = action;
-    }
-    /**
-     * @return the user.
-     */
-    public tUser getUser() {
-        return user;
-    }
-    /**
-     * @param user to set to.
-     */
-    public void setUser(tUser user) {
-        this.user = user;
-    }
-    /**
-     * @return the app.
-     */
-    public tApp getApp() {
-        return app;
-    }
-    /**
-     * @param app to set to.
-     */
-    public void setApp(tApp app) {
-        this.app = app;
-    }
-    /**
-     * @return the alterationDate.
-     */
-    public LocalDateTime getAlterationDate() {
-        return alterationDate;
-    }
-    /**
-     * @param alterationDate to set to.
-     */
-    public void setAlterationDate(LocalDateTime alterationDate) {
-        this.alterationDate = alterationDate;
-    }
-    /**
-     * @return the alterationDetail.
-     */
-    public String getAlterationDetail() {
-        return alterationDetail;
-    }
-    /**
-     * @param alterationDetail to set to.
-     */
-    public void setAlterationDetail(String alterationDetail) {
-        this.alterationDetail = alterationDetail;
-    }
 }

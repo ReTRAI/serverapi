@@ -69,26 +69,7 @@ public class tResellerRepository {
         Root<tReseller> root = query.from(tReseller.class);
         Join<tReseller, tUser> user = root.join(tReseller_.USER);
 
-        List<Predicate> predicates = new ArrayList<Predicate>();
-
-        if (resellerId != null && !onlyChildren)
-            predicates.add(cb.equal(root.get("resellerId"), resellerId));
-
-        if (resellerId != null && onlyChildren){
-
-            List<UUID> childrenIds = new ArrayList<>();
-            List<tResellerAssociation> associationsLevel1 = resellerAssociationRepository.getAssociationByParentResellerId(resellerId);
-            for (tResellerAssociation ra: associationsLevel1) { childrenIds.add(ra.getChildReseller().getResellerId()); }
-
-            List<Integer> children = new ArrayList<>();
-            predicates.add(root.get("resellerId").in(childrenIds));
-        }
-        if (resellerName != null)
-            predicates.add(cb.like(user.<String>get("userName"), "%"+resellerName+"%"));
-
-        Predicate[] predArray = new Predicate[predicates.size()];
-        predicates.toArray(predArray);
-        query.where(predArray);
+        query = getPredicates(cb,query,root,user,resellerId,resellerName,onlyChildren);
 
         List<Order> orders = new ArrayList<Order>(2);
         if (field != null) {
@@ -126,10 +107,21 @@ public class tResellerRepository {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tReseller> query = cb.createQuery(tReseller.class);
-
-        Metamodel m = entityManager.getMetamodel();
         Root<tReseller> root = query.from(tReseller.class);
         Join<tReseller, tUser> user = root.join(tReseller_.USER);
+
+        query = getPredicates(cb,query,root,user,resellerId,resellerName,onlyChildren);
+
+        long result = entityManager.createQuery(query)
+                .getResultList()
+                .size();
+
+        return result;
+    }
+
+    private CriteriaQuery<tReseller> getPredicates(CriteriaBuilder cb ,  CriteriaQuery<tReseller> query, Root<tReseller> root,
+                                                   Join<tReseller, tUser> user, @Nullable UUID resellerId, @Nullable String resellerName,
+                                                   boolean onlyChildren){
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
@@ -146,16 +138,12 @@ public class tResellerRepository {
             predicates.add(root.get("resellerId").in(childrenIds));
         }
         if (resellerName != null)
-            predicates.add(cb.like(user.<String>get("userName"), "%"+resellerName+"%"));
+            predicates.add(cb.like(cb.lower(user.<String>get("userName")), "%"+resellerName.toLowerCase()+"%"));
 
         Predicate[] predArray = new Predicate[predicates.size()];
         predicates.toArray(predArray);
         query.where(predArray);
 
-        long result = entityManager.createQuery(query)
-                .getResultList()
-                .size();
-
-        return result;
+        return query;
     }
 }

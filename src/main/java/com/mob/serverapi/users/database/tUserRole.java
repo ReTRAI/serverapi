@@ -1,11 +1,15 @@
 package com.mob.serverapi.users.database;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "userRole")
 public class tUserRole implements Serializable {
@@ -26,48 +30,5 @@ public class tUserRole implements Serializable {
     private tUserType userType;
 
     public tUserRole() {
-    }
-
-
-    /**
-     * @return the userRoleId.
-     */
-    public UUID getUserRoleId() {
-        return userRoleId;
-    }
-
-    /**
-     * @param userRoleId to set to.
-     */
-    public void setUserRoleId(UUID userRoleId) {
-        this.userRoleId = userRoleId;
-    }
-
-    /**
-     * @return the user.
-     */
-    public tUser getUser() {
-        return user;
-    }
-
-    /**
-     * @param user to set to.
-     */
-    public void setUser(tUser user) {
-        this.user = user;
-    }
-
-    /**
-     * @return the userType.
-     */
-    public tUserType getUserType() {
-        return userType;
-    }
-
-    /**
-     * @param userType to set to.
-     */
-    public void setUserType(tUserType userType) {
-        this.userType = userType;
     }
 }

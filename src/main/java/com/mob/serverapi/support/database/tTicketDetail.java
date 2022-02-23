@@ -1,12 +1,16 @@
 package com.mob.serverapi.support.database;
 
 import com.mob.serverapi.users.database.tUser;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "ticketDetail")
 public class tTicketDetail {
@@ -41,79 +45,4 @@ public class tTicketDetail {
     public tTicketDetail() {
     }
 
-
-    /**
-     * @return the ticketDetailId.
-     */
-    public UUID getTicketDetailId() {
-        return ticketDetailId;
-    }
-    /**
-     * @param ticketDetailId to set to.
-     */
-    public void setTicketDetailId(UUID ticketDetailId) {
-        this.ticketDetailId = ticketDetailId;
-    }
-    /**
-     * @return the ticket.
-     */
-    public tTicket getTicket() {
-        return ticket;
-    }
-    /**
-     * @param ticket to set to.
-     */
-    public void setTicket(tTicket ticket) {
-        this.ticket = ticket;
-    }
-    /**
-     * @return the detail.
-     */
-    public String getDetail() {
-        return detail;
-    }
-    /**
-     * @param detail to set to.
-     */
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-    /**
-     * @return the user.
-     */
-    public tUser getUser() {
-        return user;
-    }
-    /**
-     * @param user to set to.
-     */
-    public void setUser(tUser user) {
-        this.user = user;
-    }
-    /**
-     * @return the responseDate.
-     */
-    public LocalDateTime getDetailDate() {
-        return detailDate;
-    }
-    /**
-     * @param detailDate to set to.
-     */
-    public void setDetailDate(LocalDateTime detailDate) {
-        this.detailDate = detailDate;
-    }
-
-    /**
-     * @return the originalMessage.
-     */
-    public boolean isOriginalMessage() {
-        return originalMessage;
-    }
-
-    /**
-     * @param originalMessage to set to.
-     */
-    public void setOriginalMessage(boolean originalMessage) {
-        this.originalMessage = originalMessage;
-    }
 }

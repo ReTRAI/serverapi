@@ -51,6 +51,7 @@ public  class SupportUtils {
         r.setTicketId(ticket.getTicketId().toString());
         r.setCreationDate(ticket.getOpenDate().format(formatter));
         r.setCreationUserId(ticket.getOpenUser().getUserId().toString());
+        r.setStatus(ticket.getTicketStatus().getDescription());
 
         if(ticket.getAssignedUser() != null)
             r.setAssignedUserId(ticket.getAssignedUser().getUserId().toString());

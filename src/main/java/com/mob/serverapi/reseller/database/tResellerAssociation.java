@@ -1,11 +1,15 @@
 package com.mob.serverapi.reseller.database;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "resellerAssociation")
 public class tResellerAssociation implements Serializable {
@@ -29,50 +33,6 @@ public class tResellerAssociation implements Serializable {
 
     public tResellerAssociation() {}
 
-    /**
-     * @return the ResellerAssociationId.
-     */
 
-    public UUID getResellerAssociationId() {
-        return resellerAssociationId;
-    }
-
-    /**
-     * @param resellerAssociationId the id to set to.
-     */
-    public void setResellerAssociationId(UUID resellerAssociationId) {
-        this.resellerAssociationId = resellerAssociationId;
-    }
-
-    /**
-     * @return the parentReseller.
-     */
-
-    public tReseller getParentReseller() {
-        return parentReseller;
-    }
-
-    /**
-     * @param parentReseller  to set to.
-     */
-    public void setParentReseller(tReseller parentReseller) {
-        this.parentReseller = parentReseller;
-    }
-
-
-    /**
-     * @return the childReseller.
-     */
-
-    public tReseller getChildReseller() {
-        return childReseller;
-    }
-
-    /**
-     * @param childReseller to set to.
-     */
-    public void setChildReseller(tReseller childReseller) {
-        this.childReseller = childReseller;
-    }
 
 }

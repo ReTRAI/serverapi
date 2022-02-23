@@ -1,6 +1,8 @@
 package com.mob.serverapi.device.database;
 
 import com.mob.serverapi.apps.database.tApp;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "deviceApp")
 public class tDeviceApp implements Serializable {
@@ -53,88 +57,4 @@ public class tDeviceApp implements Serializable {
     }
 
 
-    /**
-     * @return the deviceAppId.
-     */
-    public UUID getDeviceAppId() {
-        return deviceAppId;
-    }
-    /**
-     * @param deviceAppId to set to.
-     */
-    public void setDeviceAppId(UUID deviceAppId) {
-        this.deviceAppId = deviceAppId;
-    }
-    /**
-     * @return the currentVersion.
-     */
-    public String getCurrentVersion() {
-        return currentVersion;
-    }
-    /**
-     * @param currentVersion to set to.
-     */
-    public void setCurrentVersion(String currentVersion) {
-        this.currentVersion = currentVersion;
-    }
-    /**
-     * @return the installationDate.
-     */
-    public LocalDateTime getInstallationDate() {
-        return installationDate;
-    }
-    /**
-     * @param installationDate to set to.
-     */
-    public void setInstallationDate(LocalDateTime installationDate) {
-        this.installationDate = installationDate;
-    }
-    /**
-     * @return the lastUpdateDate.
-     */
-    public LocalDateTime getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-    /**
-     * @param lastUpdateDate to set to.
-     */
-    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-    /**
-     * @return the active.
-     */
-    public boolean isActive() {
-        return active;
-    }
-    /**
-     * @param active to set to.
-     */
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-    /**
-     * @return the device.
-     */
-    public tDevice getDevice() {
-        return device;
-    }
-    /**
-     * @param device to set to.
-     */
-    public void setDevice(tDevice device) {
-        this.device = device;
-    }
-    /**
-     * @return the app.
-     */
-    public tApp getApp() {
-        return app;
-    }
-    /**
-     * @param app to set to.
-     */
-    public void setApp(tApp app) {
-        this.app = app;
-    }
 }
