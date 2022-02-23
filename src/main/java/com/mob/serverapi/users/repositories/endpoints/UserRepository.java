@@ -310,6 +310,37 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public boolean activateUser(UUID userId, UUID actionUserId) {
+        boolean val = false;
+        try {
+            tUser actionUser = userRepository.findById(actionUserId);
+
+            tUser getUser = userRepository.findById(userId);
+
+            if (actionUser != null && getUser != null) {
+                tUserStatus userStatusVal = userStatusRepository
+                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.ACTIVE.name());
+
+                getUser.setUserStatus(userStatusVal);
+                getUser.setInactivationDate(LocalDateTime.now());
+
+                tUser saved = userRepository.saveUser(getUser);
+
+                userLogRepository.insertUserLog(actionUser, saved, "ACTIVATE", "ACTIVATE USER");
+
+                val = true;
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("INACTIVATE_USER", ex.getMessage()));
+        }
+        return val;
+    }
+
+    @Override
     public boolean changeLangPreference(UUID userId, String lang, UUID actionUserId) {
         boolean val = false;
         try {

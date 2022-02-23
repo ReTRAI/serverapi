@@ -360,11 +360,11 @@ public class ResellerRepository implements IResellerRepository {
 
                         val = true;
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("RESSELER_HAS_DEVICES", ""));
+                        throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_HAS_DEVICES", ""));
                     }
 
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("RESSELER_DONT_EXIST", ""));
+                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
                 }
             } else {
                 throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
@@ -488,6 +488,41 @@ public class ResellerRepository implements IResellerRepository {
                 if (saved != null) {
 
                     assoc = ResellerUtils.transformResellerAssociation(saved);
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXISTS", ""));
+                }
+
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+            }
+
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("SET_RESELLER_ASSOCIATION", ex.getMessage()));
+        }
+        return assoc;
+    }
+
+
+    @Override
+    public Reseller getResellerParentByChildId(UUID childResellerId) {
+        Reseller assoc = new Reseller();
+
+        try {
+
+            tReseller child = resellerRepository.findById(childResellerId);
+
+            if (child != null) {
+
+                tResellerAssociation saved = resellerAssociationRepository.getAssociationByChildResellerId(childResellerId);
+
+                if (saved != null) {
+                    tReseller parent = resellerRepository.findById(saved.getParentReseller().getResellerId());
+                    assoc = ResellerUtils.transformReseller(parent);
+
                 } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXISTS", ""));
                 }

@@ -512,6 +512,40 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
+    public Support getSupportParentByChildId(UUID childSupportId) {
+        Support assoc = new Support();
+
+        try {
+
+            tSupport child = supportRepository.findById(childSupportId);
+
+            if (child != null) {
+
+                tSupportAssociation saved = supportAssociationRepository.getAssociationByChildId(childSupportId);
+
+
+                if (saved != null) {
+                    tSupport parent = supportRepository.findById(saved.getParentSupport().getSupportId());
+                    assoc = SupportUtils.transformSupport(parent);
+
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXISTS", ""));
+                }
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXISTS", ""));
+            }
+
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("SET_SUPPORT_ASSOCIATION", ex.getMessage()));
+        }
+        return assoc;
+    }
+
+    @Override
     public Ticket setTicket(String message, UUID creationUserId) {
         Ticket ticket = new Ticket();
 

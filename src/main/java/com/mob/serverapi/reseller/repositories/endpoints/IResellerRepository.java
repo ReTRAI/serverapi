@@ -35,4 +35,6 @@ interface IResellerRepository {
     boolean removeResellerAssociation(UUID parentResellerId, UUID childResellerId, UUID actionUserId);
 
     ResellerAssociation getResellerAssociation(UUID parentResellerId, UUID childResellerId);
+
+    Reseller getResellerParentByChildId(UUID childResellerId);
 }

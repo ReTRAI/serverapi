@@ -3,6 +3,8 @@ package com.mob.serverapi.reseller;
 
 import com.mob.serverapi.reseller.base.*;
 import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
+import com.mob.serverapi.support.base.GetSupportParentByChildIdRequest;
+import com.mob.serverapi.support.base.GetSupportParentByChildIdResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -121,13 +123,24 @@ public class ResellerEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerParentByChildIdRequest")
+    @ResponsePayload
+    public GetResellerParentByChildIdResponse getResellerParentByChildId(@RequestPayload GetResellerParentByChildIdRequest request) {
+
+        GetResellerParentByChildIdResponse response = new GetResellerParentByChildIdResponse();
+        response.setReseller(resellerRepository.getResellerParentByChildId(
+                UUID.fromString(request.getChildResellerId())));
+
+        return response;
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerAssociationRequest")
     @ResponsePayload
     public SetResellerAssociationResponse setResellerAssociation (@RequestPayload SetResellerAssociationRequest request) {
 
         SetResellerAssociationResponse response = new SetResellerAssociationResponse();
-        response.setResult(resellerRepository.setResellerAssociation(UUID.fromString(request.getParentResselerId()),
-                UUID.fromString(request.getChildResselerId()), UUID.fromString(request.getActionUserId())));
+        response.setResult(resellerRepository.setResellerAssociation(UUID.fromString(request.getParentResellerId()),
+                UUID.fromString(request.getChildResellerId()), UUID.fromString(request.getActionUserId())));
 
         return response;
     }

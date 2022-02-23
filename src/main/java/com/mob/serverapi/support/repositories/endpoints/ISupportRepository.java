@@ -51,6 +51,8 @@ interface ISupportRepository {
 
     SupportAssociation getSupportAssociation(UUID parentSupportId, UUID childSupportId);
 
+    Support getSupportParentByChildId(UUID childSupportId);
+
     Ticket setTicket(String message,UUID creationUserId);
 
     boolean updateTicket(UUID ticketId, @Nullable String status, @Nullable String assignedUserId, UUID actionUserId);

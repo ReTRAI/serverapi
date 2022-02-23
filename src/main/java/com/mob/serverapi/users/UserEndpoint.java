@@ -105,6 +105,17 @@ public class UserEndpoint {
     }
 
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "activateUserRequest")
+    @ResponsePayload
+    public ActivateUserResponse inactivateUser (@RequestPayload ActivateUserRequest request) {
+
+        ActivateUserResponse response = new ActivateUserResponse();
+        response.setResult(userRepository.activateUser(UUID.fromString(request.getUserId())
+                ,UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "changeLangPreferenceRequest")
     @ResponsePayload
     public ChangeLangPreferenceResponse changeLangPreference

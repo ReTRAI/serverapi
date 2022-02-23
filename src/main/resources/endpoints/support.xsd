@@ -173,6 +173,22 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- getSupportParentByChildId-->
+    <xs:element name="getSupportParentByChildIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="childSupportId"  type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getSupportParentByChildIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="support" type="tns:support"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- setSupport-->
     <xs:element name="setSupportRequest">
         <xs:complexType>

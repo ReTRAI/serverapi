@@ -149,6 +149,16 @@ public class SupportEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getSupportParentByChildIdRequest")
+    @ResponsePayload
+    public GetSupportParentByChildIdResponse getSupportParentByChildId(@RequestPayload GetSupportParentByChildIdRequest request) {
+
+        GetSupportParentByChildIdResponse response = new GetSupportParentByChildIdResponse();
+        response.setSupport(supportRepository.getSupportParentByChildId(
+                UUID.fromString(request.getChildSupportId())));
+
+        return response;
+    }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setSupportAssociationRequest")
     @ResponsePayload

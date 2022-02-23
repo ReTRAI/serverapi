@@ -10,6 +10,7 @@ package com.mob.serverapi.support.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="result" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="childSupportId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,27 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "result"
+    "childSupportId"
 })
-@XmlRootElement(name = "updateTicketResponse")
-public class UpdateTicketResponse {
+@XmlRootElement(name = "getSupportParentByChildIdRequest")
+public class GetSupportParentByChildIdRequest {
 
-    protected boolean result;
+    @XmlElement(required = true)
+    protected String childSupportId;
 
     /**
-     * Gets the value of the result property.
+     * Gets the value of the childSupportId property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public boolean isResult() {
-        return result;
+    public String getChildSupportId() {
+        return childSupportId;
     }
 
     /**
-     * Sets the value of the result property.
+     * Sets the value of the childSupportId property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setResult(boolean value) {
-        this.result = value;
+    public void setChildSupportId(String value) {
+        this.childSupportId = value;
     }
 
 }

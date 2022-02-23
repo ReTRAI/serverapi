@@ -15,6 +15,8 @@ interface ItSupportAssociationRepository extends JpaRepository<tSupportAssociati
 
     long countByChildSupport_SupportId(UUID supportId);
 
+    tSupportAssociation findByChildSupport_SupportId(UUID supportId);
+
 
     
 

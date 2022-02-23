@@ -35,6 +35,10 @@ public class tSupportAssociationRepository {
         return repository.findByParentSupport_SupportIdAndChildSupport_SupportId(parentSupportId, childSupportId);
     }
 
+    public tSupportAssociation getAssociationByChildId( UUID childSupportId) {
+        return repository.findByChildSupport_SupportId(childSupportId);
+    }
+
     @Transactional
     public void deleteById(UUID supportAssociationId) {
         repository.deleteById(supportAssociationId);

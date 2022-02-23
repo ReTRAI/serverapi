@@ -171,6 +171,24 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- activateUser-->
+    <xs:element name="activateUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:string"/>
+                <xs:element name="actionUserId"  type="xs:string"/>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="activateUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- changeLangPreference-->
     <xs:element name="changeLangPreferenceRequest">
         <xs:complexType>

@@ -23,6 +23,8 @@ interface IUserRepository {
 
     boolean changeUserPw(UUID userId, String newPassword, UUID actionUserId);
 
+    boolean activateUser(UUID userId, UUID actionUserId);
+
     boolean inactivateUser(UUID userId, UUID actionUserId);
 
     boolean changeLangPreference(UUID userId, String lang, UUID actionUserId);

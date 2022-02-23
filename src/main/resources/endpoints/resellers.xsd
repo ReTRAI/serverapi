@@ -123,6 +123,22 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- getResellerParentByChildId-->
+    <xs:element name="getResellerParentByChildIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="childResellerId"  type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getResellerParentByChildIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reseller" type="tns:reseller"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- setReseller-->
     <xs:element name="setResellerRequest">
         <xs:complexType>
@@ -164,8 +180,8 @@
     <xs:element name="setResellerAssociationRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="parentResselerId" type="xs:string"/>
-                <xs:element name="childResselerId" type="xs:string"/>
+                <xs:element name="parentResellerId" type="xs:string"/>
+                <xs:element name="childResellerId" type="xs:string"/>
                 <xs:element name="actionUserId" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>

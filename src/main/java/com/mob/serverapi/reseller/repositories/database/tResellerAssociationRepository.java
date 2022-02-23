@@ -27,6 +27,10 @@ public class tResellerAssociationRepository {
         return repository.findDistinctByParentReseller_ResellerId(resellerId);
     }
 
+    public tResellerAssociation getAssociationByChildResellerId (UUID resellerId){
+        return repository.findByChildReseller_ResellerId(resellerId);
+    }
+
     public long countAssociationByChildResellerId (UUID resellerId){
         return repository.countByChildReseller_ResellerId(resellerId);
     }

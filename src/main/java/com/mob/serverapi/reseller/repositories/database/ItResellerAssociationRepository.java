@@ -13,6 +13,9 @@ interface ItResellerAssociationRepository extends JpaRepository<tResellerAssocia
 
     tResellerAssociation findByParentReseller_ResellerIdAndChildReseller_ResellerId(UUID resellerId, UUID resellerId1);
 
+    tResellerAssociation findByChildReseller_ResellerId(UUID resellerId);
+
+
     long countByChildReseller_ResellerId(UUID resellerId);
 
 

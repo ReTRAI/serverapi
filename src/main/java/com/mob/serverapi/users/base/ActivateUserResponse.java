@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.support.base;
+package com.mob.serverapi.users.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -37,8 +37,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "result"
 })
-@XmlRootElement(name = "updateTicketResponse")
-public class UpdateTicketResponse {
+@XmlRootElement(name = "activateUserResponse")
+public class ActivateUserResponse {
 
     protected boolean result;
 
