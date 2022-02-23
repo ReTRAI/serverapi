@@ -27,7 +27,8 @@ public class tDeviceStatus implements Serializable {
         FREE,
         WIPED,
         BLOCKED,
-        SUSPENDED;
+        SUSPENDED,
+        UNASSIGNED;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.mob.serverapi;
 
+import com.mob.serverapi.device.repositories.endpoints.DeviceRepository;
 import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
 import com.mob.serverapi.servicefault.DetailSoapFaultDefinitionExceptionResolver;
 import com.mob.serverapi.servicefault.ServiceFaultException;
@@ -84,6 +85,16 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
+    @Bean(name = "devices")
+    public DefaultWsdl11Definition deviceWsdl11Definition(XsdSchema deviceSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("DevicesPort");
+        wsdl11Definition.setLocationUri("/");
+        wsdl11Definition.setTargetNamespace("http://www.mob.com/serverapi/device/base");
+        wsdl11Definition.setSchema(deviceSchema);
+        return wsdl11Definition;
+    }
+
     /**
      * ENDPOINT BEANS
      */
@@ -102,6 +113,11 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("endpoints/support.xsd"));
     }
 
+    @Bean
+    public XsdSchema deviceSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("endpoints/devices.xsd"));
+    }
+
     /**
      * REPOSITORY BEANS
      */
@@ -118,5 +134,10 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     @Bean
     public SupportRepository supportRepository() {
         return new SupportRepository();
+    }
+
+    @Bean
+    public DeviceRepository deviceRepository() {
+        return new DeviceRepository();
     }
 }

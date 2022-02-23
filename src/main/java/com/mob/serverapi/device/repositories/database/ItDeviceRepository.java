@@ -10,4 +10,12 @@ interface ItDeviceRepository extends JpaRepository<tDevice, UUID> {
 
     List<tDevice> findByReseller_ResellerId(UUID resellerId);
 
+    boolean existsBySerialNumber(String serialNumber);
+
+    boolean existsByImeiNumber(String imeiNumber);
+
+    boolean existsBySimNumber(String simNumber);
+
+    boolean existsByAndroidId(String androidId);
+
 }

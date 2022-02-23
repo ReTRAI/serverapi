@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/device/base"
+           targetNamespace="http://www.mob.com/serverapi/device/base" elementFormDefault="qualified">
+
+    <!-- getDeviceById-->
+    <xs:element name="getDeviceByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId"  type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getDeviceByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- setDevice-->
+    <xs:element name="setDeviceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="brand" type="xs:string"/>
+                <xs:element name="serialNumber" type="xs:string"/>
+                <xs:element name="imeiNumber" type="xs:string"/>
+                <xs:element name="simNumber" type="xs:string"/>
+                <xs:element name="androidId" type="xs:string"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="setDeviceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Endpoint Device Object-->
+    <xs:complexType name="device">
+        <xs:sequence>
+            <xs:element name="deviceId"  type="xs:string"/>
+            <xs:element name="resellerId" type="xs:string"/>
+            <xs:element name="deviceStatus" type="xs:string"/>
+            <xs:element name="brand" type="xs:string"/>
+            <xs:element name="serialNumber" type="xs:string"/>
+            <xs:element name="imeiNumber" type="xs:string"/>
+            <xs:element name="simNumber" type="xs:string"/>
+            <xs:element name="androidId" type="xs:string"/>
+            <xs:element name="firstSimNumber" type="xs:string"/>
+            <xs:element name="creationDate" type="xs:string"/>
+            <xs:element name="lastConnection" type="xs:string"/>
+            <xs:element name="lastBackup" type="xs:string"/>
+            <xs:element name="activationDate" type="xs:string"/>
+            <xs:element name="expireDate" type="xs:string"/>
+            <xs:element name="currentBalance" type="xs:float"/>
+            <xs:element name="currentMinutes" type="xs:float"/>
+            <xs:element name="notes" type="xs:string"/>
+            <xs:element name="osVersion" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

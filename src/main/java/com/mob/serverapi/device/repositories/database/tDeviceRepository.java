@@ -14,8 +14,8 @@ public class tDeviceRepository {
     @Autowired
     ItDeviceRepository repository;
 
-    public void saveDevice(tDevice device) {
-        repository.save(device);
+    public tDevice saveDevice(tDevice device) {
+       return repository.save(device);
     }
 
     public List<tDevice> getAllDevicesByResellerId(UUID resellerId){
@@ -26,5 +26,23 @@ public class tDeviceRepository {
     public tDevice findById (UUID deviceId){
 
         return repository.findById(deviceId).orElse(null);
+    }
+
+    public boolean existSerialNumber(String serialNumber)
+    {
+        return repository.existsBySerialNumber(serialNumber);
+    }
+
+    public boolean existImeiNumber(String imeiNumber)
+    {
+        return repository.existsByImeiNumber(imeiNumber);
+    }
+    public boolean existSimNumber(String simNumber)
+    {
+        return repository.existsBySimNumber(simNumber);
+    }
+    public boolean existAndroidId(String androidId)
+    {
+        return repository.existsByAndroidId(androidId);
     }
 }

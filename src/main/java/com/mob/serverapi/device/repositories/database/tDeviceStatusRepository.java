@@ -18,7 +18,7 @@ public class tDeviceStatusRepository {
     @Autowired
     ItDeviceStatusRepository repository;
 
-    public void savetDeviceStatus(tDeviceStatus deviceStatus){
+    public void saveDeviceStatus(tDeviceStatus deviceStatus){
         repository.save(deviceStatus);
     }
 
@@ -31,6 +31,7 @@ public class tDeviceStatusRepository {
         descrs.add(tDeviceStatus.DeviceStatusEnum.WIPED);
         descrs.add(tDeviceStatus.DeviceStatusEnum.BLOCKED);
         descrs.add(tDeviceStatus.DeviceStatusEnum.SUSPENDED);
+        descrs.add(tDeviceStatus.DeviceStatusEnum.UNASSIGNED);
 
 
         for (tDeviceStatus.DeviceStatusEnum d: descrs) {
@@ -46,9 +47,13 @@ public class tDeviceStatusRepository {
 
             if(!repository.exists(deviceStatus)) {
 
-                savetDeviceStatus(t);
+                saveDeviceStatus(t);
             }
 
         }
+    }
+
+    public tDeviceStatus findDeviceStatusByDescription(String description){
+        return repository.findByDescription(description);
     }
 }

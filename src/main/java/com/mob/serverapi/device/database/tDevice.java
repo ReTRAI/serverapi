@@ -26,7 +26,7 @@ public class tDevice implements Serializable {
     @Column(name = "brand", nullable = false)
     private String brand;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     //FK to table reseller, column resellerId
     @JoinColumn(name = "resellerId", referencedColumnName = "resellerId",
             foreignKey = @ForeignKey(name="FK_DEVICE_RESELLERID"))
@@ -47,13 +47,10 @@ public class tDevice implements Serializable {
     @Column(name = "firstSimNumber", nullable = false)
     private String firstSimNumber;
 
-    @Column(name = "tunnelIP", nullable = false)
-    private String tunnelIP;
+    @Column(name = "creationDate", nullable = false)
+    private LocalDateTime creationDate;
 
-    @Column(name = "creationDevice", nullable = false)
-    private LocalDateTime creationDevice;
-
-    @Column(name = "lastConnection", nullable = false)
+    @Column(name = "lastConnection")
     private LocalDateTime lastConnection;
 
     @Column(name = "lastBackup")
@@ -75,13 +72,13 @@ public class tDevice implements Serializable {
     private float currentBalance;
 
     @Column(name = "currentMinutes")
-    private Time currentMinutes;
+    private float currentMinutes;
 
     @Lob
     @Column(name = "notes")
     private String notes;
 
-    @Column(name = "osVersion", length = 100, nullable = false)
+    @Column(name = "osVersion", length = 100)
     private String osVersion;
 
     /**
