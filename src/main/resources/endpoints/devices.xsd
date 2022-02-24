@@ -18,6 +18,58 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- getDevicesFiltered-->
+    <xs:element name="getDevicesFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId"  type="xs:string" />
+                <xs:element name="resellerId"  type="xs:string" />
+                <xs:element name="status"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+                <xs:element name="startActivationDate"  type="xs:string" />
+                <xs:element name="endActivationDate"  type="xs:string" />
+                <xs:element name="startExpirationDate"  type="xs:string" />
+                <xs:element name="endExpirationDate"  type="xs:string" />
+                <xs:element name="field"  type="xs:string" />
+                <xs:element name="orderField"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getDevicesFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getCountDevicesFiltered-->
+    <xs:element name="getCountDevicesFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId"  type="xs:string" />
+                <xs:element name="resellerId"  type="xs:string" />
+                <xs:element name="status"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+                <xs:element name="startActivationDate"  type="xs:string" />
+                <xs:element name="endActivationDate"  type="xs:string" />
+                <xs:element name="startExpirationDate"  type="xs:string" />
+                <xs:element name="endExpirationDate"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountDevicesFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- setDevice-->
     <xs:element name="setDeviceRequest">
         <xs:complexType>

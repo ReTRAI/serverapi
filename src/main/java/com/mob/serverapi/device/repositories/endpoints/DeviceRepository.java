@@ -12,10 +12,12 @@ import com.mob.serverapi.users.database.tUser;
 import com.mob.serverapi.users.repositories.database.tUserRepository;
 import com.mob.serverapi.utils.DeviceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -132,10 +134,10 @@ public class DeviceRepository implements IDeviceRepository {
             if (actionUser != null) {
                 for (Device d : deviceList) {
 
-                    Device deviceSaved = setDevice(d.getBrand(),d.getModel(), d.getSerialNumber(),
+                    Device deviceSaved = setDevice(d.getBrand(), d.getModel(), d.getSerialNumber(),
                             d.getImeiNumber(), d.getSimNumber(), d.getAndroidId(), actionUserId);
 
-                    if(deviceSaved!= null)
+                    if (deviceSaved != null)
                         devicesInserted.add(deviceSaved);
                 }
 
@@ -149,6 +151,101 @@ public class DeviceRepository implements IDeviceRepository {
         }
 
         return devicesInserted;
+    }
+
+    @Override
+    public List<Device> getDevicesFiltered(@Nullable String deviceId, @Nullable String resellerId,
+                                           @Nullable String status, @Nullable String startCreationDate,
+                                           @Nullable String endCreationDate, @Nullable String startActivationDate,
+                                           @Nullable String endActivationDate, @Nullable String startExpirationDate,
+                                           @Nullable String endExpirationDate, @Nullable String field,
+                                           @Nullable String orderField, int offset, int numberRecords) {
+        List<Device> returnList = new ArrayList<>();
+
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+
+            UUID localDeviceId = deviceId.equals("") ? null : UUID.fromString(deviceId);
+            UUID localResellerId = resellerId.equals("") ? null : UUID.fromString(resellerId);
+            String localDeviceStatus = status.equals("") ? null : status;
+
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
+                    LocalDateTime.parse(startCreationDate, formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
+                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            LocalDateTime localStartActivationDate = startActivationDate.equals("") ? null :
+                    LocalDateTime.parse(startActivationDate, formatter);
+            LocalDateTime localEndActivationDate = endActivationDate.equals("") ? null :
+                    LocalDateTime.parse(endActivationDate, formatter).plusDays(1);
+            LocalDateTime localStartExpirationDate = startExpirationDate.equals("") ? null :
+                    LocalDateTime.parse(startExpirationDate, formatter);
+            LocalDateTime localEndExpirationDate = endExpirationDate.equals("") ? null :
+                    LocalDateTime.parse(endExpirationDate, formatter).plusDays(1);
+
+            String localField = field.equals("") ? null : field;
+            String localOrderField = orderField.equals("") ? null : orderField;
+
+            List<tDevice> devices = deviceRepository.getDevicesFiltered(localDeviceId, localResellerId, localDeviceStatus, localStartCreationDate,
+                    localEndCreationDate, localStartActivationDate, localEndActivationDate, localStartExpirationDate, localEndExpirationDate,
+                    field, orderField, offset, numberRecords);
+
+            if (devices != null) {
+                returnList = DeviceUtils.transformDeviceList(devices);
+
+            } else {
+                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_DEVICE_LIST", ""));
+            }
+
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_DEVICES_FILTERED", ex.getMessage()));
+        }
+        return returnList;
+    }
+
+    @Override
+    public long getCountDevicesFiltered(@Nullable String deviceId, @Nullable String resellerId,
+                                        @Nullable String status, @Nullable String startCreationDate,
+                                        @Nullable String endCreationDate, @Nullable String startActivationDate,
+                                        @Nullable String endActivationDate, @Nullable String startExpirationDate,
+                                        @Nullable String endExpirationDate) {
+        try {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+
+            UUID localDeviceId = deviceId.equals("") ? null : UUID.fromString(deviceId);
+            UUID localResellerId = resellerId.equals("") ? null : UUID.fromString(resellerId);
+            String localDeviceStatus = status.equals("") ? null : status;
+
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
+                    LocalDateTime.parse(startCreationDate, formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
+                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            LocalDateTime localStartActivationDate = startActivationDate.equals("") ? null :
+                    LocalDateTime.parse(startActivationDate, formatter);
+            LocalDateTime localEndActivationDate = endActivationDate.equals("") ? null :
+                    LocalDateTime.parse(endActivationDate, formatter).plusDays(1);
+            LocalDateTime localStartExpirationDate = startExpirationDate.equals("") ? null :
+                    LocalDateTime.parse(startExpirationDate, formatter);
+            LocalDateTime localEndExpirationDate = endExpirationDate.equals("") ? null :
+                    LocalDateTime.parse(endExpirationDate, formatter).plusDays(1);
+
+
+            long countDevices = deviceRepository.getCountDevicesFiltered(localDeviceId, localResellerId, localDeviceStatus, localStartCreationDate,
+                    localEndCreationDate, localStartActivationDate, localEndActivationDate, localStartExpirationDate, localEndExpirationDate);
+
+            return countDevices;
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_DEVICES_FILTERED", ex.getMessage()));
+        }
     }
 }
 

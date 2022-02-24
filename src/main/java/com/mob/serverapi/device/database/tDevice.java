@@ -68,8 +68,8 @@ public class tDevice implements Serializable {
     @Column(name = "activationDate")
     private LocalDateTime activationDate;
 
-    @Column(name = "expireDate")
-    private LocalDateTime expireDate;
+    @Column(name = "expirationDate")
+    private LocalDateTime expirationDate;
 
     @Column(name = "currentBalance")
     private float currentBalance;

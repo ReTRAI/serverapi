@@ -57,4 +57,33 @@ public class DeviceEndpoint {
 
         return response;
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getDevicesFilteredRequest")
+    @ResponsePayload
+    public GetDevicesFilteredResponse getDevicesFiltered(@RequestPayload GetDevicesFilteredRequest request) {
+
+        GetDevicesFilteredResponse response = new GetDevicesFilteredResponse();
+        response.getDevice().addAll(deviceRepository.getDevicesFiltered(request.getDeviceId(),
+                request.getResellerId(),request.getStatus(),request.getStartCreationDate(),
+                request.getEndCreationDate(),request.getStartActivationDate(),
+                request.getEndActivationDate(),request.getStartExpirationDate(),
+                request.getEndExpirationDate(),request.getField(),request.getOrderField(),
+                request.getOffset(),request.getNumberRecords()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountDevicesFilteredRequest")
+    @ResponsePayload
+    public GetCountDevicesFilteredResponse getCountDevicesFiltered(@RequestPayload GetCountDevicesFilteredRequest request) {
+
+        GetCountDevicesFilteredResponse response = new GetCountDevicesFilteredResponse();
+        response.setResult(deviceRepository.getCountDevicesFiltered(request.getDeviceId(),
+                request.getResellerId(),request.getStatus(),request.getStartCreationDate(),
+                request.getEndCreationDate(),request.getStartActivationDate(),
+                request.getEndActivationDate(),request.getStartExpirationDate(),
+                request.getEndExpirationDate()));
+
+        return response;
+    }
 }

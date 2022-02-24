@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.device.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,12 +25,15 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userStatus" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userEmail" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="deviceId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="resellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="startCreationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="endCreationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="startActivationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="endActivationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="startExpirationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="endExpirationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="field" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="orderField" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}int"/>
@@ -45,32 +48,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "userId",
-    "userName",
-    "userStatus",
-    "userEmail",
+    "deviceId",
+    "resellerId",
+    "status",
     "startCreationDate",
     "endCreationDate",
+    "startActivationDate",
+    "endActivationDate",
+    "startExpirationDate",
+    "endExpirationDate",
     "field",
     "orderField",
     "offset",
     "numberRecords"
 })
-@XmlRootElement(name = "getUserFilteredRequest")
-public class GetUserFilteredRequest {
+@XmlRootElement(name = "getDevicesFilteredRequest")
+public class GetDevicesFilteredRequest {
 
     @XmlElement(required = true)
-    protected String userId;
+    protected String deviceId;
     @XmlElement(required = true)
-    protected String userName;
+    protected String resellerId;
     @XmlElement(required = true)
-    protected String userStatus;
-    @XmlElement(required = true)
-    protected String userEmail;
+    protected String status;
     @XmlElement(required = true)
     protected String startCreationDate;
     @XmlElement(required = true)
     protected String endCreationDate;
+    @XmlElement(required = true)
+    protected String startActivationDate;
+    @XmlElement(required = true)
+    protected String endActivationDate;
+    @XmlElement(required = true)
+    protected String startExpirationDate;
+    @XmlElement(required = true)
+    protected String endExpirationDate;
     @XmlElement(required = true)
     protected String field;
     @XmlElement(required = true)
@@ -79,99 +91,75 @@ public class GetUserFilteredRequest {
     protected int numberRecords;
 
     /**
-     * Gets the value of the userId property.
+     * Gets the value of the deviceId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserId() {
-        return userId;
+    public String getDeviceId() {
+        return deviceId;
     }
 
     /**
-     * Sets the value of the userId property.
+     * Sets the value of the deviceId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserId(String value) {
-        this.userId = value;
+    public void setDeviceId(String value) {
+        this.deviceId = value;
     }
 
     /**
-     * Gets the value of the userName property.
+     * Gets the value of the resellerId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserName() {
-        return userName;
+    public String getResellerId() {
+        return resellerId;
     }
 
     /**
-     * Sets the value of the userName property.
+     * Sets the value of the resellerId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserName(String value) {
-        this.userName = value;
+    public void setResellerId(String value) {
+        this.resellerId = value;
     }
 
     /**
-     * Gets the value of the userStatus property.
+     * Gets the value of the status property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserStatus() {
-        return userStatus;
+    public String getStatus() {
+        return status;
     }
 
     /**
-     * Sets the value of the userStatus property.
+     * Sets the value of the status property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserStatus(String value) {
-        this.userStatus = value;
-    }
-
-    /**
-     * Gets the value of the userEmail property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    /**
-     * Sets the value of the userEmail property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUserEmail(String value) {
-        this.userEmail = value;
+    public void setStatus(String value) {
+        this.status = value;
     }
 
     /**
@@ -220,6 +208,102 @@ public class GetUserFilteredRequest {
      */
     public void setEndCreationDate(String value) {
         this.endCreationDate = value;
+    }
+
+    /**
+     * Gets the value of the startActivationDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStartActivationDate() {
+        return startActivationDate;
+    }
+
+    /**
+     * Sets the value of the startActivationDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStartActivationDate(String value) {
+        this.startActivationDate = value;
+    }
+
+    /**
+     * Gets the value of the endActivationDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEndActivationDate() {
+        return endActivationDate;
+    }
+
+    /**
+     * Sets the value of the endActivationDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEndActivationDate(String value) {
+        this.endActivationDate = value;
+    }
+
+    /**
+     * Gets the value of the startExpirationDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStartExpirationDate() {
+        return startExpirationDate;
+    }
+
+    /**
+     * Sets the value of the startExpirationDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStartExpirationDate(String value) {
+        this.startExpirationDate = value;
+    }
+
+    /**
+     * Gets the value of the endExpirationDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getEndExpirationDate() {
+        return endExpirationDate;
+    }
+
+    /**
+     * Sets the value of the endExpirationDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setEndExpirationDate(String value) {
+        this.endExpirationDate = value;
     }
 
     /**

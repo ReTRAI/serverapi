@@ -40,8 +40,8 @@ public  class DeviceUtils {
             r.setLastBackup(device.getLastBackup().format(formatter));
         if(device.getActivationDate()!= null)
             r.setActivationDate(device.getActivationDate().format(formatter));
-        if(device.getExpireDate()!= null)
-            r.setExpireDate(device.getExpireDate().format(formatter));
+        if(device.getExpirationDate()!= null)
+            r.setExpireDate(device.getExpirationDate().format(formatter));
         r.setCurrentBalance(device.getCurrentBalance());
         r.setCurrentMinutes(device.getCurrentMinutes());
         r.setNotes(device.getNotes());
