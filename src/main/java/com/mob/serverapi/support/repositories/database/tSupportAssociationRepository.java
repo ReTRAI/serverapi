@@ -39,6 +39,10 @@ public class tSupportAssociationRepository {
         return repository.findByChildSupport_SupportId(childSupportId);
     }
 
+    public  boolean existInSupportAssociation(UUID parentSupportId, UUID childSupportId) {
+        return repository.existsByParentSupport_SupportIdOrChildSupport_SupportId(parentSupportId, childSupportId);
+    }
+
     @Transactional
     public void deleteById(UUID supportAssociationId) {
         repository.deleteById(supportAssociationId);

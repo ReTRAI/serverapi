@@ -164,21 +164,24 @@ public class SupportRepository implements ISupportRepository {
 
                 if (supportValidation != null) {
 
-                    tUserType userTypeVal = userTypeRepository.
-                            findUserTypeByDescription(tUserType.UserTypeEnum.SUPPORT.name());
-                    tUser associatedUser = userRepository.findById(supportValidation.getUser().getUserId());
-                    tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(supportValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
+                    if (supportAssociationRepository.existInSupportAssociation(supportId, supportId)) {
+                        tUserType userTypeVal = userTypeRepository.
+                                findUserTypeByDescription(tUserType.UserTypeEnum.SUPPORT.name());
+                        tUser associatedUser = userRepository.findById(supportValidation.getUser().getUserId());
+                        tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(supportValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
 
 
-                    userRoleRepository.deleteUserRoleById(role.getUserRoleId());
-                    supportLogRepository.deleteSupportLogBySupportId(supportValidation.getSupportId());
-                    supportRepository.deleteSupportById(supportValidation.getSupportId());
+                        userRoleRepository.deleteUserRoleById(role.getUserRoleId());
+                        supportLogRepository.deleteSupportLogBySupportId(supportValidation.getSupportId());
+                        supportRepository.deleteSupportById(supportValidation.getSupportId());
 
-                    userLogRepository.insertUserLog(actionUser, associatedUser, "REMOVE_SUPPORT_ROLE", "");
+                        userLogRepository.insertUserLog(actionUser, associatedUser, "REMOVE_SUPPORT_ROLE", "");
 
-                    val = true;
+                        val = true;
 
-
+                    } else {
+                        throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_HAS_ASSOCIATIONS", ""));
+                    }
                 } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXIST", ""));
                 }
@@ -657,7 +660,7 @@ public class SupportRepository implements ISupportRepository {
 
             tTicket ticket = ticketRepository.findById(ticketId);
 
-            if(ticket != null) {
+            if (ticket != null) {
                 tUser actionUser = userRepository.findById(actionUserId);
 
                 if (actionUser != null) {
@@ -672,11 +675,11 @@ public class SupportRepository implements ISupportRepository {
                     ticketDetailRepository.saveTicketDetail(tickedDetailToSave);
                     ticketLogRepository.insertTicketLog(actionUser, ticket, "ADD TICKET DETAIL", "TICKET ID: " + ticket.getTicketId());
 
-                    val= true;
+                    val = true;
                 } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
                 }
-            }else {
+            } else {
                 throw new ServiceFaultException("ERROR", new ServiceFault("TICKET_DONT_EXIST", ""));
             }
 

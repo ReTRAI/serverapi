@@ -23,6 +23,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="brand" type="xs:string"/>
+                <xs:element name="model" type="xs:string"/>
                 <xs:element name="serialNumber" type="xs:string"/>
                 <xs:element name="imeiNumber" type="xs:string"/>
                 <xs:element name="simNumber" type="xs:string"/>
@@ -39,6 +40,23 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- setDeviceList-->
+    <xs:element name="setDeviceListRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device" maxOccurs="unbounded"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="setDeviceListResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- Endpoint Device Object-->
     <xs:complexType name="device">
         <xs:sequence>
@@ -46,6 +64,7 @@
             <xs:element name="resellerId" type="xs:string"/>
             <xs:element name="deviceStatus" type="xs:string"/>
             <xs:element name="brand" type="xs:string"/>
+            <xs:element name="model" type="xs:string"/>
             <xs:element name="serialNumber" type="xs:string"/>
             <xs:element name="imeiNumber" type="xs:string"/>
             <xs:element name="simNumber" type="xs:string"/>

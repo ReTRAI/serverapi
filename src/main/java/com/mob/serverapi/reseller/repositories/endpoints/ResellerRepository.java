@@ -29,7 +29,6 @@ import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 
@@ -348,21 +347,25 @@ public class ResellerRepository implements IResellerRepository {
                     tUser associatedUser = userRepository.findById(resellerValidation.getUser().getUserId());
                     tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(resellerValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
 
-                    List<tDevice> associatedDevices = deviceRepository.getAllDevicesByResellerId(resellerId);
+                    if (!resellerAssociationRepository.existInResellerAssociation(resellerId, resellerId)) {
 
-                    if (associatedDevices.isEmpty()) {
+                        List<tDevice> associatedDevices = deviceRepository.getAllDevicesByResellerId(resellerId);
 
-                        userRoleRepository.deleteUserRoleById(role.getUserRoleId());
-                        resellerLogRepository.deleteResellerLogByResellerId(resellerValidation.getResellerId());
-                        resellerRepository.deleteResellerById(resellerValidation.getResellerId());
+                        if (associatedDevices.isEmpty()) {
 
-                        userLogRepository.insertUserLog(actionUser, associatedUser, "REMOVE_RESELLER_ROLE", "");
+                            userRoleRepository.deleteUserRoleById(role.getUserRoleId());
+                            resellerLogRepository.deleteResellerLogByResellerId(resellerValidation.getResellerId());
+                            resellerRepository.deleteResellerById(resellerValidation.getResellerId());
 
-                        val = true;
+                            userLogRepository.insertUserLog(actionUser, associatedUser, "REMOVE_RESELLER_ROLE", "");
+
+                            val = true;
+                        } else {
+                            throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_HAS_DEVICES", ""));
+                        }
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_HAS_DEVICES", ""));
+                        throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_HAS_ASSOCIATIONS", ""));
                     }
-
                 } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
                 }

@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -54,7 +56,7 @@ public class DeviceRepository implements IDeviceRepository {
     }
 
     @Override
-    public Device setDevice(String brand, String serialNumber, String imeiNumber, String simNumber, String androidId,
+    public Device setDevice(String brand, String model, String serialNumber, String imeiNumber, String simNumber, String androidId,
                             UUID actionUserId) {
         Device deviceToReturn = new Device();
 
@@ -74,6 +76,7 @@ public class DeviceRepository implements IDeviceRepository {
                                 tDevice device = new tDevice();
                                 device.setDeviceStatus(deviceStatusVal);
                                 device.setBrand(brand);
+                                device.setModel(model);
                                 device.setSerialNumber(serialNumber);
                                 device.setImeiNumber(imeiNumber);
                                 device.setSimNumber(simNumber);
@@ -116,6 +119,36 @@ public class DeviceRepository implements IDeviceRepository {
         }
 
         return deviceToReturn;
+    }
+
+    @Override
+    public List<Device> setDeviceList(List<Device> deviceList, UUID actionUserId) {
+
+        List<Device> devicesInserted = new ArrayList<>();
+        try {
+
+            tUser actionUser = userRepository.findById(actionUserId);
+
+            if (actionUser != null) {
+                for (Device d : deviceList) {
+
+                    Device deviceSaved = setDevice(d.getBrand(),d.getModel(), d.getSerialNumber(),
+                            d.getImeiNumber(), d.getSimNumber(), d.getAndroidId(), actionUserId);
+
+                    if(deviceSaved!= null)
+                        devicesInserted.add(deviceSaved);
+                }
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("SET_DEVICE", ex.getMessage()));
+        }
+
+        return devicesInserted;
     }
 }
 

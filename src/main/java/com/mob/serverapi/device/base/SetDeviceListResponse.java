@@ -6,8 +6,10 @@
 //
 
 
-package com.mob.serverapi.reseller.base;
+package com.mob.serverapi.device.base;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="reseller" type="{http://www.mob.com/serverapi/reseller/base}reseller"/>
+ *         &lt;element name="device" type="{http://www.mob.com/serverapi/device/base}device" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "reseller"
+    "device"
 })
-@XmlRootElement(name = "getResellerByUserIdResponse")
-public class GetResellerByUserIdResponse {
+@XmlRootElement(name = "setDeviceListResponse")
+public class SetDeviceListResponse {
 
     @XmlElement(required = true)
-    protected Reseller reseller;
+    protected List<Device> device;
 
     /**
-     * Gets the value of the reseller property.
+     * Gets the value of the device property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Reseller }
-     *     
-     */
-    public Reseller getReseller() {
-        return reseller;
-    }
-
-    /**
-     * Sets the value of the reseller property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the device property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Reseller }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getDevice().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Device }
+     * 
+     * 
      */
-    public void setReseller(Reseller value) {
-        this.reseller = value;
+    public List<Device> getDevice() {
+        if (device == null) {
+            device = new ArrayList<Device>();
+        }
+        return this.device;
     }
 
 }

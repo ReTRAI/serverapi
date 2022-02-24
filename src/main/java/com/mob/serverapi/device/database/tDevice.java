@@ -26,6 +26,9 @@ public class tDevice implements Serializable {
     @Column(name = "brand", nullable = false)
     private String brand;
 
+    @Column(name = "model", nullable = false)
+    private String model;
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     //FK to table reseller, column resellerId
     @JoinColumn(name = "resellerId", referencedColumnName = "resellerId",

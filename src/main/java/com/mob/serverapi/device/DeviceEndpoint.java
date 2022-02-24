@@ -1,10 +1,7 @@
 package com.mob.serverapi.device;
 
 
-import com.mob.serverapi.device.base.GetDeviceByIdRequest;
-import com.mob.serverapi.device.base.GetDeviceByIdResponse;
-import com.mob.serverapi.device.base.SetDeviceRequest;
-import com.mob.serverapi.device.base.SetDeviceResponse;
+import com.mob.serverapi.device.base.*;
 import com.mob.serverapi.device.repositories.endpoints.DeviceRepository;
 import com.mob.serverapi.reseller.base.*;
 import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
@@ -43,11 +40,21 @@ public class DeviceEndpoint {
     public SetDeviceResponse setDevice(@RequestPayload SetDeviceRequest request) {
 
         SetDeviceResponse response = new SetDeviceResponse();
-        response.setDevice(deviceRepository.setDevice(request.getBrand(), request.getSerialNumber(),
+        response.setDevice(deviceRepository.setDevice(request.getBrand(), request.getModel(), request.getSerialNumber(),
                 request.getImeiNumber(),request.getSimNumber(),request.getAndroidId(),
                 UUID.fromString(request.getActionUserId())));
 
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setDeviceListRequest")
+    @ResponsePayload
+    public SetDeviceListResponse setDeviceList(@RequestPayload SetDeviceListRequest request) {
+
+        SetDeviceListResponse response = new SetDeviceListResponse();
+        response.getDevice().addAll(deviceRepository.setDeviceList(request.getDevice(),
+                UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
 }

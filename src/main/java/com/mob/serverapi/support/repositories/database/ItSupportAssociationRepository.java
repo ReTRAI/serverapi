@@ -17,6 +17,8 @@ interface ItSupportAssociationRepository extends JpaRepository<tSupportAssociati
 
     tSupportAssociation findByChildSupport_SupportId(UUID supportId);
 
+    boolean existsByParentSupport_SupportIdOrChildSupport_SupportId(UUID supportId, UUID supportId1);
+
 
     
 

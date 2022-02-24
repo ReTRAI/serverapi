@@ -39,6 +39,10 @@ public class tResellerAssociationRepository {
         return repository.findByParentReseller_ResellerIdAndChildReseller_ResellerId(parentResellerId, childResellerId);
     }
 
+    public boolean existInResellerAssociation(UUID parentResellerId, UUID childResellerId){
+        return repository.existsByParentReseller_ResellerIdOrChildReseller_ResellerId(parentResellerId,childResellerId);
+    }
+
     @Transactional
     public void deleteAssociationById (UUID resellerAssociationId){
         repository.deleteById(resellerAssociationId);
