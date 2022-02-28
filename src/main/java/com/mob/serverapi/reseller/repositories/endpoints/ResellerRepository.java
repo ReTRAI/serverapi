@@ -399,20 +399,24 @@ public class ResellerRepository implements IResellerRepository {
 
                     if (exists == 0) {
 
+                        if (!resellerRepository.isCircularAssociation(parentResellerId, childResellerId)) {
 
-                        tResellerAssociation assoc = new tResellerAssociation();
-                        assoc.setParentReseller(parent);
-                        assoc.setChildReseller(child);
+                            tResellerAssociation assoc = new tResellerAssociation();
+                            assoc.setParentReseller(parent);
+                            assoc.setChildReseller(child);
 
-                        tResellerAssociation saved = resellerAssociationRepository.saveResellerAssociation(assoc);
+                            tResellerAssociation saved = resellerAssociationRepository.saveResellerAssociation(assoc);
 
-                        resellerLogRepository.insertResellerLog(actionUser, parent, "ADD_RESELLER_ASSOCIATION", "ADD CHILD ID: " + child.getResellerId());
-                        resellerLogRepository.insertResellerLog(actionUser, child, "ADD_RESELLER_ASSOCIATION", "ADD PARENT ID: " + parent.getResellerId());
-                        resellerAssociationLogRepository.insertResellerAssociationLog(actionUser, saved, "ADD_RESELLER_ASSOCIATION",
-                                "ADD CHILD ID: " + child.getResellerId() + " TO PARENT ID: " + parent.getResellerId());
+                            resellerLogRepository.insertResellerLog(actionUser, parent, "ADD_RESELLER_ASSOCIATION", "ADD CHILD ID: " + child.getResellerId());
+                            resellerLogRepository.insertResellerLog(actionUser, child, "ADD_RESELLER_ASSOCIATION", "ADD PARENT ID: " + parent.getResellerId());
+                            resellerAssociationLogRepository.insertResellerAssociationLog(actionUser, saved, "ADD_RESELLER_ASSOCIATION",
+                                    "ADD CHILD ID: " + child.getResellerId() + " TO PARENT ID: " + parent.getResellerId());
 
-                        val = true;
+                            val = true;
 
+                        } else {
+                            throw new ServiceFaultException("ERROR", new ServiceFault("CIRCULAR_ASSOCIATION", ""));
+                        }
                     } else {
                         throw new ServiceFaultException("ERROR", new ServiceFault("CHILD_RESELLER_ALREADY_ASSOCIATED", ""));
                     }
