@@ -25,8 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="actionUserId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="resellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="numberRecords" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,63 +38,72 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "userId",
-    "actionUserId"
+    "resellerId",
+    "offset",
+    "numberRecords"
 })
-@XmlRootElement(name = "setResellerRequest")
-public class SetResellerRequest {
+@XmlRootElement(name = "getAvailableResellerParentRequest")
+public class GetAvailableResellerParentRequest {
 
     @XmlElement(required = true)
-    protected String userId;
-    @XmlElement(required = true)
-    protected String actionUserId;
+    protected String resellerId;
+    protected int offset;
+    protected int numberRecords;
 
     /**
-     * Gets the value of the userId property.
+     * Gets the value of the resellerId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserId() {
-        return userId;
+    public String getResellerId() {
+        return resellerId;
     }
 
     /**
-     * Sets the value of the userId property.
+     * Sets the value of the resellerId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserId(String value) {
-        this.userId = value;
+    public void setResellerId(String value) {
+        this.resellerId = value;
     }
 
     /**
-     * Gets the value of the actionUserId property.
+     * Gets the value of the offset property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getActionUserId() {
-        return actionUserId;
+    public int getOffset() {
+        return offset;
     }
 
     /**
-     * Sets the value of the actionUserId property.
+     * Sets the value of the offset property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setActionUserId(String value) {
-        this.actionUserId = value;
+    public void setOffset(int value) {
+        this.offset = value;
+    }
+
+    /**
+     * Gets the value of the numberRecords property.
+     * 
+     */
+    public int getNumberRecords() {
+        return numberRecords;
+    }
+
+    /**
+     * Sets the value of the numberRecords property.
+     * 
+     */
+    public void setNumberRecords(int value) {
+        this.numberRecords = value;
     }
 
 }

@@ -1,11 +1,13 @@
 package com.mob.serverapi.reseller.repositories.database;
 
+import com.mob.serverapi.reseller.base.ResellerAssociation;
 import com.mob.serverapi.reseller.database.tResellerAssociation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
@@ -47,4 +49,6 @@ public class tResellerAssociationRepository {
     public void deleteAssociationById (UUID resellerAssociationId){
         repository.deleteById(resellerAssociationId);
     }
+
+
 }

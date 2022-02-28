@@ -37,4 +37,8 @@ interface IResellerRepository {
     ResellerAssociation getResellerAssociation(UUID parentResellerId, UUID childResellerId);
 
     Reseller getResellerParentByChildId(UUID childResellerId);
+
+    List<Reseller> getAvailableResellerParent(UUID resellerId,int offset, int numberRecords);
+
+    long getCountAvailableResellerParent(UUID resellerId);
 }

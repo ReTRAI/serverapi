@@ -6,10 +6,11 @@
 //
 
 
-package com.mob.serverapi.support.base;
+package com.mob.serverapi.reseller.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="result" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="resellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,27 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "result"
+    "resellerId"
 })
-@XmlRootElement(name = "removeSupportResponse")
-public class RemoveSupportResponse {
+@XmlRootElement(name = "getCountAvailableResellerParentRequest")
+public class GetCountAvailableResellerParentRequest {
 
-    protected boolean result;
+    @XmlElement(required = true)
+    protected String resellerId;
 
     /**
-     * Gets the value of the result property.
+     * Gets the value of the resellerId property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public boolean isResult() {
-        return result;
+    public String getResellerId() {
+        return resellerId;
     }
 
     /**
-     * Sets the value of the result property.
+     * Sets the value of the resellerId property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setResult(boolean value) {
-        this.result = value;
+    public void setResellerId(String value) {
+        this.resellerId = value;
     }
 
 }

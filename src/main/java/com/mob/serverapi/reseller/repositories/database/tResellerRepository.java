@@ -1,5 +1,7 @@
 package com.mob.serverapi.reseller.repositories.database;
 
+import com.mob.serverapi.reseller.base.Reseller;
+import com.mob.serverapi.reseller.base.ResellerAssociation;
 import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.database.tResellerAssociation;
 import com.mob.serverapi.reseller.database.tReseller_;
@@ -53,6 +55,11 @@ public class tResellerRepository {
     public tReseller findByUserId(UUID userId){
 
         return repository.findByUser_UserId(userId);
+    }
+
+    public List<tReseller> findByResellerIdNotIn(List<UUID> resellerIds){
+
+        return repository.findByResellerIdNotIn(resellerIds);
     }
 
     public List<tReseller> getResellerFiltered(@Nullable UUID resellerId, @Nullable String resellerName,
@@ -145,5 +152,28 @@ public class tResellerRepository {
         query.where(predArray);
 
         return query;
+    }
+
+    public List<tReseller> getAllLevelChildrenByParentId(UUID parentResellerId){
+
+        List<tReseller> childrenList = new ArrayList<>();
+
+        childrenList = getChildren(childrenList,parentResellerId);
+
+        return childrenList;
+    }
+
+    private List<tReseller> getChildren(List<tReseller> finalList, UUID parentResellerId){
+
+        List<tResellerAssociation> level = resellerAssociationRepository.getAssociationByParentResellerId(parentResellerId);
+
+        for (tResellerAssociation ra: level) {
+
+            tReseller child = findById(ra.getChildReseller().getResellerId());
+            finalList.add(child);
+            getChildren(finalList,ra.getChildReseller().getResellerId());
+        }
+
+        return finalList;
     }
 }

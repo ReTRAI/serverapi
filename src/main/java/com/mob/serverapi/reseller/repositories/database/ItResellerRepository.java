@@ -9,11 +9,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.Nullable;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 interface ItResellerRepository extends JpaRepository<tReseller, UUID>, JpaSpecificationExecutor<tReseller> {
 
     tReseller findByUser_UserId(UUID userId);
+
+    List<tReseller> findByResellerIdNotIn(Collection<UUID> resellerIds);
+
+
 
 }

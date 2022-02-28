@@ -543,5 +543,83 @@ public class ResellerRepository implements IResellerRepository {
         }
         return assoc;
     }
+
+    @Override
+    public List<Reseller> getAvailableResellerParent(UUID resellerId, int offset, int numberRecords) {
+
+        List<Reseller> parentsList = new ArrayList<>();
+
+        try {
+
+            tReseller reseller = resellerRepository.findById(resellerId);
+
+            if (reseller != null) {
+
+                List<tReseller> allChildren = resellerRepository.getAllLevelChildrenByParentId(resellerId);
+                List<UUID> childrenIds = new ArrayList<>();
+                childrenIds.add(resellerId);
+
+                if (allChildren != null)
+                    allChildren.forEach(r -> childrenIds.add(r.getResellerId()));
+
+                List<tReseller> available = resellerRepository.findByResellerIdNotIn(childrenIds);
+
+                if (available != null) {
+                    parentsList = ResellerUtils.transformResellerList(available);
+
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_LIST_EMPTY", ""));
+                }
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+            }
+
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_AVAILABLE_RESELLER_PARENTS", ex.getMessage()));
+        }
+        return parentsList;
+    }
+
+    @Override
+    public long getCountAvailableResellerParent(UUID resellerId) {
+
+        long size = 0;
+
+        try {
+
+            tReseller reseller = resellerRepository.findById(resellerId);
+
+            if (reseller != null) {
+
+                List<tReseller> allChildren = resellerRepository.getAllLevelChildrenByParentId(resellerId);
+                List<UUID> childrenIds = new ArrayList<>();
+                childrenIds.add(resellerId);
+
+                if (allChildren != null)
+                    allChildren.forEach(r -> childrenIds.add(r.getResellerId()));
+
+                List<tReseller> available = resellerRepository.findByResellerIdNotIn(childrenIds);
+
+                if (available != null)
+                    size = available.size();
+
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+            }
+
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_AVAILABLE_RESELLER_PARENTS", ex.getMessage()));
+        }
+
+        return size;
+    }
 }
 

@@ -72,6 +72,40 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- getAvailableResellerParent-->
+    <xs:element name="getAvailableResellerParentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resellerId"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAvailableResellerParentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reseller" type="tns:reseller" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getCountAvailableResellerParent-->
+    <xs:element name="getCountAvailableResellerParentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resellerId"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountAvailableResellerParentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- getResellerBalanceMovements-->
     <xs:element name="getResellerBalanceMovementsRequest">
         <xs:complexType>

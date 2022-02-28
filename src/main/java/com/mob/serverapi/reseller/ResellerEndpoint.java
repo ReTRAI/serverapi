@@ -68,6 +68,27 @@ public class ResellerEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAvailableResellerParentRequest")
+    @ResponsePayload
+    public GetAvailableResellerParentResponse getAvailableResellerParent (@RequestPayload GetAvailableResellerParentRequest request) {
+
+        GetAvailableResellerParentResponse response = new GetAvailableResellerParentResponse();
+        response.getReseller().addAll(resellerRepository.getAvailableResellerParent(UUID.fromString(request.getResellerId()),
+                request.getOffset(), request.getNumberRecords()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountAvailableResellerParentRequest")
+    @ResponsePayload
+    public GetCountAvailableResellerParentResponse getCountAvailableResellerParentRequest(@RequestPayload GetCountAvailableResellerParentRequest request) {
+
+        GetCountAvailableResellerParentResponse response = new GetCountAvailableResellerParentResponse();
+        response.setResult(resellerRepository.getCountAvailableResellerParent(UUID.fromString(request.getResellerId())));
+
+        return response;
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerBalanceMovementsRequest")
     @ResponsePayload
     public GetResellerBalanceMovementsResponse getResellerBalanceMovements(@RequestPayload GetResellerBalanceMovementsRequest request) {

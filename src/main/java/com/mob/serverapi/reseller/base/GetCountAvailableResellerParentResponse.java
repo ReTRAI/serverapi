@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.support.base;
+package com.mob.serverapi.reseller.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="result" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="result" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,16 +37,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "result"
 })
-@XmlRootElement(name = "removeSupportResponse")
-public class RemoveSupportResponse {
+@XmlRootElement(name = "getCountAvailableResellerParentResponse")
+public class GetCountAvailableResellerParentResponse {
 
-    protected boolean result;
+    protected long result;
 
     /**
      * Gets the value of the result property.
      * 
      */
-    public boolean isResult() {
+    public long getResult() {
         return result;
     }
 
@@ -54,7 +54,7 @@ public class RemoveSupportResponse {
      * Sets the value of the result property.
      * 
      */
-    public void setResult(boolean value) {
+    public void setResult(long value) {
         this.result = value;
     }
 
