@@ -1,5 +1,6 @@
 package com.mob.serverapi;
 
+import com.mob.serverapi.dashboard.repositories.endpoints.DashboardRepository;
 import com.mob.serverapi.device.repositories.endpoints.DeviceRepository;
 import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
 import com.mob.serverapi.servicefault.DetailSoapFaultDefinitionExceptionResolver;
@@ -95,6 +96,16 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
+    @Bean(name = "dashboard")
+    public DefaultWsdl11Definition dashboardWsdl11Definition(XsdSchema dashboardSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("DashboardPort");
+        wsdl11Definition.setLocationUri("/");
+        wsdl11Definition.setTargetNamespace("http://www.mob.com/serverapi/dashboard/base");
+        wsdl11Definition.setSchema(dashboardSchema);
+        return wsdl11Definition;
+    }
+
     /**
      * ENDPOINT BEANS
      */
@@ -118,6 +129,12 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("endpoints/devices.xsd"));
     }
 
+    @Bean
+    public XsdSchema dashboardSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("endpoints/dashboard.xsd"));
+    }
+
+
     /**
      * REPOSITORY BEANS
      */
@@ -139,5 +156,10 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     @Bean
     public DeviceRepository deviceRepository() {
         return new DeviceRepository();
+    }
+
+    @Bean
+    public DashboardRepository dashboardRepository() {
+        return new DashboardRepository();
     }
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/dashboard/base"
+           targetNamespace="http://www.mob.com/serverapi/dashboard/base" elementFormDefault="qualified">
+
+    <!-- getDashboardByResellerId-->
+    <xs:element name="getDashboardByResellerIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resellerId"  type="xs:string"/>
+                <xs:element name="recursive"  type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getDashboardByResellerIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="global" type="tns:global"/>
+                <xs:element name="inactive" type="tns:inactive"/>
+                <xs:element name="expiring" type="tns:expiring"/>
+                <xs:element name="active" type="tns:active"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Endpoint Dashboard Global Object-->
+    <xs:complexType name="global">
+        <xs:sequence>
+            <xs:element name="active"  type="xs:int"/>
+            <xs:element name="notActive" type="xs:int"/>
+            <xs:element name="free" type="xs:int"/>
+            <xs:element name="portalDevices" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Endpoint Dashboard Inactive Object-->
+    <xs:complexType name="inactive">
+        <xs:sequence>
+            <xs:element name="wiped"  type="xs:int"/>
+            <xs:element name="blocked" type="xs:int"/>
+            <xs:element name="suspended" type="xs:int"/>
+            <xs:element name="remaining" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Endpoint DashboardExpiring Object-->
+    <xs:complexType name="expiring">
+        <xs:sequence>
+            <xs:element name="renewed"  type="xs:int"/>
+            <xs:element name="in30Days" type="xs:int"/>
+            <xs:element name="in15Days" type="xs:int"/>
+            <xs:element name="in7Days" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Endpoint Dashboard Active Object-->
+    <xs:complexType name="active">
+        <xs:sequence>
+            <xs:element name="day"  type="xs:int"/>
+            <xs:element name="week" type="xs:int"/>
+            <xs:element name="month" type="xs:int"/>
+            <xs:element name="quarter" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
