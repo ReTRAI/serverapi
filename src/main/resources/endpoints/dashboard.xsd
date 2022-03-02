@@ -25,40 +25,40 @@
     <!-- Endpoint Dashboard Global Object-->
     <xs:complexType name="global">
         <xs:sequence>
-            <xs:element name="active"  type="xs:int"/>
-            <xs:element name="notActive" type="xs:int"/>
-            <xs:element name="free" type="xs:int"/>
-            <xs:element name="portalDevices" type="xs:int"/>
+            <xs:element name="active"  type="xs:long"/>
+            <xs:element name="notActive" type="xs:long"/>
+            <xs:element name="free" type="xs:long"/>
+            <xs:element name="portalDevices" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
 
     <!-- Endpoint Dashboard Inactive Object-->
     <xs:complexType name="inactive">
         <xs:sequence>
-            <xs:element name="wiped"  type="xs:int"/>
-            <xs:element name="blocked" type="xs:int"/>
-            <xs:element name="suspended" type="xs:int"/>
-            <xs:element name="remaining" type="xs:int"/>
+            <xs:element name="wiped"  type="xs:long"/>
+            <xs:element name="blocked" type="xs:long"/>
+            <xs:element name="suspended" type="xs:long"/>
+            <xs:element name="remaining" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
 
     <!-- Endpoint DashboardExpiring Object-->
     <xs:complexType name="expiring">
         <xs:sequence>
-            <xs:element name="renewed"  type="xs:int"/>
-            <xs:element name="in30Days" type="xs:int"/>
-            <xs:element name="in15Days" type="xs:int"/>
-            <xs:element name="in7Days" type="xs:int"/>
+            <xs:element name="renewed"  type="xs:long"/>
+            <xs:element name="in30Days" type="xs:long"/>
+            <xs:element name="in15Days" type="xs:long"/>
+            <xs:element name="in7Days" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
 
     <!-- Endpoint Dashboard Active Object-->
     <xs:complexType name="active">
         <xs:sequence>
-            <xs:element name="day"  type="xs:int"/>
-            <xs:element name="week" type="xs:int"/>
-            <xs:element name="month" type="xs:int"/>
-            <xs:element name="quarter" type="xs:int"/>
+            <xs:element name="day"  type="xs:long"/>
+            <xs:element name="week" type="xs:long"/>
+            <xs:element name="month" type="xs:long"/>
+            <xs:element name="quarter" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

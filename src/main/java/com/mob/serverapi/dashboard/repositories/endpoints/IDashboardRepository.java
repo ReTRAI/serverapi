@@ -8,16 +8,17 @@ import com.mob.serverapi.dashboard.base.Inactive;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
+import java.util.UUID;
 
 interface IDashboardRepository {
 
 
-    Active getActiveDashboardByResellerId(@Nullable String resellerIdId, @Nullable boolean recursive);
+    Active getActiveDashboardByResellerId(UUID resellerId, boolean recursive);
 
-    Inactive getInactiveDashboardByResellerId(@Nullable String resellerIdId, @Nullable boolean recursive);
+    Inactive getInactiveDashboardByResellerId(UUID resellerId, boolean recursive);
 
-    Global getGlobalDashboardByResellerId(@Nullable String resellerIdId, @Nullable boolean recursive);
+    Global getGlobalDashboardByResellerId(UUID resellerId, boolean recursive);
 
-    Expiring getExpiringDashboardByResellerId(@Nullable String resellerIdId, @Nullable boolean recursive);
+    Expiring getExpiringDashboardByResellerId(UUID resellerId, boolean recursive);
 
 }

@@ -13,10 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class tDeviceRepository {
@@ -60,6 +57,44 @@ public class tDeviceRepository {
     public boolean existAndroidId(String androidId)
     {
         return repository.existsByAndroidId(androidId);
+    }
+
+    public long countByDeviceStatusAndActivationDateIsGreaterThan
+            (Collection<UUID> resellerIds, tDeviceStatus deviceStatus, LocalDateTime activationDate){
+
+        return repository.countByReseller_ResellerIdIsInAndDeviceStatusAndActivationDateIsGreaterThan
+                (resellerIds,deviceStatus,activationDate);
+    }
+
+    public long countByDeviceStatusAndExpirationDateIsGreaterThan
+            (Collection<UUID> resellerIds, tDeviceStatus deviceStatus, LocalDateTime expirationDate){
+
+        return repository.countByReseller_ResellerIdIsInAndDeviceStatusAndExpirationDateIsLessThan
+                (resellerIds,deviceStatus,expirationDate);
+    }
+
+
+    public long countByDeviceStatusAndLastRenovationDateIsGreaterThan
+            (Collection<UUID> resellerIds, tDeviceStatus deviceStatus, LocalDateTime lastActivationDate){
+
+        return repository.countByReseller_ResellerIdIsInAndDeviceStatusAndLastRenovationDateIsGreaterThan
+                (resellerIds,deviceStatus,lastActivationDate);
+    }
+
+
+    public long countByDeviceStatus (Collection<UUID> resellerIds, tDeviceStatus deviceStatus){
+
+        return repository.countByReseller_ResellerIdIsInAndDeviceStatus(resellerIds,deviceStatus);
+    }
+
+    public long countNotInByDeviceStatus (Collection<UUID> resellerIds, List<tDeviceStatus> deviceStatus){
+
+        return repository.countByReseller_ResellerIdIsInAndDeviceStatusIsNotIn(resellerIds,deviceStatus);
+    }
+
+    public long countAll (Collection<UUID> resellerIds){
+
+        return repository.countByReseller_ResellerIdIsIn(resellerIds);
     }
 
     public List<tDevice> getDevicesFiltered(@Nullable UUID deviceId, @Nullable UUID resellerId,

@@ -216,10 +216,6 @@ public class ResellerRepository implements IResellerRepository {
                     tReseller resellerToCreate = new tReseller();
                     resellerToCreate.setUser(associatedUser);
                     resellerToCreate.setCurrentBalance(0);
-                    resellerToCreate.setTotalDevices(0);
-                    resellerToCreate.setActiveDevices(0);
-                    resellerToCreate.setFreeDevices(0);
-                    resellerToCreate.setInactiveDevices(0);
                     resellerToCreate.setCreationDate(LocalDateTime.now());
 
                     tReseller saved = resellerRepository.saveReseller(resellerToCreate);
@@ -559,12 +555,8 @@ public class ResellerRepository implements IResellerRepository {
 
             if (reseller != null) {
 
-                List<tReseller> allChildren = resellerRepository.getAllLevelChildrenByParentId(resellerId);
-                List<UUID> childrenIds = new ArrayList<>();
-                childrenIds.add(resellerId);
 
-                if (allChildren != null)
-                    allChildren.forEach(r -> childrenIds.add(r.getResellerId()));
+                List<UUID> childrenIds = getAllIdsInHierachy(resellerId);
 
                 List<tReseller> available = resellerRepository.findByResellerIdNotIn(childrenIds);
 
@@ -599,12 +591,7 @@ public class ResellerRepository implements IResellerRepository {
 
             if (reseller != null) {
 
-                List<tReseller> allChildren = resellerRepository.getAllLevelChildrenByParentId(resellerId);
-                List<UUID> childrenIds = new ArrayList<>();
-                childrenIds.add(resellerId);
-
-                if (allChildren != null)
-                    allChildren.forEach(r -> childrenIds.add(r.getResellerId()));
+                List<UUID> childrenIds = getAllIdsInHierachy(resellerId);
 
                 List<tReseller> available = resellerRepository.findByResellerIdNotIn(childrenIds);
 
@@ -624,6 +611,18 @@ public class ResellerRepository implements IResellerRepository {
         }
 
         return size;
+    }
+
+    public List<UUID> getAllIdsInHierachy(UUID resellerId){
+
+        List<tReseller> allChildren = resellerRepository.getAllLevelChildrenByParentId(resellerId);
+        List<UUID> resellerIds = new ArrayList<>();
+        resellerIds.add(resellerId);
+
+        if (allChildren != null)
+            allChildren.forEach(r -> resellerIds.add(r.getResellerId()));
+
+        return resellerIds;
     }
 }
 

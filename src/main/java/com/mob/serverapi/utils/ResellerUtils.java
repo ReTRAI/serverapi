@@ -21,10 +21,6 @@ public  class ResellerUtils {
         r.setUserId(reseller.getUser().getUserId().toString());
         r.setResellerName(reseller.getUser().getUserName());
         r.setCurrentBalance(reseller.getCurrentBalance());
-        r.setTotalDevices(reseller.getTotalDevices());
-        r.setActiveDevices(reseller.getActiveDevices());
-        r.setInactiveDevices(reseller.getInactiveDevices());
-        r.setFreeDevices(reseller.getFreeDevices());
         return r;
     }
 

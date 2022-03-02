@@ -41,4 +41,6 @@ interface IResellerRepository {
     List<Reseller> getAvailableResellerParent(UUID resellerId,int offset, int numberRecords);
 
     long getCountAvailableResellerParent(UUID resellerId);
+
+    List<UUID> getAllIdsInHierachy(UUID resellerId);
 }

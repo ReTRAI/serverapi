@@ -71,6 +71,9 @@ public class tDevice implements Serializable {
     @Column(name = "expirationDate")
     private LocalDateTime expirationDate;
 
+    @Column(name = "lastRenovationDate")
+    private LocalDateTime lastRenovationDate;
+
     @Column(name = "currentBalance")
     private float currentBalance;
 

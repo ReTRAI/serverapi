@@ -31,10 +31,14 @@ public class DashboardEndpoint {
     public GetDashboardByResellerIdResponse getDashboardByResellerId(@RequestPayload GetDashboardByResellerIdRequest request) {
 
         GetDashboardByResellerIdResponse response = new GetDashboardByResellerIdResponse();
-        response.setActive(dashboardRepository.getActiveDashboardByResellerId(request.getResellerId(), request.isRecursive()));
-        response.setExpiring(dashboardRepository.getExpiringDashboardByResellerId(request.getResellerId(), request.isRecursive()));
-        response.setInactive(dashboardRepository.getInactiveDashboardByResellerId(request.getResellerId(),request.isRecursive()));
-        response.setGlobal(dashboardRepository.getGlobalDashboardByResellerId(request.getResellerId(),request.isRecursive()));
+        response.setActive(dashboardRepository.getActiveDashboardByResellerId
+                (UUID.fromString(request.getResellerId()), request.isRecursive()));
+        response.setExpiring(dashboardRepository.getExpiringDashboardByResellerId
+                (UUID.fromString(request.getResellerId()), request.isRecursive()));
+        response.setInactive(dashboardRepository.getInactiveDashboardByResellerId
+                (UUID.fromString(request.getResellerId()),request.isRecursive()));
+        response.setGlobal(dashboardRepository.getGlobalDashboardByResellerId
+                (UUID.fromString(request.getResellerId()),request.isRecursive()));
 
         return response;
     }

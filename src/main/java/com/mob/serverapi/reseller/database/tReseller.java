@@ -32,18 +32,6 @@ public class tReseller implements Serializable {
     @Column(name = "currentBalance", nullable = false)
     private float currentBalance;
 
-    @Column(name = "totalDevices", nullable = false)
-    private long totalDevices;
-
-    @Column(name = "activeDevices", nullable = false)
-    private long activeDevices;
-
-    @Column(name = "inactiveDevices", nullable = false)
-    private long inactiveDevices;
-
-    @Column(name = "freeDevices", nullable = false)
-    private long freeDevices;
-
     @Column(name = "creationDate", nullable = false)
     private LocalDateTime creationDate;
 
