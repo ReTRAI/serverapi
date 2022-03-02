@@ -58,4 +58,8 @@ interface ISupportRepository {
     boolean updateTicket(UUID ticketId, @Nullable String status, @Nullable String assignedUserId, UUID actionUserId);
 
     boolean setTicketDetail(UUID ticketId,String message,UUID actionUserId);
+
+    List<Support> getAvailableSupportParent(UUID supportId, int offset, int numberRecords);
+
+    long getCountAvailableSupportParent(UUID supportId);
 }

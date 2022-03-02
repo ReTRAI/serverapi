@@ -8,8 +8,6 @@
 
 package com.mob.serverapi.support.base;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -27,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="ticket" type="{http://www.mob.com/serverapi/support/base}ticket" maxOccurs="unbounded"/>
+ *         &lt;element name="supportId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,41 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "ticket"
+    "supportId"
 })
-@XmlRootElement(name = "getTicketFilteredResponse")
-public class GetTicketFilteredResponse {
+@XmlRootElement(name = "getCountAvailableSupportParentRequest")
+public class GetCountAvailableSupportParentRequest {
 
     @XmlElement(required = true)
-    protected List<Ticket> ticket;
+    protected String supportId;
 
     /**
-     * Gets the value of the ticket property.
+     * Gets the value of the supportId property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the ticket property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getTicket().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Ticket }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public List<Ticket> getTicket() {
-        if (ticket == null) {
-            ticket = new ArrayList<Ticket>();
-        }
-        return this.ticket;
+    public String getSupportId() {
+        return supportId;
+    }
+
+    /**
+     * Sets the value of the supportId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSupportId(String value) {
+        this.supportId = value;
     }
 
 }

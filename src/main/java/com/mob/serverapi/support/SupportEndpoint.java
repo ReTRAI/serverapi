@@ -149,6 +149,30 @@ public class SupportEndpoint {
         return response;
     }
 
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAvailableSupportParentRequest")
+    @ResponsePayload
+    public GetAvailableSupportParentResponse getAvailableSupportParent (@RequestPayload GetAvailableSupportParentRequest request) {
+
+        GetAvailableSupportParentResponse response = new GetAvailableSupportParentResponse();
+        response.getSupport().addAll(supportRepository.getAvailableSupportParent(UUID.fromString(request.getSupportId()),
+                request.getOffset(), request.getNumberRecords()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountAvailableSupportParentRequest")
+    @ResponsePayload
+    public GetCountAvailableSupportParentResponse getCountAvailableSupportParent
+            (@RequestPayload GetCountAvailableSupportParentRequest request) {
+
+        GetCountAvailableSupportParentResponse response = new GetCountAvailableSupportParentResponse();
+        response.setResult(supportRepository.getCountAvailableSupportParent(UUID.fromString(request.getSupportId())));
+
+        return response;
+    }
+
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getSupportParentByChildIdRequest")
     @ResponsePayload
     public GetSupportParentByChildIdResponse getSupportParentByChildId(@RequestPayload GetSupportParentByChildIdRequest request) {

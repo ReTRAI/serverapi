@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.dashboard.base;
+package com.mob.serverapi.support.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,8 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="resellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="recursive" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="supportId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="offset" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="numberRecords" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,54 +38,72 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "resellerId",
-    "recursive"
+    "supportId",
+    "offset",
+    "numberRecords"
 })
-@XmlRootElement(name = "getDashboardByResellerIdRequest")
-public class GetDashboardByResellerIdRequest {
+@XmlRootElement(name = "getAvailableSupportParentRequest")
+public class GetAvailableSupportParentRequest {
 
     @XmlElement(required = true)
-    protected String resellerId;
-    protected boolean recursive;
+    protected String supportId;
+    protected int offset;
+    protected int numberRecords;
 
     /**
-     * Gets the value of the resellerId property.
+     * Gets the value of the supportId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getResellerId() {
-        return resellerId;
+    public String getSupportId() {
+        return supportId;
     }
 
     /**
-     * Sets the value of the resellerId property.
+     * Sets the value of the supportId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setResellerId(String value) {
-        this.resellerId = value;
+    public void setSupportId(String value) {
+        this.supportId = value;
     }
 
     /**
-     * Gets the value of the recursive property.
+     * Gets the value of the offset property.
      * 
      */
-    public boolean isRecursive() {
-        return recursive;
+    public int getOffset() {
+        return offset;
     }
 
     /**
-     * Sets the value of the recursive property.
+     * Sets the value of the offset property.
      * 
      */
-    public void setRecursive(boolean value) {
-        this.recursive = value;
+    public void setOffset(int value) {
+        this.offset = value;
+    }
+
+    /**
+     * Gets the value of the numberRecords property.
+     * 
+     */
+    public int getNumberRecords() {
+        return numberRecords;
+    }
+
+    /**
+     * Sets the value of the numberRecords property.
+     * 
+     */
+    public void setNumberRecords(int value) {
+        this.numberRecords = value;
     }
 
 }

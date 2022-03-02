@@ -189,6 +189,40 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- getAvailableSupportParent-->
+    <xs:element name="getAvailableSupportParentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="supportId"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAvailableSupportParentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="support" type="tns:support" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getCountAvailableSupportParent-->
+    <xs:element name="getCountAvailableSupportParentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="supportId"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountAvailableSupportParentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- setSupport-->
     <xs:element name="setSupportRequest">
         <xs:complexType>

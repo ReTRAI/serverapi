@@ -38,4 +38,5 @@ public class tSupportLogRepository {
 
         repository.deleteBySupport_SupportId(supportId);
     }
+
 }

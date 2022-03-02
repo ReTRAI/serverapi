@@ -164,7 +164,8 @@ public class SupportRepository implements ISupportRepository {
 
                 if (supportValidation != null) {
 
-                    if (supportAssociationRepository.existInSupportAssociation(supportId, supportId)) {
+                    if (!supportAssociationRepository.existInSupportAssociation(supportId, supportId)) {
+
                         tUserType userTypeVal = userTypeRepository.
                                 findUserTypeByDescription(tUserType.UserTypeEnum.SUPPORT.name());
                         tUser associatedUser = userRepository.findById(supportValidation.getUser().getUserId());
@@ -404,19 +405,24 @@ public class SupportRepository implements ISupportRepository {
 
                     if (exists == 0) {
 
+                        if (!supportRepository.isCircularAssociation(parentSupportId, childSupportId)) {
 
-                        tSupportAssociation assoc = new tSupportAssociation();
-                        assoc.setParentSupport(parent);
-                        assoc.setChildSupport(child);
+                            tSupportAssociation assoc = new tSupportAssociation();
+                            assoc.setParentSupport(parent);
+                            assoc.setChildSupport(child);
 
-                        tSupportAssociation saved = supportAssociationRepository.saveSupportAssociation(assoc);
+                            tSupportAssociation saved = supportAssociationRepository.saveSupportAssociation(assoc);
 
-                        supportLogRepository.insertSupportLog(actionUser, parent, "ADD_SUPPORT_ASSOCIATION", "ADD CHILD ID: " + child.getSupportId());
-                        supportLogRepository.insertSupportLog(actionUser, child, "ADD_SUPPORT_ASSOCIATION", "ADD PARENT ID: " + parent.getSupportId());
-                        supportAssociationLogRepository.insertSupportAssociationLog(actionUser, saved, "ADD_SUPPORT_ASSOCIATION",
-                                "ADD CHILD ID: " + child.getSupportId() + " TO PARENT ID: " + parent.getSupportId());
+                            supportLogRepository.insertSupportLog(actionUser, parent, "ADD_SUPPORT_ASSOCIATION", "ADD CHILD ID: " + child.getSupportId());
+                            supportLogRepository.insertSupportLog(actionUser, child, "ADD_SUPPORT_ASSOCIATION", "ADD PARENT ID: " + parent.getSupportId());
+                            supportAssociationLogRepository.insertSupportAssociationLog(actionUser, saved, "ADD_SUPPORT_ASSOCIATION",
+                                    "ADD CHILD ID: " + child.getSupportId() + " TO PARENT ID: " + parent.getSupportId());
 
-                        val = true;
+                            val = true;
+
+                        } else {
+                            throw new ServiceFaultException("ERROR", new ServiceFault("CIRCULAR_ASSOCIATION", ""));
+                        }
 
                     } else {
                         throw new ServiceFaultException("ERROR", new ServiceFault("CHILD_SUPPORT_ALREADY_ASSOCIATED", ""));
@@ -691,6 +697,88 @@ public class SupportRepository implements ISupportRepository {
         }
 
         return val;
+    }
+
+    @Override
+    public List<Support> getAvailableSupportParent(UUID supportId, int offset, int numberRecords) {
+
+        List<Support> parentsList = new ArrayList<>();
+
+        try {
+
+            tSupport support = supportRepository.findById(supportId);
+
+            if (support != null) {
+
+
+                List<UUID> childrenIds = getAllIdsInHierachy(supportId);
+
+                List<tSupport> available = supportRepository.findBySupportIdNotIn(childrenIds);
+
+                if (available != null) {
+                    parentsList = SupportUtils.transformSupportList(available);
+
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_LIST_EMPTY", ""));
+                }
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXISTS", ""));
+            }
+
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_AVAILABLE_SUPPORT_PARENTS", ex.getMessage()));
+        }
+        return parentsList;
+    }
+
+    @Override
+    public long getCountAvailableSupportParent(UUID supportId) {
+
+        long size = 0;
+
+        try {
+
+            tSupport support = supportRepository.findById(supportId);
+
+            if (support != null) {
+
+                List<UUID> childrenIds = getAllIdsInHierachy(supportId);
+
+                List<tSupport> available = supportRepository.findBySupportIdNotIn(childrenIds);
+
+                if (available != null)
+                    size = available.size();
+
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXISTS", ""));
+            }
+
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_AVAILABLE_SUPPORT_PARENTS", ex.getMessage()));
+        }
+
+        return size;
+    }
+
+
+    public List<UUID> getAllIdsInHierachy(UUID supportId) {
+
+        List<tSupport> allChildren = supportRepository.getAllLevelChildrenByParentId(supportId);
+        List<UUID> supportIds = new ArrayList<>();
+        supportIds.add(supportId);
+
+        if (allChildren != null)
+            allChildren.forEach(r -> supportIds.add(r.getSupportId()));
+
+        return supportIds;
     }
 }
 
