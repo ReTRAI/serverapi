@@ -186,4 +186,26 @@ public class UserEndpoint {
 
         return response;
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setUserAdminRequest")
+    @ResponsePayload
+    public SetUserAdminResponse setUserAdmin (@RequestPayload SetUserAdminRequest request) {
+
+        SetUserAdminResponse response = new SetUserAdminResponse();
+        response.setResult(userRepository.setUserAdmin(UUID.fromString(request.getUserId())
+                ,UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeUserAdminRequest")
+    @ResponsePayload
+    public RemoveUserAdminResponse removeUserAdmin (@RequestPayload RemoveUserAdminRequest request) {
+
+        RemoveUserAdminResponse response = new RemoveUserAdminResponse();
+        response.setResult(userRepository.removeUserAdmin(UUID.fromString(request.getUserId())
+                ,UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
 }

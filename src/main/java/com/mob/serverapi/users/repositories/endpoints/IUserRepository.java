@@ -47,4 +47,8 @@ interface IUserRepository {
                                      @Nullable String userStatus, @Nullable String userEmail,
                               @Nullable String startCreationDate, @Nullable String endCreationDate);
 
+    boolean setUserAdmin(UUID userId, UUID actionUserId);
+
+    boolean removeUserAdmin(UUID userId, UUID actionUserId);
+
 }

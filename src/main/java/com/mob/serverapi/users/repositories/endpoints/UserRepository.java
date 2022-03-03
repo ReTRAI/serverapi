@@ -1,13 +1,11 @@
 package com.mob.serverapi.users.repositories.endpoints;
 
+import com.mob.serverapi.device.database.tDevice;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.base.User;
 import com.mob.serverapi.users.base.UserRole;
-import com.mob.serverapi.users.database.tUser;
-import com.mob.serverapi.users.database.tUserLoginLog;
-import com.mob.serverapi.users.database.tUserRole;
-import com.mob.serverapi.users.database.tUserStatus;
+import com.mob.serverapi.users.database.*;
 import com.mob.serverapi.users.repositories.database.*;
 import com.mob.serverapi.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,8 @@ public class UserRepository implements IUserRepository {
     protected tUserRoleRepository userRoleRepository = new tUserRoleRepository();
     @Autowired
     protected tUserStatusRepository userStatusRepository = new tUserStatusRepository();
+    @Autowired
+    protected tUserTypeRepository userTypeRepository = new tUserTypeRepository();
     @Autowired
     protected tUserLogRepository userLogRepository = new tUserLogRepository();
     @Autowired
@@ -467,9 +467,9 @@ public class UserRepository implements IUserRepository {
             String localUserStatus = userStatus.equals("") ? null : userStatus;
             String localUserEmail = userEmail.equals("") ? null : userEmail;
             LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
-                    LocalDateTime.parse(startCreationDate,formatter);
+                    LocalDateTime.parse(startCreationDate, formatter);
             LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate,formatter).plusDays(1);
+                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
 
             String localField = field.equals("") ? null : field;
             String localOrderField = orderField.equals("") ? null : orderField;
@@ -508,9 +508,9 @@ public class UserRepository implements IUserRepository {
             String localUserStatus = userStatus.equals("") ? null : userStatus;
             String localUserEmail = userEmail.equals("") ? null : userEmail;
             LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
-                    LocalDateTime.parse(startCreationDate,formatter);
+                    LocalDateTime.parse(startCreationDate, formatter);
             LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate,formatter).plusDays(1);
+                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
 
 
             long countUsers = userRepository.getCountUserFiltered(localUserId, localUserName, localUserStatus,
@@ -524,5 +524,82 @@ public class UserRepository implements IUserRepository {
             throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_USERS_FILTERED", ex.getMessage()));
         }
     }
+
+    @Override
+    public boolean setUserAdmin(UUID userId, UUID actionUserId) {
+
+        boolean val = false;
+
+        try {
+            tUser associatedUser = userRepository.findById(userId);
+            tUser actionUser = userRepository.findById(actionUserId);
+
+            if (associatedUser != null && actionUser != null) {
+
+                tUserType userTypeVal = userTypeRepository.
+                        findUserTypeByDescription(tUserType.UserTypeEnum.ADMIN.name());
+                long nRole = userRoleRepository.countByUserIdAndUserTypeId(userId, userTypeVal.getUserTypeId());
+
+                if (nRole == 0) {
+
+                    tUserRole role = new tUserRole();
+                    role.setUser(associatedUser);
+                    role.setUserType(userTypeVal);
+
+                    tUserRole saved = userRoleRepository.saveUserRole(role);
+                    userLogRepository.insertUserLog(actionUser, associatedUser, "ADD_ADMIN_ROLE", "");
+
+
+                    if (saved != null)
+                        val = true;
+
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("USER_IS_ALREADY_ADMIN", ""));
+                }
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("SET_ADMIN_ROLE", ex.getMessage()));
+        }
+
+        return val;
+    }
+
+    @Override
+    public boolean removeUserAdmin(UUID userId, UUID actionUserId) {
+        boolean val = false;
+
+        try {
+            tUser actionUser = userRepository.findById(actionUserId);
+            tUser user = userRepository.findById(userId);
+
+            if (actionUser != null && user != null) {
+
+                tUserType userTypeVal = userTypeRepository.
+                        findUserTypeByDescription(tUserType.UserTypeEnum.RESELLER.name());
+                tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(userId, userTypeVal.getUserTypeId());
+
+                    userRoleRepository.deleteUserRoleById(role.getUserRoleId());
+                    userLogRepository.insertUserLog(actionUser, user, "REMOVE_ADMIN_ROLE", "");
+
+                    val = true;
+
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("REMOVE_ADMIN_ROLE", ex.getMessage()));
+        }
+
+        return val;
+    }
+
 }
 

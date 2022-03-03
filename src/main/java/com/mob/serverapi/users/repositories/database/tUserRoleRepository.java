@@ -23,8 +23,8 @@ public class tUserRoleRepository {
     @Autowired
     ItUserRoleRepository repository;
 
-    public void saveUserRole(tUserRole userRole){
-        repository.save(userRole);
+    public tUserRole saveUserRole(tUserRole userRole){
+        return repository.save(userRole);
     }
 
     public void deleteUserRoleById(UUID userRoleId){
