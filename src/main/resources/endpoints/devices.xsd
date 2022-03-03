@@ -109,29 +109,33 @@
         </xs:complexType>
     </xs:element>
 
+
+
+
     <!-- Endpoint Device Object-->
     <xs:complexType name="device">
         <xs:sequence>
-            <xs:element name="deviceId"  type="xs:string"/>
-            <xs:element name="resellerId" type="xs:string"/>
-            <xs:element name="deviceStatus" type="xs:string"/>
+            <xs:element name="deviceId"  type="xs:string" minOccurs="0" />
+            <xs:element name="resellerId" type="xs:string" minOccurs="0"/>
+            <xs:element name="deviceStatus" type="xs:string" minOccurs="0"/>
             <xs:element name="brand" type="xs:string"/>
             <xs:element name="model" type="xs:string"/>
             <xs:element name="serialNumber" type="xs:string"/>
             <xs:element name="imeiNumber" type="xs:string"/>
             <xs:element name="simNumber" type="xs:string"/>
             <xs:element name="androidId" type="xs:string"/>
-            <xs:element name="firstSimNumber" type="xs:string"/>
-            <xs:element name="creationDate" type="xs:string"/>
-            <xs:element name="lastConnection" type="xs:string"/>
-            <xs:element name="lastBackup" type="xs:string"/>
-            <xs:element name="activationDate" type="xs:string"/>
-            <xs:element name="expireDate" type="xs:string"/>
-            <xs:element name="currentBalance" type="xs:float"/>
-            <xs:element name="currentMinutes" type="xs:float"/>
-            <xs:element name="notes" type="xs:string"/>
-            <xs:element name="osVersion" type="xs:string"/>
+            <xs:element name="firstSimNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="creationDate" type="xs:string" minOccurs="0"/>
+            <xs:element name="lastConnection" type="xs:string" minOccurs="0"/>
+            <xs:element name="lastBackup" type="xs:string" minOccurs="0"/>
+            <xs:element name="activationDate" type="xs:string" minOccurs="0"/>
+            <xs:element name="expireDate" type="xs:string" minOccurs="0"/>
+            <xs:element name="currentBalance" type="xs:float" minOccurs="0"/>
+            <xs:element name="currentMinutes" type="xs:float" minOccurs="0"/>
+            <xs:element name="notes" type="xs:string" minOccurs="0"/>
+            <xs:element name="osVersion" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
+
 
 </xs:schema>

@@ -141,9 +141,7 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public List<Reseller> getResellerFiltered(@Nullable String resellerId, @Nullable String resellerName,
-                                              boolean onlyChildren, @Nullable String field,
-                                              @Nullable String orderField, int offset, int numberRecords) {
+    public List<Reseller> getResellerFiltered(@Nullable String resellerId, @Nullable String resellerName, boolean onlyChildren, @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
 
         List<Reseller> returnList = new ArrayList<>();
 
@@ -156,8 +154,7 @@ public class ResellerRepository implements IResellerRepository {
             String localOrderField = orderField.equals("") ? null : orderField;
 
 
-            List<tReseller> resellers = resellerRepository.getResellerFiltered(localResellerId, localResellerName,
-                    onlyChildren, localField, localOrderField, offset, numberRecords);
+            List<tReseller> resellers = resellerRepository.getResellerFiltered(localResellerId, localResellerName, onlyChildren, localField, localOrderField, offset, numberRecords);
 
             if (resellers != null) {
                 returnList = ResellerUtils.transformResellerList(resellers);
@@ -175,8 +172,7 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public long getCountResellerFiltered(@Nullable String resellerId, @Nullable String resellerName,
-                                         boolean onlyChildren) {
+    public long getCountResellerFiltered(@Nullable String resellerId, @Nullable String resellerName, boolean onlyChildren) {
 
         try {
 
@@ -185,8 +181,7 @@ public class ResellerRepository implements IResellerRepository {
             String localResellerName = resellerName.equals("") ? null : resellerName;
 
 
-            long countResellers = resellerRepository.getCountResellerFiltered(localResellerId, localResellerName,
-                    onlyChildren);
+            long countResellers = resellerRepository.getCountResellerFiltered(localResellerId, localResellerName, onlyChildren);
 
             return countResellers;
 
@@ -208,8 +203,7 @@ public class ResellerRepository implements IResellerRepository {
 
             if (associatedUser != null && actionUser != null) {
 
-                tUserType userTypeVal = userTypeRepository.
-                        findUserTypeByDescription(tUserType.UserTypeEnum.RESELLER.name());
+                tUserType userTypeVal = userTypeRepository.findUserTypeByDescription(tUserType.UserTypeEnum.RESELLER.name());
                 long nRole = userRoleRepository.countByUserIdAndUserTypeId(userId, userTypeVal.getUserTypeId());
 
                 if (nRole == 0) {
@@ -231,8 +225,7 @@ public class ResellerRepository implements IResellerRepository {
                         resellerLogRepository.insertResellerLog(actionUser, saved, "ADD_RESELLER", "");
                     }
 
-                    if (saved != null)
-                        reseller = ResellerUtils.transformReseller(saved);
+                    if (saved != null) reseller = ResellerUtils.transformReseller(saved);
                 } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("USER_IS_ALREADY_RESELLER", ""));
                 }
@@ -250,8 +243,7 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public boolean setResellerBalanceMovement(UUID resellerId, String debitCredit, float movementValue,
-                                              UUID actionUserId) {
+    public boolean setResellerBalanceMovement(UUID resellerId, String debitCredit, float movementValue, UUID actionUserId) {
 
         boolean val = false;
 
@@ -338,10 +330,8 @@ public class ResellerRepository implements IResellerRepository {
 
                 if (resellerValidation != null) {
 
-                    tUserType userTypeVal = userTypeRepository.
-                            findUserTypeByDescription(tUserType.UserTypeEnum.RESELLER.name());
+                    tUserType userTypeVal = userTypeRepository.findUserTypeByDescription(tUserType.UserTypeEnum.RESELLER.name());
                     tUser associatedUser = userRepository.findById(resellerValidation.getUser().getUserId());
-                    tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(resellerValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
 
                     if (!resellerAssociationRepository.existInResellerAssociation(resellerId, resellerId)) {
 
@@ -349,13 +339,22 @@ public class ResellerRepository implements IResellerRepository {
 
                         if (associatedDevices.isEmpty()) {
 
-                            userRoleRepository.deleteUserRoleById(role.getUserRoleId());
-                            resellerLogRepository.deleteResellerLogByResellerId(resellerValidation.getResellerId());
-                            resellerRepository.deleteResellerById(resellerValidation.getResellerId());
+                            long nRole = userRoleRepository.countByUserIdAndUserTypeId(resellerValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
 
-                            userLogRepository.insertUserLog(actionUser, associatedUser, "REMOVE_RESELLER_ROLE", "");
+                            if (nRole > 0) {
+                                tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(resellerValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
 
-                            val = true;
+                                userRoleRepository.deleteUserRoleById(role.getUserRoleId());
+                                resellerLogRepository.deleteResellerLogByResellerId(resellerValidation.getResellerId());
+                                resellerRepository.deleteResellerById(resellerValidation.getResellerId());
+
+                                userLogRepository.insertUserLog(actionUser, associatedUser, "REMOVE_RESELLER_ROLE", "");
+
+                                val = true;
+
+                            } else {
+                                throw new ServiceFaultException("ERROR", new ServiceFault("ROLE_DONT_EXIST", ""));
+                            }
                         } else {
                             throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_HAS_DEVICES", ""));
                         }
@@ -405,8 +404,7 @@ public class ResellerRepository implements IResellerRepository {
 
                             resellerLogRepository.insertResellerLog(actionUser, parent, "ADD_RESELLER_ASSOCIATION", "ADD CHILD ID: " + child.getResellerId());
                             resellerLogRepository.insertResellerLog(actionUser, child, "ADD_RESELLER_ASSOCIATION", "ADD PARENT ID: " + parent.getResellerId());
-                            resellerAssociationLogRepository.insertResellerAssociationLog(actionUser, saved, "ADD_RESELLER_ASSOCIATION",
-                                    "ADD CHILD ID: " + child.getResellerId() + " TO PARENT ID: " + parent.getResellerId());
+                            resellerAssociationLogRepository.insertResellerAssociationLog(actionUser, saved, "ADD_RESELLER_ASSOCIATION", "ADD CHILD ID: " + child.getResellerId() + " TO PARENT ID: " + parent.getResellerId());
 
                             val = true;
 
@@ -595,8 +593,7 @@ public class ResellerRepository implements IResellerRepository {
 
                 List<tReseller> available = resellerRepository.findByResellerIdNotIn(childrenIds);
 
-                if (available != null)
-                    size = available.size();
+                if (available != null) size = available.size();
 
 
             } else {
@@ -613,14 +610,13 @@ public class ResellerRepository implements IResellerRepository {
         return size;
     }
 
-    public List<UUID> getAllIdsInHierachy(UUID resellerId){
+    public List<UUID> getAllIdsInHierachy(UUID resellerId) {
 
         List<tReseller> allChildren = resellerRepository.getAllLevelChildrenByParentId(resellerId);
         List<UUID> resellerIds = new ArrayList<>();
         resellerIds.add(resellerId);
 
-        if (allChildren != null)
-            allChildren.forEach(r -> resellerIds.add(r.getResellerId()));
+        if (allChildren != null) allChildren.forEach(r -> resellerIds.add(r.getResellerId()));
 
         return resellerIds;
     }

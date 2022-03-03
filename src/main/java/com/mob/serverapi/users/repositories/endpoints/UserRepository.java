@@ -1,6 +1,5 @@
 package com.mob.serverapi.users.repositories.endpoints;
 
-import com.mob.serverapi.device.database.tDevice;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.base.User;
@@ -75,11 +74,9 @@ public class UserRepository implements IUserRepository {
 
                     switch (status) {
                         case INACTIVE:
-                            throw new ServiceFaultException("WARNING",
-                                    new ServiceFault("USER_INACTIVE", ""));
+                            throw new ServiceFaultException("WARNING", new ServiceFault("USER_INACTIVE", ""));
                         case BLOCKED:
-                            throw new ServiceFaultException("WARNING",
-                                    new ServiceFault("USER_BLOCKED", ""));
+                            throw new ServiceFaultException("WARNING", new ServiceFault("USER_BLOCKED", ""));
 
                         case CHANGEPW:
                         case ACTIVE:
@@ -98,8 +95,7 @@ public class UserRepository implements IUserRepository {
 
                         long countFailed = userLoginLogRepository.countFailedLogins(user.getUserId(), false, lastValid.getLoginDate());
 
-                        if (countFailed > 2)
-                            blockUser(user.getUserId());
+                        if (countFailed > 2) blockUser(user.getUserId());
                     }
 
                     userLoginLogRepository.insertUserLoginLog(user, false, "WRONG CREDENTIALS");
@@ -135,8 +131,7 @@ public class UserRepository implements IUserRepository {
                         String langPref = "EN";
                         String themePref = "L";
                         LocalDateTime creationDate = LocalDateTime.now();
-                        tUserStatus userStatusVal = userStatusRepository.
-                                findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
+                        tUserStatus userStatusVal = userStatusRepository.findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
                         byte[] passwdSalt = UserUtils.createPasswordSalt();
                         byte[] passwdHash = UserUtils.hashPassword(passwdSalt, userPassword);
 
@@ -153,8 +148,7 @@ public class UserRepository implements IUserRepository {
 
                         tUser saved = userRepository.saveUser(userToCreate);
 
-                        if (saved != null)
-                            createdUser = UserUtils.transformUser(saved);
+                        if (saved != null) createdUser = UserUtils.transformUser(saved);
 
                         if (actionUserId.equals("")) {
                             actionUserId = saved.getUserId();
@@ -191,8 +185,7 @@ public class UserRepository implements IUserRepository {
 
             if (actionUser != null && getUser != null) {
                 if (getUser.getUserStatus().getDescription().equals(tUserStatus.UserStatusEnum.BLOCKED.name())) {
-                    tUserStatus userStatusVal = userStatusRepository
-                            .findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
+                    tUserStatus userStatusVal = userStatusRepository.findUserStatusByDescription(tUserStatus.UserStatusEnum.CHANGEPW.name());
 
 
                     getUser.setUserStatus(userStatusVal);
@@ -224,8 +217,7 @@ public class UserRepository implements IUserRepository {
             tUser getUser = userRepository.findById(userId);
 
             if (getUser != null) {
-                tUserStatus userStatusVal = userStatusRepository
-                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.BLOCKED.name());
+                tUserStatus userStatusVal = userStatusRepository.findUserStatusByDescription(tUserStatus.UserStatusEnum.BLOCKED.name());
 
                 getUser.setUserStatus(userStatusVal);
 
@@ -255,8 +247,7 @@ public class UserRepository implements IUserRepository {
             if (actionUser != null && getUser != null) {
                 byte[] passwdSalt = UserUtils.createPasswordSalt();
                 byte[] passwdHash = UserUtils.hashPassword(passwdSalt, newPassword);
-                tUserStatus userStatusVal = userStatusRepository
-                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.ACTIVE.name());
+                tUserStatus userStatusVal = userStatusRepository.findUserStatusByDescription(tUserStatus.UserStatusEnum.ACTIVE.name());
 
                 getUser.setUserStatus(userStatusVal);
                 getUser.setPasswordSalt(passwdSalt);
@@ -287,8 +278,7 @@ public class UserRepository implements IUserRepository {
             tUser getUser = userRepository.findById(userId);
 
             if (actionUser != null && getUser != null) {
-                tUserStatus userStatusVal = userStatusRepository
-                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.INACTIVE.name());
+                tUserStatus userStatusVal = userStatusRepository.findUserStatusByDescription(tUserStatus.UserStatusEnum.INACTIVE.name());
 
                 getUser.setUserStatus(userStatusVal);
                 getUser.setInactivationDate(LocalDateTime.now());
@@ -318,8 +308,7 @@ public class UserRepository implements IUserRepository {
             tUser getUser = userRepository.findById(userId);
 
             if (actionUser != null && getUser != null) {
-                tUserStatus userStatusVal = userStatusRepository
-                        .findUserStatusByDescription(tUserStatus.UserStatusEnum.ACTIVE.name());
+                tUserStatus userStatusVal = userStatusRepository.findUserStatusByDescription(tUserStatus.UserStatusEnum.ACTIVE.name());
 
                 getUser.setUserStatus(userStatusVal);
                 getUser.setInactivationDate(LocalDateTime.now());
@@ -397,8 +386,7 @@ public class UserRepository implements IUserRepository {
 
             boolean exist = userRepository.userExistsUserName(userName);
 
-            if (exist)
-                val = true;
+            if (exist) val = true;
 
         } catch (ServiceFaultException se) {
             throw se;
@@ -416,8 +404,7 @@ public class UserRepository implements IUserRepository {
 
             boolean exist = userRepository.userExistsUserEmail(userEmail);
 
-            if (exist)
-                val = true;
+            if (exist) val = true;
 
         } catch (ServiceFaultException se) {
             throw se;
@@ -450,10 +437,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public List<User> getUserFiltered(@Nullable String userId, @Nullable String userName,
-                                      @Nullable String userStatus, @Nullable String userEmail,
-                                      @Nullable String startCreationDate, @Nullable String endCreationDate,
-                                      @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
+    public List<User> getUserFiltered(@Nullable String userId, @Nullable String userName, @Nullable String userStatus, @Nullable String userEmail, @Nullable String startCreationDate, @Nullable String endCreationDate, @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
 
         List<User> returnList = new ArrayList<>();
 
@@ -466,18 +450,14 @@ public class UserRepository implements IUserRepository {
             String localUserName = userName.equals("") ? null : userName;
             String localUserStatus = userStatus.equals("") ? null : userStatus;
             String localUserEmail = userEmail.equals("") ? null : userEmail;
-            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
-                    LocalDateTime.parse(startCreationDate, formatter);
-            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
 
             String localField = field.equals("") ? null : field;
             String localOrderField = orderField.equals("") ? null : orderField;
 
 
-            List<tUser> users = userRepository.getUserFiltered(localUserId, localUserName,
-                    localUserStatus, localUserEmail, localStartCreationDate, localEndCreationDate,
-                    localField, localOrderField, offset, numberRecords);
+            List<tUser> users = userRepository.getUserFiltered(localUserId, localUserName, localUserStatus, localUserEmail, localStartCreationDate, localEndCreationDate, localField, localOrderField, offset, numberRecords);
 
             if (users != null) {
                 returnList = UserUtils.transformUserList(users);
@@ -495,9 +475,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public long getCountUserFiltered(@Nullable String userId, @Nullable String userName,
-                                     @Nullable String userStatus, @Nullable String userEmail,
-                                     @Nullable String startCreationDate, @Nullable String endCreationDate) {
+    public long getCountUserFiltered(@Nullable String userId, @Nullable String userName, @Nullable String userStatus, @Nullable String userEmail, @Nullable String startCreationDate, @Nullable String endCreationDate) {
 
         try {
 
@@ -507,14 +485,11 @@ public class UserRepository implements IUserRepository {
             String localUserName = userName.equals("") ? null : userName;
             String localUserStatus = userStatus.equals("") ? null : userStatus;
             String localUserEmail = userEmail.equals("") ? null : userEmail;
-            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
-                    LocalDateTime.parse(startCreationDate, formatter);
-            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
 
 
-            long countUsers = userRepository.getCountUserFiltered(localUserId, localUserName, localUserStatus,
-                    localUserEmail, localStartCreationDate, localEndCreationDate);
+            long countUsers = userRepository.getCountUserFiltered(localUserId, localUserName, localUserStatus, localUserEmail, localStartCreationDate, localEndCreationDate);
 
             return countUsers;
 
@@ -536,8 +511,7 @@ public class UserRepository implements IUserRepository {
 
             if (associatedUser != null && actionUser != null) {
 
-                tUserType userTypeVal = userTypeRepository.
-                        findUserTypeByDescription(tUserType.UserTypeEnum.ADMIN.name());
+                tUserType userTypeVal = userTypeRepository.findUserTypeByDescription(tUserType.UserTypeEnum.ADMIN.name());
                 long nRole = userRoleRepository.countByUserIdAndUserTypeId(userId, userTypeVal.getUserTypeId());
 
                 if (nRole == 0) {
@@ -550,8 +524,7 @@ public class UserRepository implements IUserRepository {
                     userLogRepository.insertUserLog(actionUser, associatedUser, "ADD_ADMIN_ROLE", "");
 
 
-                    if (saved != null)
-                        val = true;
+                    if (saved != null) val = true;
 
                 } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("USER_IS_ALREADY_ADMIN", ""));
@@ -579,14 +552,21 @@ public class UserRepository implements IUserRepository {
 
             if (actionUser != null && user != null) {
 
-                tUserType userTypeVal = userTypeRepository.
-                        findUserTypeByDescription(tUserType.UserTypeEnum.RESELLER.name());
-                tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(userId, userTypeVal.getUserTypeId());
+                tUserType userTypeVal = userTypeRepository.findUserTypeByDescription(tUserType.UserTypeEnum.ADMIN.name());
 
+                long nRole = userRoleRepository.countByUserIdAndUserTypeId(userId, userTypeVal.getUserTypeId());
+
+                if (nRole > 0) {
+
+                    tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(userId, userTypeVal.getUserTypeId());
                     userRoleRepository.deleteUserRoleById(role.getUserRoleId());
                     userLogRepository.insertUserLog(actionUser, user, "REMOVE_ADMIN_ROLE", "");
-
                     val = true;
+
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("ROLE_DONT_EXIST", ""));
+                }
+
 
             } else {
                 throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));

@@ -112,8 +112,7 @@ public class SupportRepository implements ISupportRepository {
 
             if (associatedUser != null && actionUser != null) {
 
-                tUserType userTypeVal = userTypeRepository.
-                        findUserTypeByDescription(tUserType.UserTypeEnum.SUPPORT.name());
+                tUserType userTypeVal = userTypeRepository.findUserTypeByDescription(tUserType.UserTypeEnum.SUPPORT.name());
                 long nRole = userRoleRepository.countByUserIdAndUserTypeId(userId, userTypeVal.getUserTypeId());
 
                 if (nRole == 0) {
@@ -134,8 +133,7 @@ public class SupportRepository implements ISupportRepository {
                         supportLogRepository.insertSupportLog(actionUser, saved, "ADD_SUPPORT", "");
                     }
 
-                    if (saved != null)
-                        support = SupportUtils.transformSupport(saved);
+                    if (saved != null) support = SupportUtils.transformSupport(saved);
                 } else {
                     throw new ServiceFaultException("ERROR", new ServiceFault("USER_IS_ALREADY_SUPPORT", ""));
                 }
@@ -166,20 +164,25 @@ public class SupportRepository implements ISupportRepository {
 
                     if (!supportAssociationRepository.existInSupportAssociation(supportId, supportId)) {
 
-                        tUserType userTypeVal = userTypeRepository.
-                                findUserTypeByDescription(tUserType.UserTypeEnum.SUPPORT.name());
+                        tUserType userTypeVal = userTypeRepository.findUserTypeByDescription(tUserType.UserTypeEnum.SUPPORT.name());
                         tUser associatedUser = userRepository.findById(supportValidation.getUser().getUserId());
-                        tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(supportValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
 
+                        long nRole = userRoleRepository.countByUserIdAndUserTypeId(supportValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
 
-                        userRoleRepository.deleteUserRoleById(role.getUserRoleId());
-                        supportLogRepository.deleteSupportLogBySupportId(supportValidation.getSupportId());
-                        supportRepository.deleteSupportById(supportValidation.getSupportId());
+                        if (nRole > 0) {
+                            tUserRole role = userRoleRepository.findByUserIdAndUserTypeId(supportValidation.getUser().getUserId(), userTypeVal.getUserTypeId());
 
-                        userLogRepository.insertUserLog(actionUser, associatedUser, "REMOVE_SUPPORT_ROLE", "");
+                            userRoleRepository.deleteUserRoleById(role.getUserRoleId());
+                            supportLogRepository.deleteSupportLogBySupportId(supportValidation.getSupportId());
+                            supportRepository.deleteSupportById(supportValidation.getSupportId());
 
-                        val = true;
+                            userLogRepository.insertUserLog(actionUser, associatedUser, "REMOVE_SUPPORT_ROLE", "");
 
+                            val = true;
+
+                        } else {
+                            throw new ServiceFaultException("ERROR", new ServiceFault("ROLE_DONT_EXIST", ""));
+                        }
                     } else {
                         throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_HAS_ASSOCIATIONS", ""));
                     }
@@ -201,9 +204,7 @@ public class SupportRepository implements ISupportRepository {
 
 
     @Override
-    public List<Support> getSupportFiltered(@Nullable String supportId, @Nullable String supportName,
-                                            boolean onlyChildren, @Nullable String field,
-                                            @Nullable String orderField, int offset, int numberRecords) {
+    public List<Support> getSupportFiltered(@Nullable String supportId, @Nullable String supportName, boolean onlyChildren, @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
 
         List<Support> returnList = new ArrayList<>();
 
@@ -216,8 +217,7 @@ public class SupportRepository implements ISupportRepository {
             String localOrderField = orderField.equals("") ? null : orderField;
 
 
-            List<tSupport> support = supportRepository.getSupportFiltered(localSupportId, localSupportName,
-                    onlyChildren, localField, localOrderField, offset, numberRecords);
+            List<tSupport> support = supportRepository.getSupportFiltered(localSupportId, localSupportName, onlyChildren, localField, localOrderField, offset, numberRecords);
 
             if (support != null) {
                 returnList = SupportUtils.transformSupportList(support);
@@ -235,8 +235,7 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public long getCountSupportFiltered(@Nullable String supportId, @Nullable String supportName,
-                                        boolean onlyChildren) {
+    public long getCountSupportFiltered(@Nullable String supportId, @Nullable String supportName, boolean onlyChildren) {
 
         try {
 
@@ -245,8 +244,7 @@ public class SupportRepository implements ISupportRepository {
             String localSupportName = supportName.equals("") ? null : supportName;
 
 
-            long countSupport = supportRepository.getCountSupportFiltered(localSupportId, localSupportName,
-                    onlyChildren);
+            long countSupport = supportRepository.getCountSupportFiltered(localSupportId, localSupportName, onlyChildren);
 
             return countSupport;
 
@@ -259,10 +257,7 @@ public class SupportRepository implements ISupportRepository {
 
 
     @Override
-    public List<Ticket> getTicketFiltered(@Nullable String ticketId, @Nullable String status,
-                                          @Nullable String startCreationDate, @Nullable String endCreationDate,
-                                          @Nullable String field, @Nullable String orderField,
-                                          int offset, int numberRecords) {
+    public List<Ticket> getTicketFiltered(@Nullable String ticketId, @Nullable String status, @Nullable String startCreationDate, @Nullable String endCreationDate, @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
 
         List<Ticket> returnList = new ArrayList<>();
 
@@ -274,14 +269,10 @@ public class SupportRepository implements ISupportRepository {
             String localStatus = status.equals("") ? null : status;
             String localField = field.equals("") ? null : field;
             String localOrderField = orderField.equals("") ? null : orderField;
-            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
-                    LocalDateTime.parse(startCreationDate, formatter);
-            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
 
-            List<tTicket> ticket = ticketRepository.getTicketFiltered(localTicketId, localStatus,
-                    localStartCreationDate, localEndCreationDate,
-                    localField, localOrderField, offset, numberRecords);
+            List<tTicket> ticket = ticketRepository.getTicketFiltered(localTicketId, localStatus, localStartCreationDate, localEndCreationDate, localField, localOrderField, offset, numberRecords);
 
             if (ticket != null) {
                 returnList = SupportUtils.transformTicketList(ticket);
@@ -299,8 +290,7 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public long getCountTicketFiltered(@Nullable String ticketId, @Nullable String status,
-                                       @Nullable String startCreationDate, @Nullable String endCreationDate) {
+    public long getCountTicketFiltered(@Nullable String ticketId, @Nullable String status, @Nullable String startCreationDate, @Nullable String endCreationDate) {
 
         try {
 
@@ -308,14 +298,11 @@ public class SupportRepository implements ISupportRepository {
 
             UUID localTicketId = ticketId.equals("") ? null : UUID.fromString(ticketId);
             String localStatus = status.equals("") ? null : status;
-            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
-                    LocalDateTime.parse(startCreationDate, formatter);
-            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
 
 
-            long countSupport = ticketRepository.getCountTicketFiltered(localTicketId, localStatus,
-                    localStartCreationDate, localEndCreationDate);
+            long countSupport = ticketRepository.getCountTicketFiltered(localTicketId, localStatus, localStartCreationDate, localEndCreationDate);
 
             return countSupport;
 
@@ -327,9 +314,7 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public List<TicketDetail> getTicketDetailFiltered(@Nullable String ticketId, @Nullable String startCreationDate, @Nullable String endCreationDate,
-                                                      @Nullable String field, @Nullable String orderField,
-                                                      int offset, int numberRecords) {
+    public List<TicketDetail> getTicketDetailFiltered(@Nullable String ticketId, @Nullable String startCreationDate, @Nullable String endCreationDate, @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
         List<TicketDetail> returnList = new ArrayList<>();
 
         try {
@@ -339,14 +324,10 @@ public class SupportRepository implements ISupportRepository {
             UUID localTicketId = ticketId.equals("") ? null : UUID.fromString(ticketId);
             String localField = field.equals("") ? null : field;
             String localOrderField = orderField.equals("") ? null : orderField;
-            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
-                    LocalDateTime.parse(startCreationDate, formatter);
-            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
 
-            List<tTicketDetail> ticket = ticketDetailRepository.getTicketDetailFiltered(localTicketId,
-                    localStartCreationDate, localEndCreationDate,
-                    localField, localOrderField, offset, numberRecords);
+            List<tTicketDetail> ticket = ticketDetailRepository.getTicketDetailFiltered(localTicketId, localStartCreationDate, localEndCreationDate, localField, localOrderField, offset, numberRecords);
 
             if (ticket != null) {
                 returnList = SupportUtils.transformTicketDetailList(ticket);
@@ -370,14 +351,11 @@ public class SupportRepository implements ISupportRepository {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
             UUID localTicketId = ticketId.equals("") ? null : UUID.fromString(ticketId);
-            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null :
-                    LocalDateTime.parse(startCreationDate, formatter);
-            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null :
-                    LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
+            LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
 
 
-            long countSupport = ticketDetailRepository.getCountTicketDetailFiltered(localTicketId,
-                    localStartCreationDate, localEndCreationDate);
+            long countSupport = ticketDetailRepository.getCountTicketDetailFiltered(localTicketId, localStartCreationDate, localEndCreationDate);
 
             return countSupport;
 
@@ -415,8 +393,7 @@ public class SupportRepository implements ISupportRepository {
 
                             supportLogRepository.insertSupportLog(actionUser, parent, "ADD_SUPPORT_ASSOCIATION", "ADD CHILD ID: " + child.getSupportId());
                             supportLogRepository.insertSupportLog(actionUser, child, "ADD_SUPPORT_ASSOCIATION", "ADD PARENT ID: " + parent.getSupportId());
-                            supportAssociationLogRepository.insertSupportAssociationLog(actionUser, saved, "ADD_SUPPORT_ASSOCIATION",
-                                    "ADD CHILD ID: " + child.getSupportId() + " TO PARENT ID: " + parent.getSupportId());
+                            supportAssociationLogRepository.insertSupportAssociationLog(actionUser, saved, "ADD_SUPPORT_ASSOCIATION", "ADD CHILD ID: " + child.getSupportId() + " TO PARENT ID: " + parent.getSupportId());
 
                             val = true;
 
@@ -562,8 +539,7 @@ public class SupportRepository implements ISupportRepository {
             tUser creationUser = userRepository.findById(creationUserId);
             if (creationUser != null) {
 
-                tTicketStatus ticketStatusVal = ticketStatusRepository
-                        .findTicketStatusByDescription(tTicketStatus.TicketStatusEnum.OPEN.name());
+                tTicketStatus ticketStatusVal = ticketStatusRepository.findTicketStatusByDescription(tTicketStatus.TicketStatusEnum.OPEN.name());
 
                 tTicket ticketToSave = new tTicket();
                 ticketToSave.setOpenUser(creationUser);
@@ -614,8 +590,7 @@ public class SupportRepository implements ISupportRepository {
                 if (actionUser != null) {
 
                     UUID localAssignedUserId = assignedUserId.equals("") ? null : UUID.fromString(assignedUserId);
-                    tTicketStatus localStatus = status.equals("") ? null : ticketStatusRepository
-                            .findTicketStatusByDescription(status);
+                    tTicketStatus localStatus = status.equals("") ? null : ticketStatusRepository.findTicketStatusByDescription(status);
 
                     if (localAssignedUserId != null) {
 
@@ -624,8 +599,7 @@ public class SupportRepository implements ISupportRepository {
                         if (assignedUser != null) {
                             ticket.setAssignedUser(assignedUser);
                             ticketRepository.saveTicket(ticket);
-                            ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED",
-                                    "ALTERED ASSIGNED USER TO : " + localStatus.getDescription());
+                            ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED", "ALTERED ASSIGNED USER TO : " + localStatus.getDescription());
                         } else {
                             throw new ServiceFaultException("ERROR", new ServiceFault("ASSIGNED_USER_DONT_EXIST", ""));
                         }
@@ -634,8 +608,7 @@ public class SupportRepository implements ISupportRepository {
 
                         ticket.setTicketStatus(localStatus);
                         ticketRepository.saveTicket(ticket);
-                        ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED",
-                                "ALTERED STATUS TO : " + localStatus.getDescription());
+                        ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED", "ALTERED STATUS TO : " + localStatus.getDescription());
 
                     } else {
                         throw new ServiceFaultException("ERROR", new ServiceFault("STATUS_DONT_EXIST", ""));
@@ -750,8 +723,7 @@ public class SupportRepository implements ISupportRepository {
 
                 List<tSupport> available = supportRepository.findBySupportIdNotIn(childrenIds);
 
-                if (available != null)
-                    size = available.size();
+                if (available != null) size = available.size();
 
 
             } else {
@@ -775,8 +747,7 @@ public class SupportRepository implements ISupportRepository {
         List<UUID> supportIds = new ArrayList<>();
         supportIds.add(supportId);
 
-        if (allChildren != null)
-            allChildren.forEach(r -> supportIds.add(r.getSupportId()));
+        if (allChildren != null) allChildren.forEach(r -> supportIds.add(r.getSupportId()));
 
         return supportIds;
     }

@@ -111,7 +111,7 @@ public class tDeviceRepository {
         CriteriaQuery<tDevice> query = cb.createQuery(tDevice.class);
         Root<tDevice> root = query.from(tDevice.class);
         Join<tDevice, tDeviceStatus> status = root.join(tDevice_.DEVICE_STATUS);
-        Join<tDevice, tReseller> reseller = root.join(tDevice_.RESELLER);
+        Join<tDevice, tReseller> reseller = root.join(tDevice_.RESELLER, JoinType.LEFT);
 
         query = getPredicates(cb,query,root,status,reseller,deviceId,resellerId,deviceStatus,startCreationDate,endCreationDate,
                 startActivationDate,endActivationDate,startExpirationDate,endExpirationDate);
@@ -162,7 +162,7 @@ public class tDeviceRepository {
         CriteriaQuery<tDevice> query = cb.createQuery(tDevice.class);
         Root<tDevice> root = query.from(tDevice.class);
         Join<tDevice, tDeviceStatus> status = root.join(tDevice_.DEVICE_STATUS);
-        Join<tDevice, tReseller> reseller = root.join(tDevice_.RESELLER);
+        Join<tDevice, tReseller> reseller = root.join(tDevice_.RESELLER, JoinType.LEFT);
 
         query = getPredicates(cb,query,root,status,reseller,deviceId,resellerId,deviceStatus,startCreationDate,endCreationDate,
                 startActivationDate,endActivationDate,startExpirationDate,endExpirationDate);
