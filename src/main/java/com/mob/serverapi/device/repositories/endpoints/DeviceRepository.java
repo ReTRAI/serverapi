@@ -9,9 +9,11 @@ import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.repositories.database.tResellerRepository;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
+import com.mob.serverapi.users.base.User;
 import com.mob.serverapi.users.database.tUser;
 import com.mob.serverapi.users.repositories.database.tUserRepository;
 import com.mob.serverapi.utils.DeviceUtils;
+import com.mob.serverapi.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 
@@ -344,6 +346,13 @@ public class DeviceRepository implements IDeviceRepository {
                         deviceUser.setDevice(deviceVal);
                         deviceUser.setNickname(ownerNickname);
                         deviceUser.setCreationDate(LocalDateTime.now());
+
+                        String password = UserUtils.generateRandomAlphanumericString();
+                        byte[] salt = UserUtils.createPasswordSalt();
+                        byte[] passwdHash = UserUtils.hashPassword(salt, password);
+
+                        deviceUser.setUserActivationPasswordSalt(salt);
+                        deviceUser.setUserActivationPasswordHash(passwdHash);
 
                         tDeviceUser deviceUserSaved = deviceUserRepository.saveDeviceUser(deviceUser);
 

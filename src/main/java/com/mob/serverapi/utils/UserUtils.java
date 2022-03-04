@@ -11,10 +11,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public  class UserUtils {
 
@@ -91,6 +88,21 @@ public  class UserUtils {
         byte[] hashNewPassword = hashPassword(passwordSalt,insertedPasswd);
 
         return  Arrays.equals(passwordHash,hashNewPassword);
+    }
+
+    public static String generateRandomAlphanumericString() {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 12;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return  generatedString;
     }
 
 }

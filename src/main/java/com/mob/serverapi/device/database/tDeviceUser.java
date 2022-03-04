@@ -29,9 +29,15 @@ public class tDeviceUser implements Serializable {
     @Column(name = "creationDate", nullable = false)
     private LocalDateTime creationDate;
 
-    @Column(name = "userActivationPassword", nullable = false)
+
+    @Column(name = "userActivationPasswordSalt", nullable = false)
     @Lob
-    private String userActivationPassword;
+    private byte[] userActivationPasswordSalt;
+
+    @Column(name = "userActivationPasswordHash", nullable = false)
+    @Lob
+    private byte[] userActivationPasswordHash;
+
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to table device, column deviceId
