@@ -9,7 +9,6 @@ import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.repositories.database.tResellerRepository;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
-import com.mob.serverapi.users.base.User;
 import com.mob.serverapi.users.database.tUser;
 import com.mob.serverapi.users.repositories.database.tUserRepository;
 import com.mob.serverapi.utils.DeviceUtils;
@@ -156,7 +155,7 @@ public class DeviceRepository implements IDeviceRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_DEVICE", ex.getMessage()));
+            throw new ServiceFaultException("ERROR", new ServiceFault("SET_DEVICE_LIST", ex.getMessage()));
         }
 
         return devicesInserted;
@@ -253,7 +252,7 @@ public class DeviceRepository implements IDeviceRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_DEVICES_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_DEVICES_FILTERED", ex.getMessage()));
         }
     }
 
@@ -311,7 +310,7 @@ public class DeviceRepository implements IDeviceRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_DEVICES_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException("ERROR", new ServiceFault("ASSIGN_DEVICE", ex.getMessage()));
         }
         return device;
     }
@@ -340,7 +339,6 @@ public class DeviceRepository implements IDeviceRepository {
                         deviceVal.setDeviceStatus(deviceStatusActive);
                         deviceVal.setActivationDate(LocalDateTime.now());
                         deviceVal.setExpirationDate(LocalDateTime.now().plusDays(180));
-                        deviceVal.setLastRenovationDate(LocalDateTime.now());
 
                         tDeviceUser deviceUser = new tDeviceUser();
                         deviceUser.setDevice(deviceVal);
@@ -362,9 +360,9 @@ public class DeviceRepository implements IDeviceRepository {
                             if (saved != null) {
 
                                 device = DeviceUtils.transformDevice(saved);
-                                deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE ASSIGNED TO RESELLER", "DEVICE ID: "
+                                deviceLogRepository.insertDeviceLog(actionUser, saved, "ACTIVATE DEVICE", "DEVICE ID: "
                                         + saved.getDeviceId());
-                                deviceUserLogRepository.insertDeviceUserLog(actionUser,deviceUserSaved, "CREATE DEVICE USER ",
+                                deviceUserLogRepository.insertDeviceUserLog(actionUser, deviceUserSaved, "CREATE DEVICE USER ",
                                         "DEVICE ID: " + saved.getDeviceId());
 
                             } else {
@@ -386,7 +384,151 @@ public class DeviceRepository implements IDeviceRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_DEVICES_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException("ERROR", new ServiceFault("ACTIVATE_DEVICE", ex.getMessage()));
+        }
+        return device;
+    }
+
+    @Override
+    public Device blockDevice(UUID deviceId, UUID actionUserId) {
+        Device device = new Device();
+
+        try {
+
+            tUser actionUser = userRepository.findById(actionUserId);
+            if (actionUser != null) {
+
+                tDevice deviceVal = deviceRepository.findById((deviceId));
+                if (deviceVal != null) {
+
+                    tDeviceStatus deviceStatusVal = deviceStatusRepository.findDeviceStatusByDescription(
+                            deviceVal.getDeviceStatus().getDescription());
+
+                    if (deviceStatusVal.getDescription().equals(tDeviceStatus.DeviceStatusEnum.ACTIVE.name())) {
+
+                        tDeviceStatus deviceStatusFree = deviceStatusRepository.findDeviceStatusByDescription(
+                                tDeviceStatus.DeviceStatusEnum.BLOCKED.name());
+
+                        deviceVal.setDeviceStatus(deviceStatusFree);
+                        tDevice saved = deviceRepository.saveDevice(deviceVal);
+
+                        if (saved != null) {
+                            device = DeviceUtils.transformDevice(saved);
+                            deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE BLOCKED", "DEVICE ID: "
+                                    + saved.getDeviceId());
+
+                        } else {
+                            throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
+                        }
+                    } else {
+                        throw new ServiceFaultException("ERROR", new ServiceFault("INCONSISTENT_DEVICE_STATUS", ""));
+                    }
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                }
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("BLOCK_DEVICE", ex.getMessage()));
+        }
+        return device;
+    }
+
+    @Override
+    public Device wipeDevice(UUID deviceId, UUID actionUserId) {
+        Device device = new Device();
+
+        try {
+
+            tUser actionUser = userRepository.findById(actionUserId);
+            if (actionUser != null) {
+
+                tDevice deviceVal = deviceRepository.findById((deviceId));
+                if (deviceVal != null) {
+
+                    tDeviceStatus deviceStatusVal = deviceStatusRepository.findDeviceStatusByDescription(
+                            deviceVal.getDeviceStatus().getDescription());
+
+                    if (deviceStatusVal.getDescription().equals(tDeviceStatus.DeviceStatusEnum.ACTIVE.name())) {
+
+                        tDeviceStatus deviceStatusFree = deviceStatusRepository.findDeviceStatusByDescription(
+                                tDeviceStatus.DeviceStatusEnum.WIPED.name());
+
+                        deviceVal.setDeviceStatus(deviceStatusFree);
+                        tDevice saved = deviceRepository.saveDevice(deviceVal);
+
+                        if (saved != null) {
+                            device = DeviceUtils.transformDevice(saved);
+                            deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE BLOCKED", "DEVICE ID: "
+                                    + saved.getDeviceId());
+
+                        } else {
+                            throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
+                        }
+                    } else {
+                        throw new ServiceFaultException("ERROR", new ServiceFault("INCONSISTENT_DEVICE_STATUS", ""));
+                    }
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                }
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("WIPE_DEVICE", ex.getMessage()));
+        }
+        return device;
+    }
+
+    @Override
+    public Device suspendDevice(UUID deviceId, UUID actionUserId) {
+        Device device = new Device();
+
+        try {
+
+            tUser actionUser = userRepository.findById(actionUserId);
+            if (actionUser != null) {
+
+                tDevice deviceVal = deviceRepository.findById((deviceId));
+                if (deviceVal != null) {
+
+                    tDeviceStatus deviceStatusVal = deviceStatusRepository.findDeviceStatusByDescription(
+                            deviceVal.getDeviceStatus().getDescription());
+
+                    if (deviceStatusVal.getDescription().equals(tDeviceStatus.DeviceStatusEnum.ACTIVE.name())) {
+
+                        tDeviceStatus deviceStatusFree = deviceStatusRepository.findDeviceStatusByDescription(
+                                tDeviceStatus.DeviceStatusEnum.SUSPENDED.name());
+
+                        deviceVal.setDeviceStatus(deviceStatusFree);
+                        tDevice saved = deviceRepository.saveDevice(deviceVal);
+
+                        if (saved != null) {
+                            device = DeviceUtils.transformDevice(saved);
+                            deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE BLOCKED", "DEVICE ID: "
+                                    + saved.getDeviceId());
+
+                        } else {
+                            throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
+                        }
+                    } else {
+                        throw new ServiceFaultException("ERROR", new ServiceFault("INCONSISTENT_DEVICE_STATUS", ""));
+                    }
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                }
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("SUSPEND_DEVICE", ex.getMessage()));
         }
         return device;
     }

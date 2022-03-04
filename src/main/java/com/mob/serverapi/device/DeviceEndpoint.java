@@ -57,6 +57,40 @@ public class DeviceEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "blockDeviceRequest")
+    @ResponsePayload
+    public BlockDeviceResponse blockDevice (@RequestPayload BlockDeviceRequest request) {
+
+        BlockDeviceResponse response = new BlockDeviceResponse();
+        response.setDevice(deviceRepository.blockDevice(UUID.fromString(request.getDeviceId()),
+               UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "wipeDeviceRequest")
+    @ResponsePayload
+    public WipeDeviceResponse wipeDevice (@RequestPayload WipeDeviceRequest request) {
+
+        WipeDeviceResponse response = new WipeDeviceResponse();
+        response.setDevice(deviceRepository.wipeDevice(UUID.fromString(request.getDeviceId()),
+                UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "suspendDeviceRequest")
+    @ResponsePayload
+    public SuspendDeviceResponse suspendDevice (@RequestPayload SuspendDeviceRequest request) {
+
+        SuspendDeviceResponse response = new SuspendDeviceResponse();
+        response.setDevice(deviceRepository.suspendDevice(UUID.fromString(request.getDeviceId()),
+                UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setDeviceRequest")
     @ResponsePayload
     public SetDeviceResponse setDevice(@RequestPayload SetDeviceRequest request) {

@@ -6,26 +6,27 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.device.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for userRole complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="userRole">
+ * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="userRoleId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userRoleName" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="deviceId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="actionUserId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,63 +36,64 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "userRole", propOrder = {
-    "userRoleId",
-    "userRoleName"
+@XmlType(name = "", propOrder = {
+    "deviceId",
+    "actionUserId"
 })
-public class UserRole {
+@XmlRootElement(name = "suspendDeviceRequest")
+public class SuspendDeviceRequest {
 
     @XmlElement(required = true)
-    protected String userRoleId;
+    protected String deviceId;
     @XmlElement(required = true)
-    protected String userRoleName;
+    protected String actionUserId;
 
     /**
-     * Gets the value of the userRoleId property.
+     * Gets the value of the deviceId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserRoleId() {
-        return userRoleId;
+    public String getDeviceId() {
+        return deviceId;
     }
 
     /**
-     * Sets the value of the userRoleId property.
+     * Sets the value of the deviceId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserRoleId(String value) {
-        this.userRoleId = value;
+    public void setDeviceId(String value) {
+        this.deviceId = value;
     }
 
     /**
-     * Gets the value of the userRoleName property.
+     * Gets the value of the actionUserId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserRoleName() {
-        return userRoleName;
+    public String getActionUserId() {
+        return actionUserId;
     }
 
     /**
-     * Sets the value of the userRoleName property.
+     * Sets the value of the actionUserId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserRoleName(String value) {
-        this.userRoleName = value;
+    public void setActionUserId(String value) {
+        this.actionUserId = value;
     }
 
 }

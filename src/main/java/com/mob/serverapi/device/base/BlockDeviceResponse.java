@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.device.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="user" type="{http://www.mob.com/serverapi/users/base}user"/>
+ *         &lt;element name="device" type="{http://www.mob.com/serverapi/device/base}device"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "user"
+    "device"
 })
-@XmlRootElement(name = "userLoginResponse")
-public class UserLoginResponse {
+@XmlRootElement(name = "blockDeviceResponse")
+public class BlockDeviceResponse {
 
     @XmlElement(required = true)
-    protected User user;
+    protected Device device;
 
     /**
-     * Gets the value of the user property.
+     * Gets the value of the device property.
      * 
      * @return
      *     possible object is
-     *     {@link User }
+     *     {@link Device }
      *     
      */
-    public User getUser() {
-        return user;
+    public Device getDevice() {
+        return device;
     }
 
     /**
-     * Sets the value of the user property.
+     * Sets the value of the device property.
      * 
      * @param value
      *     allowed object is
-     *     {@link User }
+     *     {@link Device }
      *     
      */
-    public void setUser(User value) {
-        this.user = value;
+    public void setDevice(Device value) {
+        this.device = value;
     }
 
 }

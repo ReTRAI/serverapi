@@ -33,4 +33,10 @@ interface IDeviceRepository {
     Device assignDevice(UUID deviceId, UUID resellerId, UUID actionUserId);
 
     Device activateDevice(UUID deviceId, String ownerNickname, UUID actionUserId);
+
+    Device blockDevice(UUID deviceId, UUID actionUserId);
+
+    Device wipeDevice(UUID deviceId, UUID actionUserId);
+
+    Device suspendDevice(UUID deviceId, UUID actionUserId);
 }

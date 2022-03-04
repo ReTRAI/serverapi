@@ -147,6 +147,57 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- blockDevice-->
+    <xs:element name="blockDeviceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId" type="xs:string"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="blockDeviceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- wipeDevice-->
+    <xs:element name="wipeDeviceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId" type="xs:string"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="wipeDeviceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- suspendDevice-->
+    <xs:element name="suspendDeviceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId" type="xs:string"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="suspendDeviceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 
     <!-- Endpoint Device Object-->
     <xs:complexType name="device">
