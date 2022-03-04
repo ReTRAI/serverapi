@@ -1,18 +1,28 @@
 package com.mob.serverapi.utils;
 
 
+import com.mob.serverapi.dashboard.repositories.endpoints.DashboardRepository;
+import com.mob.serverapi.device.repositories.database.tDeviceRepository;
 import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.database.tResellerAssociation;
 
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import com.mob.serverapi.reseller.base.*;
 import com.mob.serverapi.reseller.database.tResellerBalance;
+import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 public  class ResellerUtils {
+
+
 
     public static Reseller transformReseller(tReseller reseller){
 
@@ -21,6 +31,8 @@ public  class ResellerUtils {
         r.setUserId(reseller.getUser().getUserId().toString());
         r.setResellerName(reseller.getUser().getUserName());
         r.setCurrentBalance(reseller.getCurrentBalance());
+        r.setTotalDevices(reseller.getTotalDevices());
+
         return r;
     }
 

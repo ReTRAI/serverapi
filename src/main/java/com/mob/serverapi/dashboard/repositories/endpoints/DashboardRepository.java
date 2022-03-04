@@ -164,7 +164,7 @@ public class DashboardRepository implements IDashboardRepository {
         return expiring;
     }
 
-    private long getActivateInPeriod(List<UUID> resellerIds, int days) {
+    public long getActivateInPeriod(List<UUID> resellerIds, int days) {
 
         tDeviceStatus deviceStatus = deviceStatusRepository.findDeviceStatusByDescription(
                 tDeviceStatus.DeviceStatusEnum.ACTIVE.name());
@@ -176,7 +176,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getExpiringInPeriod(List<UUID> resellerIds, int days) {
+    public long getExpiringInPeriod(List<UUID> resellerIds, int days) {
 
         tDeviceStatus deviceStatus = deviceStatusRepository.findDeviceStatusByDescription(
                 tDeviceStatus.DeviceStatusEnum.SUSPENDED.name());
@@ -188,7 +188,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getRenewedInPeriod(List<UUID> resellerIds, int days) {
+    public long getRenewedInPeriod(List<UUID> resellerIds, int days) {
 
         tDeviceStatus deviceStatus = deviceStatusRepository.findDeviceStatusByDescription(
                 tDeviceStatus.DeviceStatusEnum.ACTIVE.name());
@@ -200,7 +200,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getActive(List<UUID> resellerIds) {
+    public long getActive(List<UUID> resellerIds) {
 
         tDeviceStatus deviceStatus = deviceStatusRepository.findDeviceStatusByDescription(
                 tDeviceStatus.DeviceStatusEnum.ACTIVE.name());
@@ -210,7 +210,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getFree(List<UUID> resellerIds) {
+    public long getFree(List<UUID> resellerIds) {
 
         tDeviceStatus deviceStatus = deviceStatusRepository.findDeviceStatusByDescription(
                 tDeviceStatus.DeviceStatusEnum.FREE.name());
@@ -220,7 +220,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getBlocked(List<UUID> resellerIds) {
+    public long getBlocked(List<UUID> resellerIds) {
 
         tDeviceStatus deviceStatus = deviceStatusRepository.findDeviceStatusByDescription(
                 tDeviceStatus.DeviceStatusEnum.BLOCKED.name());
@@ -230,7 +230,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getWipped(List<UUID> resellerIds) {
+    public long getWipped(List<UUID> resellerIds) {
 
         tDeviceStatus deviceStatus = deviceStatusRepository.findDeviceStatusByDescription(
                 tDeviceStatus.DeviceStatusEnum.WIPED.name());
@@ -240,7 +240,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getSuspended(List<UUID> resellerIds) {
+    public long getSuspended(List<UUID> resellerIds) {
 
         tDeviceStatus deviceStatus = deviceStatusRepository.findDeviceStatusByDescription(
                 tDeviceStatus.DeviceStatusEnum.SUSPENDED.name());
@@ -250,7 +250,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getRemaining(List<UUID> resellerIds) {
+    public long getRemaining(List<UUID> resellerIds) {
 
         List<tDeviceStatus> statusToFilter = new ArrayList<>();
         statusToFilter.add(deviceStatusRepository.findDeviceStatusByDescription(tDeviceStatus.DeviceStatusEnum.SUSPENDED.name()));
@@ -263,7 +263,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getNotActive(List<UUID> resellerIds) {
+    public long getNotActive(List<UUID> resellerIds) {
 
         List<tDeviceStatus> statusToFilter = new ArrayList<>();
         statusToFilter.add(deviceStatusRepository.findDeviceStatusByDescription(tDeviceStatus.DeviceStatusEnum.ACTIVE.name()));
@@ -274,7 +274,7 @@ public class DashboardRepository implements IDashboardRepository {
         return count;
     }
 
-    private long getAll(List<UUID> resellerIds) {
+    public long getAll(List<UUID> resellerIds) {
 
         long count = deviceRepository.countAll(resellerIds);
 

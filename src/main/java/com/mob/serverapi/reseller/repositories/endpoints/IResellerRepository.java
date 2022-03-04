@@ -22,7 +22,15 @@ interface IResellerRepository {
     long getCountResellerFiltered(@Nullable String resellerId, @Nullable String resellerName,
                                        boolean recursive);
 
-    List<ResellerBalance> getResellerBalanceMovements(UUID resellerId);
+    List<ResellerBalance> getResellerBalanceMovements(UUID resellerId, @Nullable String startMovementDate,
+                                                      @Nullable String endMovementDate, @Nullable String minValue,
+                                                      @Nullable String maxValue, @Nullable String dc,
+                                                      @Nullable String field, @Nullable String orderField,
+                                                      int offset, int numberRecords);
+
+   long getCountResellerBalanceMovements(UUID resellerId, @Nullable String startMovementDate,
+                                                      @Nullable String endMovementDate, @Nullable String minValue,
+                                                      @Nullable String maxValue, @Nullable String dc);
 
     Reseller setReseller(UUID userId, UUID actionUserId);
 

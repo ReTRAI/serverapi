@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.users.base;
+package com.mob.serverapi.reseller.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,12 +25,12 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userStatus" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="userEmail" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="startCreationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="endCreationDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="resellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="startMovementDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="endMovementDate" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="minValue" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="maxValue" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="debitCredit" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -41,171 +41,171 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "userId",
-    "userName",
-    "userStatus",
-    "userEmail",
-    "startCreationDate",
-    "endCreationDate"
+    "resellerId",
+    "startMovementDate",
+    "endMovementDate",
+    "minValue",
+    "maxValue",
+    "debitCredit"
 })
-@XmlRootElement(name = "getCountUserFilteredRequest")
-public class GetCountUserFilteredRequest {
+@XmlRootElement(name = "getCountResellerBalanceMovementsRequest")
+public class GetCountResellerBalanceMovementsRequest {
 
     @XmlElement(required = true)
-    protected String userId;
+    protected String resellerId;
     @XmlElement(required = true)
-    protected String userName;
+    protected String startMovementDate;
     @XmlElement(required = true)
-    protected String userStatus;
+    protected String endMovementDate;
     @XmlElement(required = true)
-    protected String userEmail;
+    protected String minValue;
     @XmlElement(required = true)
-    protected String startCreationDate;
+    protected String maxValue;
     @XmlElement(required = true)
-    protected String endCreationDate;
+    protected String debitCredit;
 
     /**
-     * Gets the value of the userId property.
+     * Gets the value of the resellerId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserId() {
-        return userId;
+    public String getResellerId() {
+        return resellerId;
     }
 
     /**
-     * Sets the value of the userId property.
+     * Sets the value of the resellerId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserId(String value) {
-        this.userId = value;
+    public void setResellerId(String value) {
+        this.resellerId = value;
     }
 
     /**
-     * Gets the value of the userName property.
+     * Gets the value of the startMovementDate property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserName() {
-        return userName;
+    public String getStartMovementDate() {
+        return startMovementDate;
     }
 
     /**
-     * Sets the value of the userName property.
+     * Sets the value of the startMovementDate property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserName(String value) {
-        this.userName = value;
+    public void setStartMovementDate(String value) {
+        this.startMovementDate = value;
     }
 
     /**
-     * Gets the value of the userStatus property.
+     * Gets the value of the endMovementDate property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserStatus() {
-        return userStatus;
+    public String getEndMovementDate() {
+        return endMovementDate;
     }
 
     /**
-     * Sets the value of the userStatus property.
+     * Sets the value of the endMovementDate property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserStatus(String value) {
-        this.userStatus = value;
+    public void setEndMovementDate(String value) {
+        this.endMovementDate = value;
     }
 
     /**
-     * Gets the value of the userEmail property.
+     * Gets the value of the minValue property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getUserEmail() {
-        return userEmail;
+    public String getMinValue() {
+        return minValue;
     }
 
     /**
-     * Sets the value of the userEmail property.
+     * Sets the value of the minValue property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setUserEmail(String value) {
-        this.userEmail = value;
+    public void setMinValue(String value) {
+        this.minValue = value;
     }
 
     /**
-     * Gets the value of the startCreationDate property.
+     * Gets the value of the maxValue property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getStartCreationDate() {
-        return startCreationDate;
+    public String getMaxValue() {
+        return maxValue;
     }
 
     /**
-     * Sets the value of the startCreationDate property.
+     * Sets the value of the maxValue property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setStartCreationDate(String value) {
-        this.startCreationDate = value;
+    public void setMaxValue(String value) {
+        this.maxValue = value;
     }
 
     /**
-     * Gets the value of the endCreationDate property.
+     * Gets the value of the debitCredit property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getEndCreationDate() {
-        return endCreationDate;
+    public String getDebitCredit() {
+        return debitCredit;
     }
 
     /**
-     * Sets the value of the endCreationDate property.
+     * Sets the value of the debitCredit property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setEndCreationDate(String value) {
-        this.endCreationDate = value;
+    public void setDebitCredit(String value) {
+        this.debitCredit = value;
     }
 
 }

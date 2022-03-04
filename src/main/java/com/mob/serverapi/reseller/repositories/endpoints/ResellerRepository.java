@@ -27,6 +27,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -291,7 +292,11 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public List<ResellerBalance> getResellerBalanceMovements(UUID resellerId) {
+    public List<ResellerBalance> getResellerBalanceMovements(UUID resellerId, @Nullable String startMovementDate,
+                                                             @Nullable String endMovementDate, @Nullable String minValue,
+                                                             @Nullable String maxValue, @Nullable String debitCredit,
+                                                             @Nullable String field, @Nullable String orderField,
+                                                             int offset, int numberRecords) {
 
         List<ResellerBalance> returnList = new ArrayList<>();
 
@@ -299,8 +304,22 @@ public class ResellerRepository implements IResellerRepository {
             tReseller u = resellerRepository.findById(resellerId);
 
             if (u != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-                List<tResellerBalance> listBalance = resellerBalanceRepository.getAllBalanceMovements(resellerId);
+                String localMinValue =minValue.equals("") ? null : minValue;
+                String localMaxValue =maxValue.equals("") ? null : maxValue;
+                String localDebitCredit =debitCredit.equals("") ? null : debitCredit;
+                LocalDateTime localStartMovementDate = startMovementDate.equals("") ? null :
+                        LocalDateTime.parse(startMovementDate, formatter);
+                LocalDateTime localEndMovementDate = endMovementDate.equals("") ? null :
+                        LocalDateTime.parse(endMovementDate, formatter).plusDays(1);
+
+                String localField = field.equals("") ? null : field;
+                String localOrderField = orderField.equals("") ? null : orderField;
+
+                List<tResellerBalance> listBalance = resellerBalanceRepository.getResellerBalanceFiltered(resellerId,
+                        localStartMovementDate, localEndMovementDate, localMinValue, localMaxValue, localDebitCredit, localField,
+                        localOrderField, offset, numberRecords);
 
                 if (listBalance != null) {
                     returnList = ResellerUtils.transformResellerBalanceList(listBalance);
@@ -316,6 +335,43 @@ public class ResellerRepository implements IResellerRepository {
             throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BALANCE_MOVEMENTS", ex.getMessage()));
         }
         return returnList;
+    }
+
+    @Override
+    public long getCountResellerBalanceMovements(UUID resellerId, @Nullable String startMovementDate,
+                                                 @Nullable String endMovementDate, @Nullable String minValue,
+                                                 @Nullable String maxValue, @Nullable String debitCredit) {
+
+
+        try {
+            tReseller u = resellerRepository.findById(resellerId);
+
+            if (u != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                String localMinValue =minValue.equals("") ? null : minValue;
+                String localMaxValue =maxValue.equals("") ? null : maxValue;
+                String localDebitCredit =debitCredit.equals("") ? null : debitCredit;
+                LocalDateTime localStartMovementDate = startMovementDate.equals("") ? null :
+                        LocalDateTime.parse(startMovementDate, formatter);
+                LocalDateTime localEndMovementDate = endMovementDate.equals("") ? null :
+                        LocalDateTime.parse(endMovementDate, formatter).plusDays(1);
+
+
+                long nBalance = resellerBalanceRepository.getCountResellerFiltered(resellerId,
+                        localStartMovementDate, localEndMovementDate, localMinValue, localMaxValue, localDebitCredit);
+
+                return nBalance;
+
+            } else {
+                throw new ServiceFaultException("WARNING", new ServiceFault("RESELLER_DONT_EXIST", ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_RESELLER_BALANCE_MOVEMENTS", ex.getMessage()));
+        }
     }
 
     @Override

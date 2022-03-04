@@ -111,6 +111,15 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:string" />
+                <xs:element name="startMovementDate"  type="xs:string" />
+                <xs:element name="endMovementDate"  type="xs:string" />
+                <xs:element name="minValue"  type="xs:string" />
+                <xs:element name="maxValue"  type="xs:string" />
+                <xs:element name="debitCredit"  type="xs:string" />
+                <xs:element name="field"  type="xs:string" />
+                <xs:element name="orderField"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -118,6 +127,27 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerBalance" type="tns:resellerBalance" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getCountResellerBalanceMovements-->
+    <xs:element name="getCountResellerBalanceMovementsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resellerId"  type="xs:string" />
+                <xs:element name="startMovementDate"  type="xs:string" />
+                <xs:element name="endMovementDate"  type="xs:string" />
+                <xs:element name="minValue"  type="xs:string" />
+                <xs:element name="maxValue"  type="xs:string" />
+                <xs:element name="debitCredit"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountResellerBalanceMovementsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:long" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -271,9 +301,6 @@
             <xs:element name="resellerName" type="xs:string"/>
             <xs:element name="currentBalance" type="xs:float"/>
             <xs:element name="totalDevices" type="xs:long"/>
-            <xs:element name="activeDevices" type="xs:long"/>
-            <xs:element name="inactiveDevices" type="xs:long"/>
-            <xs:element name="freeDevices" type="xs:long"/>
         </xs:sequence>
     </xs:complexType>
 

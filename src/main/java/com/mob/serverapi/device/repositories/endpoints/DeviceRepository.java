@@ -291,6 +291,9 @@ public class DeviceRepository implements IDeviceRepository {
                                 deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE ASSIGNED TO RESELLER", "DEVICE ID: "
                                         + saved.getDeviceId() + " RESELLER ID: " + resellerVal.getResellerId());
 
+                                resellerVal.setTotalDevices(resellerVal.getTotalDevices()+1);
+                                resellerRepository.saveReseller(resellerVal);
+
                             } else {
                                 throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
                             }

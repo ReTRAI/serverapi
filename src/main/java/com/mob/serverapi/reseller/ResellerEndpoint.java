@@ -95,7 +95,22 @@ public class ResellerEndpoint {
 
         GetResellerBalanceMovementsResponse response = new GetResellerBalanceMovementsResponse();
         response.getResellerBalance().addAll(resellerRepository.getResellerBalanceMovements
-                (UUID.fromString(request.getResellerId())));
+                (UUID.fromString(request.getResellerId()), request.getStartMovementDate(),request.getEndMovementDate(),
+                        request.getMinValue(),request.getMaxValue(), request.getDebitCredit(),request.getField(),request.getOrderField(),
+                        request.getOffset(),request.getNumberRecords()));
+
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountResellerBalanceMovementsRequest")
+    @ResponsePayload
+    public GetCountResellerBalanceMovementsResponse getCountResellerBalanceMovementsRequest
+            (@RequestPayload GetCountResellerBalanceMovementsRequest request) {
+
+        GetCountResellerBalanceMovementsResponse response = new GetCountResellerBalanceMovementsResponse();
+        response.setResult(resellerRepository.getCountResellerBalanceMovements (UUID.fromString(request.getResellerId()),
+                        request.getStartMovementDate(),request.getEndMovementDate(),
+                        request.getMinValue(),request.getMaxValue(), request.getDebitCredit()));
 
         return response;
     }
