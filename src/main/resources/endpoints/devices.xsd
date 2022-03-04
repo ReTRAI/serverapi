@@ -129,6 +129,24 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- activateDevice-->
+    <xs:element name="activateDeviceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId" type="xs:string"/>
+                <xs:element name="ownerNickname" type="xs:string"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="activateDeviceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 
     <!-- Endpoint Device Object-->
     <xs:complexType name="device">

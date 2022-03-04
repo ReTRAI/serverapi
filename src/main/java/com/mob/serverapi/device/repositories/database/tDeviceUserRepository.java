@@ -14,8 +14,8 @@ public class tDeviceUserRepository {
     @Autowired
     ItDeviceUserRepository repository;
 
-    public void saveDeviceUser(tDeviceUser device) {
-        repository.save(device);
+    public tDeviceUser saveDeviceUser(tDeviceUser device) {
+        return repository.save(device);
     }
 
     public tDeviceUser findByNickname(String nickname){

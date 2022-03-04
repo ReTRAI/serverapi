@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.support.base;
+package com.mob.serverapi.device.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="supportId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="supportName" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="onlyChildren" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="deviceId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="ownerNickname" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="actionUserId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,81 +38,90 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "supportId",
-    "supportName",
-    "onlyChildren"
+    "deviceId",
+    "ownerNickname",
+    "actionUserId"
 })
-@XmlRootElement(name = "getCountSupportFilteredRequest")
-public class GetCountSupportFilteredRequest {
+@XmlRootElement(name = "activateDeviceRequest")
+public class ActivateDeviceRequest {
 
     @XmlElement(required = true)
-    protected String supportId;
+    protected String deviceId;
     @XmlElement(required = true)
-    protected String supportName;
-    protected boolean onlyChildren;
+    protected String ownerNickname;
+    @XmlElement(required = true)
+    protected String actionUserId;
 
     /**
-     * Gets the value of the supportId property.
+     * Gets the value of the deviceId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSupportId() {
-        return supportId;
+    public String getDeviceId() {
+        return deviceId;
     }
 
     /**
-     * Sets the value of the supportId property.
+     * Sets the value of the deviceId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSupportId(String value) {
-        this.supportId = value;
+    public void setDeviceId(String value) {
+        this.deviceId = value;
     }
 
     /**
-     * Gets the value of the supportName property.
+     * Gets the value of the ownerNickname property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSupportName() {
-        return supportName;
+    public String getOwnerNickname() {
+        return ownerNickname;
     }
 
     /**
-     * Sets the value of the supportName property.
+     * Sets the value of the ownerNickname property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSupportName(String value) {
-        this.supportName = value;
+    public void setOwnerNickname(String value) {
+        this.ownerNickname = value;
     }
 
     /**
-     * Gets the value of the onlyChildren property.
+     * Gets the value of the actionUserId property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public boolean isOnlyChildren() {
-        return onlyChildren;
+    public String getActionUserId() {
+        return actionUserId;
     }
 
     /**
-     * Sets the value of the onlyChildren property.
+     * Sets the value of the actionUserId property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setOnlyChildren(boolean value) {
-        this.onlyChildren = value;
+    public void setActionUserId(String value) {
+        this.actionUserId = value;
     }
 
 }

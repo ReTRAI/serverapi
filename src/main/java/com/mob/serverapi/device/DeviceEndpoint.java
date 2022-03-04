@@ -46,6 +46,17 @@ public class DeviceEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "activateDeviceRequest")
+    @ResponsePayload
+    public ActivateDeviceResponse activateDevice (@RequestPayload ActivateDeviceRequest request) {
+
+        ActivateDeviceResponse response = new ActivateDeviceResponse();
+        response.setDevice(deviceRepository.activateDevice(UUID.fromString(request.getDeviceId()),
+                request.getOwnerNickname(), UUID.fromString(request.getActionUserId())));
+
+        return response;
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setDeviceRequest")
     @ResponsePayload
     public SetDeviceResponse setDevice(@RequestPayload SetDeviceRequest request) {

@@ -31,4 +31,6 @@ interface IDeviceRepository {
                                  @Nullable String endExpirationDate);
 
     Device assignDevice(UUID deviceId, UUID resellerId, UUID actionUserId);
+
+    Device activateDevice(UUID deviceId, String ownerNickname, UUID actionUserId);
 }
