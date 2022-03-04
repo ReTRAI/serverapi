@@ -29,4 +29,6 @@ interface IDeviceRepository {
                                  @Nullable String endCreationDate, @Nullable String startActivationDate,
                                  @Nullable String endActivationDate, @Nullable String startExpirationDate,
                                  @Nullable String endExpirationDate);
+
+    Device assignDevice(UUID deviceId, UUID resellerId, UUID actionUserId);
 }

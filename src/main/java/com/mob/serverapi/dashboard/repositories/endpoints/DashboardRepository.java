@@ -46,7 +46,7 @@ public class DashboardRepository implements IDashboardRepository {
 
                 List<UUID> resellerIds = new ArrayList<>();
                 if(recursive)
-                    resellerMasterRepository.getAllIdsInHierachy(resellerId);
+                    resellerIds = resellerMasterRepository.getAllIdsInHierachy(resellerId);
                 else
                     resellerIds.add(resellerId);
 
@@ -79,7 +79,7 @@ public class DashboardRepository implements IDashboardRepository {
 
                 List<UUID> resellerIds = new ArrayList<>();
                 if(recursive)
-                    resellerMasterRepository.getAllIdsInHierachy(resellerId);
+                    resellerIds = resellerMasterRepository.getAllIdsInHierachy(resellerId);
                 else
                     resellerIds.add(resellerId);
 
@@ -111,10 +111,9 @@ public class DashboardRepository implements IDashboardRepository {
 
                 List<UUID> resellerIds = new ArrayList<>();
                 if(recursive)
-                    resellerMasterRepository.getAllIdsInHierachy(resellerId);
+                    resellerIds = resellerMasterRepository.getAllIdsInHierachy(resellerId);
                 else
                     resellerIds.add(resellerId);
-
 
                 global.setActive(getActive(resellerIds));
                 global.setFree(getFree(resellerIds));
@@ -144,7 +143,7 @@ public class DashboardRepository implements IDashboardRepository {
 
                 List<UUID> resellerIds = new ArrayList<>();
                 if(recursive)
-                    resellerMasterRepository.getAllIdsInHierachy(resellerId);
+                    resellerIds = resellerMasterRepository.getAllIdsInHierachy(resellerId);
                 else
                     resellerIds.add(resellerId);
 

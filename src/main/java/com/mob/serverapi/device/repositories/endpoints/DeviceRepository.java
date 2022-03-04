@@ -6,6 +6,8 @@ import com.mob.serverapi.device.database.tDeviceStatus;
 import com.mob.serverapi.device.repositories.database.tDeviceLogRepository;
 import com.mob.serverapi.device.repositories.database.tDeviceRepository;
 import com.mob.serverapi.device.repositories.database.tDeviceStatusRepository;
+import com.mob.serverapi.reseller.database.tReseller;
+import com.mob.serverapi.reseller.repositories.database.tResellerRepository;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.database.tUser;
@@ -35,6 +37,8 @@ public class DeviceRepository implements IDeviceRepository {
     protected tDeviceStatusRepository deviceStatusRepository = new tDeviceStatusRepository();
     @Autowired
     protected tUserRepository userRepository = new tUserRepository();
+    @Autowired
+    protected tResellerRepository resellerRepository = new tResellerRepository();
 
     @Override
     public Device getDeviceById(UUID deviceId) {
@@ -246,6 +250,65 @@ public class DeviceRepository implements IDeviceRepository {
         } catch (Exception ex) {
             throw new ServiceFaultException("ERROR", new ServiceFault("GET_DEVICES_FILTERED", ex.getMessage()));
         }
+    }
+
+    @Override
+    public Device assignDevice(UUID deviceId, UUID resellerId, UUID actionUserId) {
+
+        Device device = new Device();
+
+        try {
+
+            tUser actionUser = userRepository.findById(actionUserId);
+
+            if (actionUser != null) {
+
+                tDevice deviceVal = deviceRepository.findById((deviceId));
+                if (deviceVal != null) {
+
+                    tDeviceStatus deviceStatusVal = deviceStatusRepository.findDeviceStatusByDescription(
+                            deviceVal.getDeviceStatus().getDescription());
+
+                    if(deviceStatusVal.getDescription().equals(tDeviceStatus.DeviceStatusEnum.UNASSIGNED.name())) {
+
+                        tReseller resellerVal = resellerRepository.findById(resellerId);
+                        if (resellerVal != null) {
+
+                            tDeviceStatus deviceStatusFree = deviceStatusRepository.findDeviceStatusByDescription(
+                                    tDeviceStatus.DeviceStatusEnum.FREE.name());
+
+                            deviceVal.setReseller(resellerVal);
+                            deviceVal.setDeviceStatus(deviceStatusFree);
+
+                            tDevice saved = deviceRepository.saveDevice(deviceVal);
+
+                            if (saved != null) {
+                                device = DeviceUtils.transformDevice(saved);
+                                deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE ASSIGNED TO RESELLER", "DEVICE ID: "
+                                        + saved.getDeviceId() + " RESELLER ID: " + resellerVal.getResellerId());
+
+                            } else {
+                                throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
+                            }
+
+                        } else {
+                            throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                        }
+                    } else {
+                        throw new ServiceFaultException("ERROR", new ServiceFault("INCONSISTENT_DEVICE_STATUS", ""));
+                    }
+                } else {
+                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                }
+            } else {
+                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException("ERROR", new ServiceFault("GET_DEVICES_FILTERED", ex.getMessage()));
+        }
+        return device;
     }
 }
 

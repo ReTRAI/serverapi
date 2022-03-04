@@ -6,7 +6,7 @@
 //
 
 
-package com.mob.serverapi.reseller.base;
+package com.mob.serverapi.device.base;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,7 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="deviceId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="resellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="actionUserId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,13 +38,43 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "resellerId"
+    "deviceId",
+    "resellerId",
+    "actionUserId"
 })
-@XmlRootElement(name = "getResellerByIdRequest")
-public class GetResellerByIdRequest {
+@XmlRootElement(name = "assignDeviceRequest")
+public class AssignDeviceRequest {
 
     @XmlElement(required = true)
+    protected String deviceId;
+    @XmlElement(required = true)
     protected String resellerId;
+    @XmlElement(required = true)
+    protected String actionUserId;
+
+    /**
+     * Gets the value of the deviceId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    /**
+     * Sets the value of the deviceId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDeviceId(String value) {
+        this.deviceId = value;
+    }
 
     /**
      * Gets the value of the resellerId property.
@@ -66,6 +98,30 @@ public class GetResellerByIdRequest {
      */
     public void setResellerId(String value) {
         this.resellerId = value;
+    }
+
+    /**
+     * Gets the value of the actionUserId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getActionUserId() {
+        return actionUserId;
+    }
+
+    /**
+     * Sets the value of the actionUserId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setActionUserId(String value) {
+        this.actionUserId = value;
     }
 
 }

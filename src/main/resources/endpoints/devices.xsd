@@ -92,6 +92,8 @@
         </xs:complexType>
     </xs:element>
 
+
+
     <!-- setDeviceList-->
     <xs:element name="setDeviceListRequest">
         <xs:complexType>
@@ -109,7 +111,23 @@
         </xs:complexType>
     </xs:element>
 
-
+    <!-- assignDevice-->
+    <xs:element name="assignDeviceRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId" type="xs:string"/>
+                <xs:element name="resellerId" type="xs:string"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="assignDeviceResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
 
     <!-- Endpoint Device Object-->
