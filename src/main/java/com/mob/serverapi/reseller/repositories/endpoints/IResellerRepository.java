@@ -50,5 +50,5 @@ interface IResellerRepository {
 
     long getCountAvailableResellerParent(UUID resellerId);
 
-    List<UUID> getAllIdsInHierachy(UUID resellerId);
+    boolean isHierarchyValid (UUID resellerId, UUID childResellerId);
 }

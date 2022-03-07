@@ -347,6 +347,23 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- isHierarchyValid-->
+    <xs:element name="isHierarchyValidRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="supportId" type="xs:string"/>
+                <xs:element name="childSupportId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="isHierarchyValidResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <!-- Endpoint Support Object-->
     <xs:complexType name="support">
         <xs:sequence>

@@ -25,7 +25,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="reseller" type="{http://www.mob.com/serverapi/reseller/base}reseller"/>
+ *         &lt;element name="resellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="childResellerId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,36 +37,63 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "reseller"
+    "resellerId",
+    "childResellerId"
 })
-@XmlRootElement(name = "getResellerParentByChildIdResponse")
-public class GetResellerParentByChildIdResponse {
+@XmlRootElement(name = "isHierarchyValidRequest")
+public class IsHierarchyValidRequest {
 
     @XmlElement(required = true)
-    protected Reseller reseller;
+    protected String resellerId;
+    @XmlElement(required = true)
+    protected String childResellerId;
 
     /**
-     * Gets the value of the reseller property.
+     * Gets the value of the resellerId property.
      * 
      * @return
      *     possible object is
-     *     {@link Reseller }
+     *     {@link String }
      *     
      */
-    public Reseller getReseller() {
-        return reseller;
+    public String getResellerId() {
+        return resellerId;
     }
 
     /**
-     * Sets the value of the reseller property.
+     * Sets the value of the resellerId property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Reseller }
+     *     {@link String }
      *     
      */
-    public void setReseller(Reseller value) {
-        this.reseller = value;
+    public void setResellerId(String value) {
+        this.resellerId = value;
+    }
+
+    /**
+     * Gets the value of the childResellerId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getChildResellerId() {
+        return childResellerId;
+    }
+
+    /**
+     * Sets the value of the childResellerId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setChildResellerId(String value) {
+        this.childResellerId = value;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.mob.serverapi.users.repositories.endpoints;
 
+import com.mob.serverapi.servicefault.FaultMapping;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.base.User;
@@ -37,7 +38,6 @@ public class UserRepository implements IUserRepository {
     protected tUserLoginLogRepository userLoginLogRepository = new tUserLoginLogRepository();
 
     @Override
-    @SuppressWarnings("unchecked")
     public User getUserById(UUID id) {
 
         User userToReturn = new User();
@@ -48,12 +48,12 @@ public class UserRepository implements IUserRepository {
             if (u != null) {
                 userToReturn = UserUtils.transformUser(u);
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_USER_BY_ID", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.getUserById.label, ex.getMessage()));
         }
 
         return userToReturn;
@@ -74,9 +74,9 @@ public class UserRepository implements IUserRepository {
 
                     switch (status) {
                         case INACTIVE:
-                            throw new ServiceFaultException("WARNING", new ServiceFault("USER_INACTIVE", ""));
+                            throw new ServiceFaultException(FaultMapping.FaultType.warning.label, new ServiceFault(FaultMapping.RepoFault.userInactive.label, ""));
                         case BLOCKED:
-                            throw new ServiceFaultException("WARNING", new ServiceFault("USER_BLOCKED", ""));
+                            throw new ServiceFaultException(FaultMapping.FaultType.warning.label, new ServiceFault(FaultMapping.RepoFault.userBlocked.label, ""));
 
                         case CHANGEPW:
                         case ACTIVE:
@@ -98,17 +98,17 @@ public class UserRepository implements IUserRepository {
                         if (countFailed > 2) blockUser(user.getUserId());
                     }
 
-                    userLoginLogRepository.insertUserLoginLog(user, false, "WRONG CREDENTIALS");
-                    userLogRepository.insertUserLog(user, user, "WRONG_CREDENTIALS", "WRONG CREDENTIALS");
-                    throw new ServiceFaultException("ERROR", new ServiceFault("WRONG_CREDENTIALS", ""));
+                    userLoginLogRepository.insertUserLoginLog(user, false, FaultMapping.RepoFault.wrongCredentials.label);
+                    userLogRepository.insertUserLog(user, user, FaultMapping.RepoFault.wrongCredentials.label, FaultMapping.RepoFault.wrongCredentials.label);
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.wrongCredentials.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("WRONG_CREDENTIALS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.wrongCredentials.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("LOGIN_FAILED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.loginFailed.label, ex.getMessage()));
         }
         return validateUser;
     }
@@ -158,20 +158,20 @@ public class UserRepository implements IUserRepository {
 
                         userLogRepository.insertUserLog(actionUser, saved, "CREATE", "CREATE NEW USER");
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("INVALID_ACTION_USER", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.invalidActionUser.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("EMAIL ALREADY EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.emailExist.label, ""));
 
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USERNAME ALREADY EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.usernameExist.label, ""));
 
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_USER", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.setUser.label, ex.getMessage()));
         }
         return createdUser;
     }
@@ -196,15 +196,15 @@ public class UserRepository implements IUserRepository {
 
                     val = true;
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("USER NOT BLOCKED", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotBlocked.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("UNBLOCK_USER", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.unblockUser.label, ex.getMessage()));
         }
         return val;
     }
@@ -226,12 +226,12 @@ public class UserRepository implements IUserRepository {
                 userLogRepository.insertUserLog(saved, saved, "BLOCKED", "BLOCKED BY EXCEEDING MAX ATTEMPTS");
                 val = true;
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("UNBLOCK_USER", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.blockUser.label, ex.getMessage()));
         }
         return val;
     }
@@ -259,12 +259,12 @@ public class UserRepository implements IUserRepository {
 
                 val = true;
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("CHANGE_USER_PW", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.changeUserPassword.label, ex.getMessage()));
         }
         return val;
     }
@@ -289,12 +289,12 @@ public class UserRepository implements IUserRepository {
 
                 val = true;
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("INACTIVATE_USER", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.inactivateUser.label, ex.getMessage()));
         }
         return val;
     }
@@ -319,12 +319,12 @@ public class UserRepository implements IUserRepository {
 
                 val = true;
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("INACTIVATE_USER", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.activateUser.label, ex.getMessage()));
         }
         return val;
     }
@@ -344,12 +344,12 @@ public class UserRepository implements IUserRepository {
                 userLogRepository.insertUserLog(actionUser, saved, "CHANGELANG", "CHANGE LANGUAGE FOR USER");
                 val = true;
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("CHANGE_LANG", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.changeLang.label, ex.getMessage()));
         }
         return val;
     }
@@ -369,12 +369,12 @@ public class UserRepository implements IUserRepository {
                 userLogRepository.insertUserLog(actionUser, saved, "CHANGETHEME", "CHANGE THEME FOR USER");
                 val = true;
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("CHANGE_THEME", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.changeTheme.label, ex.getMessage()));
         }
         return val;
     }
@@ -391,7 +391,7 @@ public class UserRepository implements IUserRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("EXIST_USER_NAME", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.existUserName.label, ex.getMessage()));
         }
         return val;
 
@@ -409,7 +409,7 @@ public class UserRepository implements IUserRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("EXIST_USER_NAME", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.existUserEmail.label, ex.getMessage()));
         }
         return val;
 
@@ -426,12 +426,12 @@ public class UserRepository implements IUserRepository {
                 List<tUserRole> role = userRoleRepository.findAllRolesByUserId(userId);
                 userRoles = UserUtils.transformUserRoleList(role);
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("CHANGE_THEME", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.getUserRoleByUser.label, ex.getMessage()));
         }
         return userRoles;
     }
@@ -444,7 +444,6 @@ public class UserRepository implements IUserRepository {
         try {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
 
             UUID localUserId = userId.equals("") ? null : UUID.fromString(userId);
             String localUserName = userName.equals("") ? null : userName;
@@ -459,17 +458,14 @@ public class UserRepository implements IUserRepository {
 
             List<tUser> users = userRepository.getUserFiltered(localUserId, localUserName, localUserStatus, localUserEmail, localStartCreationDate, localEndCreationDate, localField, localOrderField, offset, numberRecords);
 
-            if (users != null) {
+            if (users != null)
                 returnList = UserUtils.transformUserList(users);
 
-            } else {
-                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_USER_LIST", ""));
-            }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_USER_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.getUserFiltered.label, ex.getMessage()));
         }
         return returnList;
     }
@@ -488,7 +484,6 @@ public class UserRepository implements IUserRepository {
             LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
             LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
 
-
             long countUsers = userRepository.getCountUserFiltered(localUserId, localUserName, localUserStatus, localUserEmail, localStartCreationDate, localEndCreationDate);
 
             return countUsers;
@@ -496,7 +491,7 @@ public class UserRepository implements IUserRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_USERS_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.getCountUserFiltered.label, ex.getMessage()));
         }
     }
 
@@ -527,16 +522,16 @@ public class UserRepository implements IUserRepository {
                     if (saved != null) val = true;
 
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("USER_IS_ALREADY_ADMIN", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userIsAdmin.label, ""));
                 }
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_ADMIN_ROLE", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.setAdminRole.label, ex.getMessage()));
         }
 
         return val;
@@ -564,18 +559,18 @@ public class UserRepository implements IUserRepository {
                     val = true;
 
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("ROLE_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.roleNotExist.label, ""));
                 }
 
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("REMOVE_ADMIN_ROLE", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.UserGeneralRepoFault.removeAdminRole.label, ex.getMessage()));
         }
 
         return val;

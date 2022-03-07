@@ -10,6 +10,7 @@ import com.mob.serverapi.device.repositories.database.tDeviceStatusRepository;
 import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.repositories.database.tResellerRepository;
 import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
+import com.mob.serverapi.servicefault.FaultMapping;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +58,12 @@ public class DashboardRepository implements IDashboardRepository {
                 active.setQuarter(getActivateInPeriod(resellerIds, 90));
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_ACTIVE_DASHBOARD", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DashboardGeneralRepoFault.getActiveDashboard.label, ex.getMessage()));
         }
         return active;
     }
@@ -89,12 +90,12 @@ public class DashboardRepository implements IDashboardRepository {
                 inactive.setRemaining(getRemaining(resellerIds));
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_INACTIVE_DASHBOARD", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DashboardGeneralRepoFault.getInactiveDashboard.label, ex.getMessage()));
         }
         return inactive;
     }
@@ -121,12 +122,12 @@ public class DashboardRepository implements IDashboardRepository {
                 global.setPortalDevices(getAll(resellerIds));
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_GLOBAL_DASHBOARD", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DashboardGeneralRepoFault.getGlobalDashboard.label, ex.getMessage()));
         }
         return global;
     }
@@ -154,12 +155,12 @@ public class DashboardRepository implements IDashboardRepository {
                 expiring.setIn30Days(getExpiringInPeriod(resellerIds, 30));
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_EXPIRING_DASHBOARD", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DashboardGeneralRepoFault.getExpiringDashboard.label, ex.getMessage()));
         }
         return expiring;
     }

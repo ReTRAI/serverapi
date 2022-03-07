@@ -7,6 +7,7 @@ import com.mob.serverapi.device.database.tDeviceUser;
 import com.mob.serverapi.device.repositories.database.*;
 import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.repositories.database.tResellerRepository;
+import com.mob.serverapi.servicefault.FaultMapping;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.database.tUser;
@@ -54,12 +55,12 @@ public class DeviceRepository implements IDeviceRepository {
             if (u != null) {
                 deviceToReturn = DeviceUtils.transformDevice(u);
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_DEVICE_BY_ID", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.getDeviceById.label, ex.getMessage()));
         }
 
         return deviceToReturn;
@@ -103,29 +104,27 @@ public class DeviceRepository implements IDeviceRepository {
                                     deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE CREATED", "DEVICE ID: "
                                             + saved.getDeviceId());
 
-                                } else {
-                                    throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
                                 }
                             } else {
-                                throw new ServiceFaultException("ERROR", new ServiceFault("ANDROIDID_EXISTS", ""));
+                                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.androidIdExist.label, ""));
                             }
                         } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("SIM_NUMBER_EXISTS", ""));
+                            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.simNumberExist.label, ""));
                         }
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("IMEI_EXISTS", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.imeiExist.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("SERIAL_NUMBER_EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.serialNumberExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_DEVICE", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.setDevice.label, ex.getMessage()));
         }
 
         return deviceToReturn;
@@ -150,12 +149,12 @@ public class DeviceRepository implements IDeviceRepository {
                 }
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_DEVICE_LIST", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.setDeviceList.label, ex.getMessage()));
         }
 
         return devicesInserted;
@@ -199,18 +198,15 @@ public class DeviceRepository implements IDeviceRepository {
                     localEndCreationDate, localStartActivationDate, localEndActivationDate, localStartExpirationDate, localEndExpirationDate,
                     field, orderField, offset, numberRecords);
 
-            if (devices != null) {
+            if (devices != null)
                 returnList = DeviceUtils.transformDeviceList(devices);
 
-            } else {
-                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_DEVICE_LIST", ""));
-            }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_DEVICES_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.getDeviceFiltered.label, ex.getMessage()));
         }
         return returnList;
     }
@@ -252,7 +248,7 @@ public class DeviceRepository implements IDeviceRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_DEVICES_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.getCountDeviceFiltered.label, ex.getMessage()));
         }
     }
 
@@ -294,26 +290,24 @@ public class DeviceRepository implements IDeviceRepository {
                                 resellerVal.setTotalDevices(resellerVal.getTotalDevices()+1);
                                 resellerRepository.saveReseller(resellerVal);
 
-                            } else {
-                                throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
                             }
 
                         } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
                         }
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("INCONSISTENT_DEVICE_STATUS", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.inconsistentDeviceStatus.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("ASSIGN_DEVICE", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.assignDevice.label, ex.getMessage()));
         }
         return device;
     }
@@ -368,26 +362,21 @@ public class DeviceRepository implements IDeviceRepository {
                                 deviceUserLogRepository.insertDeviceUserLog(actionUser, deviceUserSaved, "CREATE DEVICE USER ",
                                         "DEVICE ID: " + saved.getDeviceId());
 
-                            } else {
-                                throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
                             }
-                        } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_USER_DEVICE", ""));
                         }
-
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("INCONSISTENT_DEVICE_STATUS", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.inconsistentDeviceStatus.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("ACTIVATE_DEVICE", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.activateDevice.label, ex.getMessage()));
         }
         return device;
     }
@@ -420,22 +409,20 @@ public class DeviceRepository implements IDeviceRepository {
                             deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE BLOCKED", "DEVICE ID: "
                                     + saved.getDeviceId());
 
-                        } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
                         }
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("INCONSISTENT_DEVICE_STATUS", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.inconsistentDeviceStatus.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("BLOCK_DEVICE", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.blockDevice.label, ex.getMessage()));
         }
         return device;
     }
@@ -468,22 +455,20 @@ public class DeviceRepository implements IDeviceRepository {
                             deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE BLOCKED", "DEVICE ID: "
                                     + saved.getDeviceId());
 
-                        } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
                         }
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("INCONSISTENT_DEVICE_STATUS", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.inconsistentDeviceStatus.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("WIPE_DEVICE", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.wipeDevice.label, ex.getMessage()));
         }
         return device;
     }
@@ -516,22 +501,20 @@ public class DeviceRepository implements IDeviceRepository {
                             deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE BLOCKED", "DEVICE ID: "
                                     + saved.getDeviceId());
 
-                        } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("CANT_SAVE_DEVICE", ""));
                         }
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("INCONSISTENT_DEVICE_STATUS", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.inconsistentDeviceStatus.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SUSPEND_DEVICE", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.suspendDevice.label, ex.getMessage()));
         }
         return device;
     }

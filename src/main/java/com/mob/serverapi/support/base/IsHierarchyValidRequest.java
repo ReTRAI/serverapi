@@ -11,21 +11,21 @@ package com.mob.serverapi.support.base;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for supportAssociation complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="supportAssociation">
+ * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="supportAssociationId" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="parentSupportId" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="supportId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="childSupportId" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -36,66 +36,40 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "supportAssociation", propOrder = {
-    "supportAssociationId",
-    "parentSupportId",
+@XmlType(name = "", propOrder = {
+    "supportId",
     "childSupportId"
 })
-public class SupportAssociation {
+@XmlRootElement(name = "isHierarchyValidRequest")
+public class IsHierarchyValidRequest {
 
     @XmlElement(required = true)
-    protected String supportAssociationId;
-    @XmlElement(required = true)
-    protected String parentSupportId;
+    protected String supportId;
     @XmlElement(required = true)
     protected String childSupportId;
 
     /**
-     * Gets the value of the supportAssociationId property.
+     * Gets the value of the supportId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getSupportAssociationId() {
-        return supportAssociationId;
+    public String getSupportId() {
+        return supportId;
     }
 
     /**
-     * Sets the value of the supportAssociationId property.
+     * Sets the value of the supportId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setSupportAssociationId(String value) {
-        this.supportAssociationId = value;
-    }
-
-    /**
-     * Gets the value of the parentSupportId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getParentSupportId() {
-        return parentSupportId;
-    }
-
-    /**
-     * Sets the value of the parentSupportId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setParentSupportId(String value) {
-        this.parentSupportId = value;
+    public void setSupportId(String value) {
+        this.supportId = value;
     }
 
     /**

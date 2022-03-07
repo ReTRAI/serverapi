@@ -61,5 +61,7 @@ interface ISupportRepository {
 
     List<Support> getAvailableSupportParent(UUID supportId, int offset, int numberRecords);
 
+    boolean isHierarchyValid (UUID supportId, UUID childSupportId);
+
     long getCountAvailableSupportParent(UUID supportId);
 }

@@ -203,4 +203,15 @@ public class ResellerEndpoint {
 
         return response;
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "isHierarchyValidRequest")
+    @ResponsePayload
+    public IsHierarchyValidResponse isHierarchyValid (@RequestPayload IsHierarchyValidRequest request) {
+
+        IsHierarchyValidResponse response = new IsHierarchyValidResponse();
+        response.setResult(resellerRepository.isHierarchyValid(UUID.fromString(request.getResellerId()),
+                UUID.fromString(request.getChildResellerId())));
+
+        return response;
+    }
 }

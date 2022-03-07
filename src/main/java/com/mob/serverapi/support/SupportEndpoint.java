@@ -1,10 +1,8 @@
 package com.mob.serverapi.support;
 
 
-import com.mob.serverapi.reseller.base.*;
 import com.mob.serverapi.support.base.*;
 import com.mob.serverapi.support.repositories.endpoints.SupportRepository;
-import com.mob.serverapi.users.base.GetCountUserFilteredRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -74,8 +72,8 @@ public class SupportEndpoint {
 
         GetTicketFilteredResponse response = new GetTicketFilteredResponse();
         response.getTicket().addAll(supportRepository.getTicketFiltered(request.getTicketId(),
-                request.getTicketStatus(),request.getStartCreationDate(),request.getEndCreationDate(),
-                request.getField(),request.getOrderField(),request.getOffset(),request.getNumberRecords()));
+                request.getTicketStatus(), request.getStartCreationDate(), request.getEndCreationDate(),
+                request.getField(), request.getOrderField(), request.getOffset(), request.getNumberRecords()));
 
         return response;
     }
@@ -85,7 +83,7 @@ public class SupportEndpoint {
     public GetCountTicketFilteredResponse getCountTicketFiltered(@RequestPayload GetCountTicketFilteredRequest request) {
 
         GetCountTicketFilteredResponse response = new GetCountTicketFilteredResponse();
-        response.setResult(supportRepository.getCountTicketFiltered(request.getTicketId(),request.getTicketStatus(),
+        response.setResult(supportRepository.getCountTicketFiltered(request.getTicketId(), request.getTicketStatus(),
                 request.getStartCreationDate(), request.getEndCreationDate()));
 
         return response;
@@ -98,15 +96,15 @@ public class SupportEndpoint {
 
         GetTicketDetailFilteredResponse response = new GetTicketDetailFilteredResponse();
         response.getTicketDetail().addAll(supportRepository.getTicketDetailFiltered(request.getTicketId(),
-                request.getStartDetailDate(),request.getEndDetailDate(),
-                request.getField(),request.getOrderField(),request.getOffset(),request.getNumberRecords()));
+                request.getStartDetailDate(), request.getEndDetailDate(),
+                request.getField(), request.getOrderField(), request.getOffset(), request.getNumberRecords()));
 
         return response;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountTicketDetailFilteredRequest")
     @ResponsePayload
-    public GetCountTicketDetailFilteredResponse getCountTicketDetailFiltered (@RequestPayload GetCountTicketDetailFilteredRequest request) {
+    public GetCountTicketDetailFilteredResponse getCountTicketDetailFiltered(@RequestPayload GetCountTicketDetailFilteredRequest request) {
 
         GetCountTicketDetailFilteredResponse response = new GetCountTicketDetailFilteredResponse();
         response.setResult(supportRepository.getCountTicketDetailFiltered(request.getTicketId(),
@@ -152,7 +150,7 @@ public class SupportEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAvailableSupportParentRequest")
     @ResponsePayload
-    public GetAvailableSupportParentResponse getAvailableSupportParent (@RequestPayload GetAvailableSupportParentRequest request) {
+    public GetAvailableSupportParentResponse getAvailableSupportParent(@RequestPayload GetAvailableSupportParentRequest request) {
 
         GetAvailableSupportParentResponse response = new GetAvailableSupportParentResponse();
         response.getSupport().addAll(supportRepository.getAvailableSupportParent(UUID.fromString(request.getSupportId()),
@@ -186,7 +184,7 @@ public class SupportEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setSupportAssociationRequest")
     @ResponsePayload
-    public SetSupportAssociationResponse setSupportAssociation (@RequestPayload SetSupportAssociationRequest request) {
+    public SetSupportAssociationResponse setSupportAssociation(@RequestPayload SetSupportAssociationRequest request) {
 
         SetSupportAssociationResponse response = new SetSupportAssociationResponse();
         response.setResult(supportRepository.setSupportAssociation(UUID.fromString(request.getParentSupportId()),
@@ -197,17 +195,17 @@ public class SupportEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setTicketRequest")
     @ResponsePayload
-    public SetTicketResponse setTicket (@RequestPayload SetTicketRequest request) {
+    public SetTicketResponse setTicket(@RequestPayload SetTicketRequest request) {
 
         SetTicketResponse response = new SetTicketResponse();
-        response.setTicket(supportRepository.setTicket(request.getMessage(),UUID.fromString(request.getCreationUserId())));
+        response.setTicket(supportRepository.setTicket(request.getMessage(), UUID.fromString(request.getCreationUserId())));
 
         return response;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setTicketDetailRequest")
     @ResponsePayload
-    public SetTicketDetailResponse setTicketDetail (@RequestPayload SetTicketDetailRequest request) {
+    public SetTicketDetailResponse setTicketDetail(@RequestPayload SetTicketDetailRequest request) {
 
         SetTicketDetailResponse response = new SetTicketDetailResponse();
         response.setResult(supportRepository.setTicketDetail(UUID.fromString(request.getTicketId()),
@@ -218,7 +216,7 @@ public class SupportEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateTicketRequest")
     @ResponsePayload
-    public UpdateTicketResponse updateTicket (@RequestPayload UpdateTicketRequest request) {
+    public UpdateTicketResponse updateTicket(@RequestPayload UpdateTicketRequest request) {
 
         UpdateTicketResponse response = new UpdateTicketResponse();
         response.setResult(supportRepository.updateTicket(UUID.fromString(request.getTicketId()),
@@ -229,7 +227,7 @@ public class SupportEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeSupportAssociationRequest")
     @ResponsePayload
-    public RemoveSupportAssociationResponse removeSupportAssociation (@RequestPayload RemoveSupportAssociationRequest request) {
+    public RemoveSupportAssociationResponse removeSupportAssociation(@RequestPayload RemoveSupportAssociationRequest request) {
 
         RemoveSupportAssociationResponse response = new RemoveSupportAssociationResponse();
         response.setResult(supportRepository.removeSupportAssociation(UUID.fromString(request.getParentSupportId()),
@@ -239,5 +237,14 @@ public class SupportEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "isHierarchyValidRequest")
+    @ResponsePayload
+    public IsHierarchyValidResponse isHierarchyValid(@RequestPayload IsHierarchyValidRequest request) {
 
+        IsHierarchyValidResponse response = new IsHierarchyValidResponse();
+        response.setResult(supportRepository.isHierarchyValid(UUID.fromString(request.getSupportId()),
+                UUID.fromString(request.getChildSupportId())));
+
+        return response;
+    }
 }

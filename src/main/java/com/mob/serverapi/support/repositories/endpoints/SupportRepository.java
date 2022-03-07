@@ -1,5 +1,6 @@
 package com.mob.serverapi.support.repositories.endpoints;
 
+import com.mob.serverapi.servicefault.FaultMapping;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.support.base.Support;
@@ -68,12 +69,12 @@ public class SupportRepository implements ISupportRepository {
             if (u != null) {
                 supportToReturn = SupportUtils.transformSupport(u);
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_SUPPORT_BY_ID", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getSupportById.label, ex.getMessage()));
         }
 
         return supportToReturn;
@@ -90,12 +91,12 @@ public class SupportRepository implements ISupportRepository {
             if (u != null) {
                 supportToReturn = SupportUtils.transformSupport(u);
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_SUPPORT_BY_USER_ID", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getSupportByUserId.label, ex.getMessage()));
         }
 
         return supportToReturn;
@@ -135,16 +136,16 @@ public class SupportRepository implements ISupportRepository {
 
                     if (saved != null) support = SupportUtils.transformSupport(saved);
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("USER_IS_ALREADY_SUPPORT", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userAlreadyHasRole.label, ""));
                 }
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_SUPPORT", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.setSupport.label, ex.getMessage()));
         }
 
         return support;
@@ -181,22 +182,22 @@ public class SupportRepository implements ISupportRepository {
                             val = true;
 
                         } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("ROLE_DONT_EXIST", ""));
+                            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.roleNotExist.label, ""));
                         }
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_HAS_ASSOCIATIONS", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.hasAssoc.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("REMOVE_SUPPORT", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.removeSupport.label, ex.getMessage()));
         }
 
         return val;
@@ -219,17 +220,14 @@ public class SupportRepository implements ISupportRepository {
 
             List<tSupport> support = supportRepository.getSupportFiltered(localSupportId, localSupportName, onlyChildren, localField, localOrderField, offset, numberRecords);
 
-            if (support != null) {
+            if (support != null)
                 returnList = SupportUtils.transformSupportList(support);
 
-            } else {
-                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_SUPPORT_LIST", ""));
-            }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_SUPPORT_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getSupportFiltered.label, ex.getMessage()));
         }
         return returnList;
     }
@@ -251,7 +249,7 @@ public class SupportRepository implements ISupportRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_SUPPORT_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getCountSupportFiltered.label, ex.getMessage()));
         }
     }
 
@@ -274,17 +272,14 @@ public class SupportRepository implements ISupportRepository {
 
             List<tTicket> ticket = ticketRepository.getTicketFiltered(localTicketId, localStatus, localStartCreationDate, localEndCreationDate, localField, localOrderField, offset, numberRecords);
 
-            if (ticket != null) {
+            if (ticket != null)
                 returnList = SupportUtils.transformTicketList(ticket);
 
-            } else {
-                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_TICKET_LIST", ""));
-            }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_TICKET_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getTicketFiltered.label, ex.getMessage()));
         }
         return returnList;
     }
@@ -309,7 +304,7 @@ public class SupportRepository implements ISupportRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_TICKET_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getCountTicketFiltered.label, ex.getMessage()));
         }
     }
 
@@ -329,17 +324,14 @@ public class SupportRepository implements ISupportRepository {
 
             List<tTicketDetail> ticket = ticketDetailRepository.getTicketDetailFiltered(localTicketId, localStartCreationDate, localEndCreationDate, localField, localOrderField, offset, numberRecords);
 
-            if (ticket != null) {
+            if (ticket != null)
                 returnList = SupportUtils.transformTicketDetailList(ticket);
 
-            } else {
-                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_TICKET_DETAIL_LIST", ""));
-            }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_TICKET_DETAIL_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getTicketDetailFiltered.label, ex.getMessage()));
         }
         return returnList;
     }
@@ -362,7 +354,7 @@ public class SupportRepository implements ISupportRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_TICKET_DETAIL_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getCountTicketDetailFiltered.label, ex.getMessage()));
         }
     }
 
@@ -398,24 +390,24 @@ public class SupportRepository implements ISupportRepository {
                             val = true;
 
                         } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("CIRCULAR_ASSOCIATION", ""));
+                            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.circularAssoc.label, ""));
                         }
 
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("CHILD_SUPPORT_ALREADY_ASSOCIATED", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.childHasParent.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_SUPPORT_ASSOCIATION", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.setSupportAssoc.label, ex.getMessage()));
         }
         return val;
     }
@@ -445,20 +437,20 @@ public class SupportRepository implements ISupportRepository {
                         val = true;
 
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXIST", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.assocNotExist.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_SUPPORT_ASSOCIATION", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.removeSupportAssoc.label, ex.getMessage()));
         }
         return val;
     }
@@ -480,19 +472,19 @@ public class SupportRepository implements ISupportRepository {
 
                     assoc = SupportUtils.transformSupportAssociation(saved);
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.assocNotExist.label, ""));
                 }
 
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_SUPPORT_ASSOCIATION", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getSupportAssoc.label, ex.getMessage()));
         }
         return assoc;
     }
@@ -515,18 +507,18 @@ public class SupportRepository implements ISupportRepository {
                     assoc = SupportUtils.transformSupport(parent);
 
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.assocNotExist.label, ""));
                 }
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_SUPPORT_ASSOCIATION", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getSupportParentByChildId.label, ex.getMessage()));
         }
         return assoc;
     }
@@ -565,12 +557,12 @@ public class SupportRepository implements ISupportRepository {
                 }
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_TICKET", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.setTicket.label, ex.getMessage()));
 
         }
 
@@ -601,7 +593,7 @@ public class SupportRepository implements ISupportRepository {
                             ticketRepository.saveTicket(ticket);
                             ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED", "ALTERED ASSIGNED USER TO : " + localStatus.getDescription());
                         } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("ASSIGNED_USER_DONT_EXIST", ""));
+                            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
                         }
                     }
                     if (localStatus != null) {
@@ -611,22 +603,22 @@ public class SupportRepository implements ISupportRepository {
                         ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED", "ALTERED STATUS TO : " + localStatus.getDescription());
 
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("STATUS_DONT_EXIST", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.statusNotExist.label, ""));
                     }
 
                     val = true;
 
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("TICKET_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.ticketNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("UPDATE_TICKET_ASSOCIATION", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.updateTicket.label, ex.getMessage()));
         }
         return val;
     }
@@ -656,16 +648,16 @@ public class SupportRepository implements ISupportRepository {
 
                     val = true;
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("TICKET_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.ticketNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_TICKET_DETAIL", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.setTicketDetail.label, ex.getMessage()));
 
         }
 
@@ -688,22 +680,19 @@ public class SupportRepository implements ISupportRepository {
 
                 List<tSupport> available = supportRepository.findBySupportIdNotIn(childrenIds);
 
-                if (available != null) {
+                if (available != null)
                     parentsList = SupportUtils.transformSupportList(available);
 
-                } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_LIST_EMPTY", ""));
-                }
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_AVAILABLE_SUPPORT_PARENTS", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getAvailableSupportTicket.label, ex.getMessage()));
         }
         return parentsList;
     }
@@ -727,19 +716,46 @@ public class SupportRepository implements ISupportRepository {
 
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("SUPPORT_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_AVAILABLE_SUPPORT_PARENTS", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.getCountAvailableSupportTicket.label, ex.getMessage()));
         }
 
         return size;
     }
 
+    @Override
+    public boolean isHierarchyValid(UUID supportId, UUID childSupportId) {
+
+        boolean val = false;
+        try {
+
+            tSupport support = supportRepository.findById(supportId);
+            tSupport child = supportRepository.findById(childSupportId);
+
+            if (support != null && child != null) {
+
+                List<UUID> childrenIds = getAllIdsInHierachy(supportId);
+
+                if (childrenIds.contains(childSupportId))
+                    val = true;
+
+            } else {
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.supportNotExist.label, ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.SupportGeneralRepoFault.isHierarchyValid.label, ex.getMessage()));
+        }
+        return val;
+    }
 
     public List<UUID> getAllIdsInHierachy(UUID supportId) {
 

@@ -11,6 +11,7 @@ import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.database.tResellerAssociation;
 import com.mob.serverapi.reseller.database.tResellerBalance;
 import com.mob.serverapi.reseller.repositories.database.*;
+import com.mob.serverapi.servicefault.FaultMapping;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.database.tUser;
@@ -72,12 +73,12 @@ public class ResellerRepository implements IResellerRepository {
             if (u != null) {
                 resellerToReturn = ResellerUtils.transformReseller(u);
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BY_ID", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getResellerById.label, ex.getMessage()));
         }
 
         return resellerToReturn;
@@ -94,12 +95,12 @@ public class ResellerRepository implements IResellerRepository {
             if (u != null) {
                 resellerToReturn = ResellerUtils.transformReseller(u);
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BY_USER_ID", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getResellerByUserId.label, ex.getMessage()));
         }
 
         return resellerToReturn;
@@ -124,18 +125,18 @@ public class ResellerRepository implements IResellerRepository {
                         resellerToReturn = ResellerUtils.transformReseller(r);
 
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("DEVICE_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USERDEVICE_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userDeviceNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BY_ID", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getResellerByUserDeviceName.label, ex.getMessage()));
         }
 
         return resellerToReturn;
@@ -157,17 +158,14 @@ public class ResellerRepository implements IResellerRepository {
 
             List<tReseller> resellers = resellerRepository.getResellerFiltered(localResellerId, localResellerName, onlyChildren, localField, localOrderField, offset, numberRecords);
 
-            if (resellers != null) {
+            if (resellers != null)
                 returnList = ResellerUtils.transformResellerList(resellers);
 
-            } else {
-                throw new ServiceFaultException("WARNING", new ServiceFault("EMPTY_RESELLER_LIST", ""));
-            }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getResellerFiltered.label, ex.getMessage()));
         }
         return returnList;
     }
@@ -189,7 +187,7 @@ public class ResellerRepository implements IResellerRepository {
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_RESELLER_FILTERED", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getCountResellerFiltered.label, ex.getMessage()));
         }
     }
 
@@ -228,16 +226,16 @@ public class ResellerRepository implements IResellerRepository {
 
                     if (saved != null) reseller = ResellerUtils.transformReseller(saved);
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("USER_IS_ALREADY_RESELLER", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userAlreadyHasRole.label, ""));
                 }
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_RESELLER", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.setReseller.label, ex.getMessage()));
         }
 
         return reseller;
@@ -275,16 +273,16 @@ public class ResellerRepository implements IResellerRepository {
                     val = true;
 
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("ADD_RESELLER_BALANCE_MOVEMENT", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.setResellerBalanceMovement.label, ex.getMessage()));
         }
 
         return val;
@@ -306,9 +304,9 @@ public class ResellerRepository implements IResellerRepository {
             if (u != null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-                String localMinValue =minValue.equals("") ? null : minValue;
-                String localMaxValue =maxValue.equals("") ? null : maxValue;
-                String localDebitCredit =debitCredit.equals("") ? null : debitCredit;
+                String localMinValue = minValue.equals("") ? null : minValue;
+                String localMaxValue = maxValue.equals("") ? null : maxValue;
+                String localDebitCredit = debitCredit.equals("") ? null : debitCredit;
                 LocalDateTime localStartMovementDate = startMovementDate.equals("") ? null :
                         LocalDateTime.parse(startMovementDate, formatter);
                 LocalDateTime localEndMovementDate = endMovementDate.equals("") ? null :
@@ -321,18 +319,18 @@ public class ResellerRepository implements IResellerRepository {
                         localStartMovementDate, localEndMovementDate, localMinValue, localMaxValue, localDebitCredit, localField,
                         localOrderField, offset, numberRecords);
 
-                if (listBalance != null) {
+                if (listBalance != null)
                     returnList = ResellerUtils.transformResellerBalanceList(listBalance);
-                }
+
 
             } else {
-                throw new ServiceFaultException("WARNING", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_RESELLER_BALANCE_MOVEMENTS", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getResellerBalanceMovement.label, ex.getMessage()));
         }
         return returnList;
     }
@@ -349,9 +347,9 @@ public class ResellerRepository implements IResellerRepository {
             if (u != null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-                String localMinValue =minValue.equals("") ? null : minValue;
-                String localMaxValue =maxValue.equals("") ? null : maxValue;
-                String localDebitCredit =debitCredit.equals("") ? null : debitCredit;
+                String localMinValue = minValue.equals("") ? null : minValue;
+                String localMaxValue = maxValue.equals("") ? null : maxValue;
+                String localDebitCredit = debitCredit.equals("") ? null : debitCredit;
                 LocalDateTime localStartMovementDate = startMovementDate.equals("") ? null :
                         LocalDateTime.parse(startMovementDate, formatter);
                 LocalDateTime localEndMovementDate = endMovementDate.equals("") ? null :
@@ -364,13 +362,13 @@ public class ResellerRepository implements IResellerRepository {
                 return nBalance;
 
             } else {
-                throw new ServiceFaultException("WARNING", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_RESELLER_BALANCE_MOVEMENTS", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getCountResellerBalanceMovement.label, ex.getMessage()));
         }
     }
 
@@ -409,25 +407,25 @@ public class ResellerRepository implements IResellerRepository {
                                 val = true;
 
                             } else {
-                                throw new ServiceFaultException("ERROR", new ServiceFault("ROLE_DONT_EXIST", ""));
+                                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.roleNotExist.label, ""));
                             }
                         } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_HAS_DEVICES", ""));
+                            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerHasDevices.label, ""));
                         }
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_HAS_ASSOCIATIONS", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.hasAssoc.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXIST", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("REMOVE_RESELLER", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.removeReseller.label, ex.getMessage()));
         }
 
         return val;
@@ -465,23 +463,23 @@ public class ResellerRepository implements IResellerRepository {
                             val = true;
 
                         } else {
-                            throw new ServiceFaultException("ERROR", new ServiceFault("CIRCULAR_ASSOCIATION", ""));
+                            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.hasAssoc.label, ""));
                         }
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("CHILD_RESELLER_ALREADY_ASSOCIATED", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.childHasParent.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_RESELLER_ASSOCIATION", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.setResellerAssoc.label, ex.getMessage()));
         }
         return val;
     }
@@ -511,20 +509,20 @@ public class ResellerRepository implements IResellerRepository {
                         val = true;
 
                     } else {
-                        throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXIST", ""));
+                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.assocNotExist.label, ""));
                     }
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
                 }
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("USER_DONT_EXIST", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_RESELLER_ASSOCIATION", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.removeResellerAssoc.label, ex.getMessage()));
         }
         return val;
     }
@@ -546,19 +544,19 @@ public class ResellerRepository implements IResellerRepository {
 
                     assoc = ResellerUtils.transformResellerAssociation(saved);
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.assocNotExist.label, ""));
                 }
 
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_RESELLER_ASSOCIATION", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getResellerAssoc.label, ex.getMessage()));
         }
         return assoc;
     }
@@ -581,19 +579,19 @@ public class ResellerRepository implements IResellerRepository {
                     assoc = ResellerUtils.transformReseller(parent);
 
                 } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("ASSOCIATION_DONT_EXISTS", ""));
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.assocNotExist.label, ""));
                 }
 
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("SET_RESELLER_ASSOCIATION", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getResellerParentByChildId.label, ex.getMessage()));
         }
         return assoc;
     }
@@ -614,22 +612,19 @@ public class ResellerRepository implements IResellerRepository {
 
                 List<tReseller> available = resellerRepository.findByResellerIdNotIn(childrenIds);
 
-                if (available != null) {
+                if (available != null)
                     parentsList = ResellerUtils.transformResellerList(available);
 
-                } else {
-                    throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_LIST_EMPTY", ""));
-                }
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_AVAILABLE_RESELLER_PARENTS", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getAvailableResellerParent.label, ex.getMessage()));
         }
         return parentsList;
     }
@@ -653,17 +648,45 @@ public class ResellerRepository implements IResellerRepository {
 
 
             } else {
-                throw new ServiceFaultException("ERROR", new ServiceFault("RESELLER_DONT_EXISTS", ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
             }
 
 
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
-            throw new ServiceFaultException("ERROR", new ServiceFault("GET_COUNT_AVAILABLE_RESELLER_PARENTS", ex.getMessage()));
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.getCountAvailableResellerParent.label, ex.getMessage()));
         }
 
         return size;
+    }
+
+    @Override
+    public boolean isHierarchyValid(UUID resellerId, UUID childResellerId) {
+
+        boolean val = false;
+        try {
+
+            tReseller reseller = resellerRepository.findById(resellerId);
+            tReseller child = resellerRepository.findById(childResellerId);
+
+            if (reseller != null && child != null) {
+
+                List<UUID> childrenIds = getAllIdsInHierachy(resellerId);
+
+                if (childrenIds.contains(childResellerId))
+                    val = true;
+
+            } else {
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.ResellerGeneralRepoFault.isHierarchyValid.label, ex.getMessage()));
+        }
+        return val;
     }
 
     public List<UUID> getAllIdsInHierachy(UUID resellerId) {
