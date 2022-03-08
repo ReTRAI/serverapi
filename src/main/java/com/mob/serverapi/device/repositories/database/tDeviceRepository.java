@@ -194,7 +194,7 @@ public class tDeviceRepository {
         if (deviceStatus != null)
             predicates.add(cb.equal(cb.lower(status.<String>get("description")), deviceStatus.toLowerCase()));
         if (resellerId != null)
-            predicates.add(cb.equal(reseller.get("resellerId"), deviceId));
+            predicates.add(cb.equal(reseller.get("resellerId"), resellerId));
 
         if (startCreationDate != null && endCreationDate!= null)
             predicates.add(cb.between(root.get("creationDate"), startCreationDate, endCreationDate));
@@ -204,14 +204,14 @@ public class tDeviceRepository {
             predicates.add(cb.lessThanOrEqualTo(root.get("creationDate"), endCreationDate));
 
         if (startActivationDate != null && endActivationDate!= null)
-            predicates.add(cb.between(root.get("activationDate"), startActivationDate, endCreationDate));
+            predicates.add(cb.between(root.get("activationDate"), startActivationDate, endActivationDate));
         if (startActivationDate != null && endActivationDate== null)
             predicates.add(cb.greaterThanOrEqualTo(root.get("activationDate"), startActivationDate));
         if (startActivationDate == null && endActivationDate != null)
             predicates.add(cb.lessThanOrEqualTo(root.get("activationDate"), endActivationDate));
 
         if (startExpirationDate != null && endExpirationDate!= null)
-            predicates.add(cb.between(root.get("expirationDate"), startExpirationDate, endCreationDate));
+            predicates.add(cb.between(root.get("expirationDate"), startExpirationDate, endExpirationDate));
         if (startExpirationDate != null && endExpirationDate== null)
             predicates.add(cb.greaterThanOrEqualTo(root.get("expirationDate"), startExpirationDate));
         if (startExpirationDate == null && endExpirationDate != null)
