@@ -1,7 +1,9 @@
 package com.mob.serverapi.device.repositories.endpoints;
 
 import com.mob.serverapi.device.base.Device;
+import com.mob.serverapi.device.base.DeviceBalance;
 import com.mob.serverapi.device.database.tDevice;
+import com.mob.serverapi.device.database.tDeviceBalance;
 import com.mob.serverapi.device.database.tDeviceStatus;
 import com.mob.serverapi.device.database.tDeviceUser;
 import com.mob.serverapi.device.repositories.database.*;
@@ -44,6 +46,8 @@ public class DeviceRepository implements IDeviceRepository {
     protected tDeviceUserRepository deviceUserRepository = new tDeviceUserRepository();
     @Autowired
     protected tDeviceUserLogRepository deviceUserLogRepository = new tDeviceUserLogRepository();
+    @Autowired
+    protected tDeviceBalanceRepository deviceBalanceRepository = new tDeviceBalanceRepository();
 
     @Override
     public Device getDeviceById(UUID deviceId) {
@@ -202,7 +206,6 @@ public class DeviceRepository implements IDeviceRepository {
                 returnList = DeviceUtils.transformDeviceList(devices);
 
 
-
         } catch (ServiceFaultException se) {
             throw se;
         } catch (Exception ex) {
@@ -287,7 +290,7 @@ public class DeviceRepository implements IDeviceRepository {
                                 deviceLogRepository.insertDeviceLog(actionUser, saved, "DEVICE ASSIGNED TO RESELLER", "DEVICE ID: "
                                         + saved.getDeviceId() + " RESELLER ID: " + resellerVal.getResellerId());
 
-                                resellerVal.setTotalDevices(resellerVal.getTotalDevices()+1);
+                                resellerVal.setTotalDevices(resellerVal.getTotalDevices() + 1);
                                 resellerRepository.saveReseller(resellerVal);
 
                             }
@@ -517,6 +520,171 @@ public class DeviceRepository implements IDeviceRepository {
             throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.suspendDevice.label, ex.getMessage()));
         }
         return device;
+    }
+
+    @Override
+    public Device setDeviceNotes(UUID deviceId, String notes, UUID actionUserId) {
+        Device device = new Device();
+
+        try {
+
+            tUser actionUser = userRepository.findById(actionUserId);
+            if (actionUser != null) {
+
+                tDevice deviceVal = deviceRepository.findById((deviceId));
+                if (deviceVal != null) {
+
+                    deviceVal.setNotes(notes.trim());
+                    tDevice saved = deviceRepository.saveDevice(deviceVal);
+
+                    if (saved != null) {
+                        device = DeviceUtils.transformDevice(saved);
+                        deviceLogRepository.insertDeviceLog(actionUser, saved, "CHANGE DEVICE NOTES", "DEVICE ID: "
+                                + saved.getDeviceId());
+                    }
+                } else {
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
+                }
+            } else {
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
+            }
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.setDeviceNotes.label, ex.getMessage()));
+        }
+        return device;
+    }
+
+    @Override
+    public boolean setDeviceBalanceMovement(UUID deviceId, String debitCredit, float movementValue, UUID actionUserId) {
+
+        boolean val = false;
+
+        try {
+            tUser actionUser = userRepository.findById(actionUserId);
+
+            if (actionUser != null) {
+
+                LocalDateTime localMovementDate = LocalDateTime.now();
+
+                tDevice u = deviceRepository.findById(deviceId);
+
+                if (u != null) {
+
+                    tDeviceBalance dBalance = new tDeviceBalance();
+                    dBalance.setDevice(u);
+                    dBalance.setMovementDate(localMovementDate);
+                    dBalance.setDebitCredit(debitCredit);
+                    dBalance.setMovementValue(movementValue);
+
+                    deviceBalanceRepository.saveDeviceBalance(dBalance);
+
+                    u.setCurrentBalance(deviceBalanceRepository.getCurrentBalance(deviceId));
+                    deviceRepository.saveDevice(u);
+
+                    deviceLogRepository.insertDeviceLog(actionUser, u, "ADD_DEVICE_BALANCE_MOVEMENT", "");
+
+                    val = true;
+
+                } else {
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
+                }
+            } else {
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.setDeviceBalanceMovement.label, ex.getMessage()));
+        }
+
+        return val;
+
+    }
+
+    @Override
+    public List<DeviceBalance> getDeviceBalanceMovements(UUID deviceId, @Nullable String startMovementDate,
+                                                         @Nullable String endMovementDate, @Nullable String minValue,
+                                                         @Nullable String maxValue, @Nullable String debitCredit,
+                                                         @Nullable String field, @Nullable String orderField,
+                                                         int offset, int numberRecords) {
+
+        List<DeviceBalance> returnList = new ArrayList<>();
+
+        try {
+            tDevice u = deviceRepository.findById(deviceId);
+
+            if (u != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                String localMinValue = minValue.equals("") ? null : minValue;
+                String localMaxValue = maxValue.equals("") ? null : maxValue;
+                String localDebitCredit = debitCredit.equals("") ? null : debitCredit;
+                LocalDateTime localStartMovementDate = startMovementDate.equals("") ? null :
+                        LocalDateTime.parse(startMovementDate, formatter);
+                LocalDateTime localEndMovementDate = endMovementDate.equals("") ? null :
+                        LocalDateTime.parse(endMovementDate, formatter).plusDays(1);
+
+                String localField = field.equals("") ? null : field;
+                String localOrderField = orderField.equals("") ? null : orderField;
+
+                List<tDeviceBalance> listBalance = deviceBalanceRepository.getDeviceBalanceFiltered(deviceId,
+                        localStartMovementDate, localEndMovementDate, localMinValue, localMaxValue, localDebitCredit, localField,
+                        localOrderField, offset, numberRecords);
+
+                if (listBalance != null)
+                    returnList = DeviceUtils.transformDeviceBalanceList(listBalance);
+
+
+            } else {
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.getDeviceBalanceMovements.label, ex.getMessage()));
+        }
+        return returnList;
+    }
+
+    @Override
+    public long getCountDeviceBalanceMovements(UUID deviceId, @Nullable String startMovementDate,
+                                               @Nullable String endMovementDate, @Nullable String minValue,
+                                               @Nullable String maxValue, @Nullable String debitCredit) {
+
+
+        try {
+            tDevice u = deviceRepository.findById(deviceId);
+
+            if (u != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                String localMinValue = minValue.equals("") ? null : minValue;
+                String localMaxValue = maxValue.equals("") ? null : maxValue;
+                String localDebitCredit = debitCredit.equals("") ? null : debitCredit;
+                LocalDateTime localStartMovementDate = startMovementDate.equals("") ? null :
+                        LocalDateTime.parse(startMovementDate, formatter);
+                LocalDateTime localEndMovementDate = endMovementDate.equals("") ? null :
+                        LocalDateTime.parse(endMovementDate, formatter).plusDays(1);
+
+
+                long nBalance = deviceBalanceRepository.getCountDeviceFiltered(deviceId,
+                        localStartMovementDate, localEndMovementDate, localMinValue, localMaxValue, localDebitCredit);
+
+                return nBalance;
+
+            } else {
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
+            }
+
+        } catch (ServiceFaultException se) {
+            throw se;
+        } catch (Exception ex) {
+            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.DeviceGeneralRepoFault.getCountDeviceBalanceMovements.label, ex.getMessage()));
+        }
     }
 }
 

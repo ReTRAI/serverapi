@@ -92,8 +92,6 @@
         </xs:complexType>
     </xs:element>
 
-
-
     <!-- setDeviceList-->
     <xs:element name="setDeviceListRequest">
         <xs:complexType>
@@ -198,6 +196,89 @@
         </xs:complexType>
     </xs:element>
 
+    <!-- setDeviceNotes-->
+    <xs:element name="setDeviceNotesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId" type="xs:string"/>
+                <xs:element name="notes" type="xs:string"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="setDeviceNotesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="device" type="tns:device"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- setDeviceBalanceMovement-->
+    <xs:element name="setDeviceBalanceMovementRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId" type="xs:string"/>
+                <xs:element name="debitCredit" type="xs:string" />
+                <xs:element name="movementValue" type="xs:float"/>
+                <xs:element name="actionUserId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="setDeviceBalanceMovementResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getDeviceBalanceMovements-->
+    <xs:element name="getDeviceBalanceMovementsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId"  type="xs:string" />
+                <xs:element name="startMovementDate"  type="xs:string" />
+                <xs:element name="endMovementDate"  type="xs:string" />
+                <xs:element name="minValue"  type="xs:string" />
+                <xs:element name="maxValue"  type="xs:string" />
+                <xs:element name="debitCredit"  type="xs:string" />
+                <xs:element name="field"  type="xs:string" />
+                <xs:element name="orderField"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getDeviceBalanceMovementsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceBalance" type="tns:deviceBalance" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getCountDeviceBalanceMovements-->
+    <xs:element name="getCountDeviceBalanceMovementsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId"  type="xs:string" />
+                <xs:element name="startMovementDate"  type="xs:string" />
+                <xs:element name="endMovementDate"  type="xs:string" />
+                <xs:element name="minValue"  type="xs:string" />
+                <xs:element name="maxValue"  type="xs:string" />
+                <xs:element name="debitCredit"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountDeviceBalanceMovementsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 
     <!-- Endpoint Device Object-->
     <xs:complexType name="device">
@@ -224,5 +305,13 @@
         </xs:sequence>
     </xs:complexType>
 
-
+    <!-- Endpoint DeviceBalance Object-->
+    <xs:complexType name="deviceBalance">
+        <xs:sequence>
+            <xs:element name="deviceBalanceId"  type="xs:string"/>
+            <xs:element name="debitCredit" type="xs:string" />
+            <xs:element name="movementValue" type="xs:float"/>
+            <xs:element name="movementDate" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>

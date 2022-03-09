@@ -71,8 +71,7 @@ public class tResellerRepository {
         List<Order> orders = new ArrayList<Order>(2);
         if (field != null) {
             if (field.equals("resellerId") || field.equals("currentBalance") ||
-                    field.equals("totalDevices") || field.equals("activeDevices") ||
-                    field.equals("inactiveDevices") || field.equals("freeDevices")) {
+                    field.equals("totalDevices")) {
                 if (orderField.toUpperCase(Locale.ROOT).equals("ASC"))
                     orders.add(cb.asc(root.get(field)));
                 if (orderField.toUpperCase(Locale.ROOT).equals("DESC"))

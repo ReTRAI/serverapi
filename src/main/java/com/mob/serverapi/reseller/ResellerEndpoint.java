@@ -104,7 +104,7 @@ public class ResellerEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountResellerBalanceMovementsRequest")
     @ResponsePayload
-    public GetCountResellerBalanceMovementsResponse getCountResellerBalanceMovementsRequest
+    public GetCountResellerBalanceMovementsResponse getCountResellerBalanceMovements
             (@RequestPayload GetCountResellerBalanceMovementsRequest request) {
 
         GetCountResellerBalanceMovementsResponse response = new GetCountResellerBalanceMovementsResponse();

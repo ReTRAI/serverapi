@@ -2,7 +2,9 @@ package com.mob.serverapi.utils;
 
 
 import com.mob.serverapi.device.base.Device;
+import com.mob.serverapi.device.base.DeviceBalance;
 import com.mob.serverapi.device.database.tDevice;
+import com.mob.serverapi.device.database.tDeviceBalance;
 import com.mob.serverapi.reseller.base.Reseller;
 import com.mob.serverapi.reseller.base.ResellerAssociation;
 import com.mob.serverapi.reseller.base.ResellerBalance;
@@ -63,5 +65,31 @@ public  class DeviceUtils {
 
         return rs;
     }
+
+
+    public static DeviceBalance transformDeviceBalance(tDeviceBalance deviceBalance){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        DeviceBalance r = new DeviceBalance();
+        r.setDeviceBalanceId(deviceBalance.getDeviceBalanceId().toString());
+        r.setDebitCredit(deviceBalance.getDebitCredit());
+        r.setMovementDate(deviceBalance.getMovementDate().format(formatter));
+        r.setMovementValue(deviceBalance.getMovementValue());
+        return r;
+    }
+
+    public static List<DeviceBalance> transformDeviceBalanceList(List<tDeviceBalance> deviceBalances){
+
+        List<DeviceBalance> rs= new ArrayList<DeviceBalance>();
+
+        for (tDeviceBalance r: deviceBalances) {
+            DeviceBalance newDeviceBalance = transformDeviceBalance(r);
+            rs.add(newDeviceBalance);
+        }
+
+        return rs;
+    }
+
 
 }

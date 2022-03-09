@@ -2,6 +2,7 @@ package com.mob.serverapi.device.repositories.endpoints;
 
 
 import com.mob.serverapi.device.base.Device;
+import com.mob.serverapi.device.base.DeviceBalance;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
@@ -39,4 +40,18 @@ interface IDeviceRepository {
     Device wipeDevice(UUID deviceId, UUID actionUserId);
 
     Device suspendDevice(UUID deviceId, UUID actionUserId);
+
+    Device setDeviceNotes(UUID deviceId, String notes, UUID actionUserId);
+
+    boolean setDeviceBalanceMovement(UUID deviceId, String debitCredit, float movementValue, UUID actionUserId);
+
+    List<DeviceBalance> getDeviceBalanceMovements(UUID deviceId, @Nullable String startMovementDate,
+                                                  @Nullable String endMovementDate, @Nullable String minValue,
+                                                  @Nullable String maxValue, @Nullable String debitCredit,
+                                                  @Nullable String field, @Nullable String orderField,
+                                                  int offset, int numberRecords);
+
+    long getCountDeviceBalanceMovements(UUID deviceId, @Nullable String startMovementDate,
+                                   @Nullable String endMovementDate, @Nullable String minValue,
+                                   @Nullable String maxValue, @Nullable String debitCredit);
 }

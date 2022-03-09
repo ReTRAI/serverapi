@@ -36,6 +36,6 @@ public class tDeviceBalance implements Serializable {
             foreignKey = @ForeignKey(name="FK_DEVICEBALANCE_DEVICEID"))
     private tDevice device;
 
-    protected tDeviceBalance() {}
+    public tDeviceBalance() {}
 
 }

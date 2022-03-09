@@ -154,7 +154,11 @@ public class FaultMapping {
         getCountDeviceFiltered("GET_COUNT_DEVICES_FILTERED"),
         setDevice("SET_DEVICE"),
         setDeviceList("SET_DEVICE_LIST"),
-        getDeviceById("GET_DEVICE_BY_ID");
+        getDeviceById("GET_DEVICE_BY_ID"),
+        setDeviceNotes("SET_DEVICE_NOTES"),
+        setDeviceBalanceMovement("SET_DEVICE_BALANCE_MOVEMENTS"),
+        getDeviceBalanceMovements("GET_DEVICE_BALANCE_MOVEMENTS"),
+        getCountDeviceBalanceMovements("GET_COUNT_DEVICE_BALANCE_MOVEMENTS");
 
         public final String label;
 
