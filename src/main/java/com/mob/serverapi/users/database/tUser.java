@@ -174,6 +174,13 @@ public class tUser implements Serializable {
     @OneToMany(targetEntity = tTicketLog.class, mappedBy = "user", fetch = FetchType.LAZY)
     private Set<tTicketLog> ticketLog;
 
+    /**
+     * FK from userNotification to user
+     */
+
+    @OneToMany(targetEntity = tUserNotification.class,mappedBy="user" , fetch = FetchType.LAZY)
+    private Set<tUserNotification> userNotification;
+
     public tUser() {
     }
 

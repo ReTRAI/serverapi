@@ -53,12 +53,7 @@ public class tReseller implements Serializable {
     @OneToMany(targetEntity = tResellerBalance.class,mappedBy="reseller" , fetch = FetchType.LAZY)
     private Set<tResellerBalance> resellerBalance;
 
-    /**
-     * FK from resellerNotification to Reseller
-     */
 
-    @OneToMany(targetEntity = tResellerNotification.class,mappedBy="reseller" , fetch = FetchType.LAZY)
-    private Set<tResellerNotification> resellerNotification;
     /**
      * FK from device to Reseller
      */

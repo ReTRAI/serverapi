@@ -8,7 +8,7 @@ import java.util.UUID;
 
 interface ItDeviceUserRepository extends JpaRepository<tDeviceUser, UUID> {
 
-    tDeviceUser findByNickname(String nickname);
+    tDeviceUser findByNicknameIgnoreCase(String nickname);
 
 
 }

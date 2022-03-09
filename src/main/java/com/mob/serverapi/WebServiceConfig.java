@@ -2,6 +2,7 @@ package com.mob.serverapi;
 
 import com.mob.serverapi.dashboard.repositories.endpoints.DashboardRepository;
 import com.mob.serverapi.device.repositories.endpoints.DeviceRepository;
+import com.mob.serverapi.notification.repositories.endpoints.NotificationRepository;
 import com.mob.serverapi.reseller.repositories.endpoints.ResellerRepository;
 import com.mob.serverapi.servicefault.DetailSoapFaultDefinitionExceptionResolver;
 import com.mob.serverapi.servicefault.ServiceFaultException;
@@ -106,6 +107,16 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
+    @Bean(name = "notifications")
+    public DefaultWsdl11Definition notificationsWsdl11Definition(XsdSchema notificationsSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("NotificationsPort");
+        wsdl11Definition.setLocationUri("/");
+        wsdl11Definition.setTargetNamespace("http://www.mob.com/serverapi/notification/base");
+        wsdl11Definition.setSchema(notificationsSchema);
+        return wsdl11Definition;
+    }
+
     /**
      * ENDPOINT BEANS
      */
@@ -134,6 +145,9 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("endpoints/dashboard.xsd"));
     }
 
+    @Bean
+    public XsdSchema notificationsSchema() {return new SimpleXsdSchema(new ClassPathResource("endpoints/notifications.xsd"));
+    }
 
     /**
      * REPOSITORY BEANS
@@ -161,5 +175,10 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     @Bean
     public DashboardRepository dashboardRepository() {
         return new DashboardRepository();
+    }
+
+    @Bean
+    public NotificationRepository notificationRepository() {
+        return new NotificationRepository();
     }
 }

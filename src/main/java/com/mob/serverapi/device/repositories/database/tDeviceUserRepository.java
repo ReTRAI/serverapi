@@ -20,6 +20,6 @@ public class tDeviceUserRepository {
 
     public tDeviceUser findByNickname(String nickname){
 
-        return repository.findByNickname(nickname);
+        return repository.findByNicknameIgnoreCase(nickname);
     }
 }

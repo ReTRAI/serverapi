@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/notification/base"
+           targetNamespace="http://www.mob.com/serverapi/notification/base" elementFormDefault="qualified">
+
+
+    <!-- setDeviceNotification-->
+    <xs:element name="setDeviceNotificationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId"  type="xs:string" />
+                <xs:element name="detail"  type="xs:string" />
+                <xs:element name="actionUserId"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="setDeviceNotificationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceNotification" type="tns:deviceNotification" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- setUserNotification-->
+    <xs:element name="setUserNotificationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId"  type="xs:string" />
+                <xs:element name="detail"  type="xs:string" />
+                <xs:element name="actionUserId"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="setUserNotificationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userNotification" type="tns:userNotification" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- setDeviceNotificationChecked-->
+    <xs:element name="setDeviceNotificationCheckedRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceNotificationId"  type="xs:string" />
+                <xs:element name="actionUserId"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="setDeviceNotificationCheckedResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceNotification" type="tns:deviceNotification" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- setUserNotificationChecked-->
+    <xs:element name="setUserNotificationCheckedRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userNotificationId"  type="xs:string" />
+                <xs:element name="actionUserId"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="setUserNotificationCheckedResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userNotification" type="tns:userNotification" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getDeviceNotificationFiltered-->
+    <xs:element name="getDeviceNotificationFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+                <xs:element name="checked"  type="xs:string" />
+                <xs:element name="startCheckedDate"  type="xs:string" />
+                <xs:element name="endCheckedDate"  type="xs:string" />
+                <xs:element name="field"  type="xs:string" />
+                <xs:element name="orderField"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getDeviceNotificationFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceNotification" type="tns:deviceNotification" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getCountDeviceNotificationFiltered-->
+    <xs:element name="getCountDeviceNotificationFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deviceId"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+                <xs:element name="checked"  type="xs:string" />
+                <xs:element name="startCheckedDate"  type="xs:string" />
+                <xs:element name="endCheckedDate"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountDeviceNotificationFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getUserNotificationFiltered-->
+    <xs:element name="getUserNotificationFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+                <xs:element name="checked"  type="xs:string" />
+                <xs:element name="startCheckedDate"  type="xs:string" />
+                <xs:element name="endCheckedDate"  type="xs:string" />
+                <xs:element name="field"  type="xs:string" />
+                <xs:element name="orderField"  type="xs:string" />
+                <xs:element name="offset"  type="xs:int"/>
+                <xs:element name="numberRecords"  type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserNotificationFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userNotification" type="tns:userNotification" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- getCountUserNotificationFiltered-->
+    <xs:element name="getCountUserNotificationFilteredRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId"  type="xs:string" />
+                <xs:element name="startCreationDate"  type="xs:string" />
+                <xs:element name="endCreationDate"  type="xs:string" />
+                <xs:element name="checked"  type="xs:string" />
+                <xs:element name="startCheckedDate"  type="xs:string" />
+                <xs:element name="endCheckedDate"  type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCountUserNotificationFilteredResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Endpoint DeviceNotification Object-->
+    <xs:complexType name="deviceNotification">
+        <xs:sequence>
+            <xs:element name="deviceNotificationId"  type="xs:long"/>
+            <xs:element name="deviceId" type="xs:long"/>
+            <xs:element name="creationDate" type="xs:long"/>
+            <xs:element name="detail" type="xs:long"/>
+            <xs:element name="checked" type="xs:long"/>
+            <xs:element name="checkedDate" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Endpoint UserNotification Object-->
+    <xs:complexType name="userNotification">
+        <xs:sequence>
+            <xs:element name="userNotificationId"  type="xs:long"/>
+            <xs:element name="userId" type="xs:long"/>
+            <xs:element name="creationDate" type="xs:long"/>
+            <xs:element name="detail" type="xs:long"/>
+            <xs:element name="checked" type="xs:long"/>
+            <xs:element name="checkedDate" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
