@@ -147,7 +147,7 @@ public class tResellerBalanceRepository {
             predicates.add(cb.lessThanOrEqualTo(root.get("movementValue"), Float.parseFloat(maxValue)));
 
         if (debitCredit != null)
-            predicates.add(cb.equal(cb.lower(root.get("debitCredit")), debitCredit));
+            predicates.add(cb.equal(cb.lower(root.get("debitCredit")), debitCredit.toLowerCase()));
 
         Predicate[] predArray = new Predicate[predicates.size()];
         predicates.toArray(predArray);

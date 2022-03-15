@@ -31,6 +31,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -260,7 +261,7 @@ public class ResellerRepository implements IResellerRepository {
                     tResellerBalance rBalance = new tResellerBalance();
                     rBalance.setReseller(u);
                     rBalance.setMovementDate(localMovementDate);
-                    rBalance.setDebitCredit(debitCredit);
+                    rBalance.setDebitCredit(debitCredit.toUpperCase());
                     rBalance.setMovementValue(movementValue);
 
                     resellerBalanceRepository.saveResellerBalance(rBalance);

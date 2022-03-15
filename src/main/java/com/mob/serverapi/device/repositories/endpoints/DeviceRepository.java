@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -575,7 +576,7 @@ public class DeviceRepository implements IDeviceRepository {
                     tDeviceBalance dBalance = new tDeviceBalance();
                     dBalance.setDevice(u);
                     dBalance.setMovementDate(localMovementDate);
-                    dBalance.setDebitCredit(debitCredit);
+                    dBalance.setDebitCredit(debitCredit.toUpperCase());
                     dBalance.setMovementValue(movementValue);
 
                     deviceBalanceRepository.saveDeviceBalance(dBalance);
