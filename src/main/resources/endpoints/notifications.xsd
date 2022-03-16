@@ -168,24 +168,24 @@
     <!-- Endpoint DeviceNotification Object-->
     <xs:complexType name="deviceNotification">
         <xs:sequence>
-            <xs:element name="deviceNotificationId"  type="xs:long"/>
-            <xs:element name="deviceId" type="xs:long"/>
-            <xs:element name="creationDate" type="xs:long"/>
-            <xs:element name="detail" type="xs:long"/>
-            <xs:element name="checked" type="xs:long"/>
-            <xs:element name="checkedDate" type="xs:long"/>
+            <xs:element name="deviceNotificationId"  type="xs:string"/>
+            <xs:element name="deviceId" type="xs:string"/>
+            <xs:element name="creationDate" type="xs:string"/>
+            <xs:element name="detail" type="xs:string"/>
+            <xs:element name="checked" type="xs:boolean"/>
+            <xs:element name="checkedDate" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
     <!-- Endpoint UserNotification Object-->
     <xs:complexType name="userNotification">
         <xs:sequence>
-            <xs:element name="userNotificationId"  type="xs:long"/>
-            <xs:element name="userId" type="xs:long"/>
-            <xs:element name="creationDate" type="xs:long"/>
-            <xs:element name="detail" type="xs:long"/>
-            <xs:element name="checked" type="xs:long"/>
-            <xs:element name="checkedDate" type="xs:long"/>
+            <xs:element name="userNotificationId"  type="xs:string"/>
+            <xs:element name="userId" type="xs:string"/>
+            <xs:element name="creationDate" type="xs:string"/>
+            <xs:element name="detail" type="xs:string"/>
+            <xs:element name="checked" type="xs:boolean"/>
+            <xs:element name="checkedDate" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
