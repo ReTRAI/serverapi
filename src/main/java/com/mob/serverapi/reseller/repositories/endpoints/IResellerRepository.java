@@ -34,7 +34,8 @@ interface IResellerRepository {
 
     Reseller setReseller(UUID userId, UUID actionUserId);
 
-    boolean setResellerBalanceMovement(UUID resellerId, String debitCredit, float movementValue, UUID actionUserId);
+    boolean setResellerBalanceMovement(UUID resellerId, String debitCredit, float movementValue, String movementType,
+                                       String movementDetail, UUID actionUserId);
 
     boolean removeReseller(UUID resellerId, UUID actionUserId);
 

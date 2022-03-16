@@ -143,7 +143,8 @@ public class ResellerEndpoint {
 
         SetResellerBalanceMovementResponse response = new SetResellerBalanceMovementResponse();
         response.setResult(resellerRepository.setResellerBalanceMovement(UUID.fromString(request.getResellerId()),
-                request.getDebitCredit(),request.getMovementValue(),UUID.fromString(request.getActionUserId())));
+                request.getDebitCredit(),request.getMovementValue(),request.getMovementType(),
+                request.getMovementDetail(), UUID.fromString(request.getActionUserId())));
 
         return response;
     }

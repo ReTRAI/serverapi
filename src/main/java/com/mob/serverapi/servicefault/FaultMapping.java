@@ -40,7 +40,8 @@ public class FaultMapping {
         androidIdExist("ANDROID_ID_EXIST"),
         simNumberExist("SIM_NUMBER_EXIST"),
         imeiExist("IMEI_EXIST"),
-        serialNumberExist("SERIAL_NUMBER_EXIST");
+        serialNumberExist("SERIAL_NUMBER_EXIST"),
+        invalidStatus("INVALID_STATUS");
 
         public final String label;
 
@@ -163,6 +164,23 @@ public class FaultMapping {
         public final String label;
 
         private DeviceGeneralRepoFault(String label) {
+            this.label = label;
+        }
+    }
+
+    public enum NotificationsGeneralRepoFault {
+        setDeviceNotification("SET_DEVICE_NOTIFICATION"),
+        setDeviceNotificationChecked("SET_DEVICE_NOTIFICATION"),
+        getDeviceNotificationFiltered("GET_DEVICE_NOTIFICATION"),
+        getCountDeviceNotificationFiltered("GET_COUNT_DEVICE_NOTIFICATION"),
+        setUserNotification("SET_USER_NOTIFICATION"),
+        setUserNotificationChecked("SET_USER_NOTIFICATION"),
+        getUserNotificationFiltered("GET_USER_NOTIFICATION"),
+        getCountUserNotificationFiltered("GET_USER_DEVICE_NOTIFICATION");
+
+        public final String label;
+
+        private NotificationsGeneralRepoFault(String label) {
             this.label = label;
         }
     }

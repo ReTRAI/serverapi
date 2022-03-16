@@ -25,7 +25,7 @@
     <xs:element name="setUserNotificationRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="deviceId"  type="xs:string" />
+                <xs:element name="userId"  type="xs:string" />
                 <xs:element name="detail"  type="xs:string" />
                 <xs:element name="actionUserId"  type="xs:string" />
             </xs:sequence>

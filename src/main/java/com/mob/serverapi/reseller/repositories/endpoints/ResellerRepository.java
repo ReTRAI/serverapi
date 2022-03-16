@@ -10,12 +10,14 @@ import com.mob.serverapi.reseller.base.ResellerBalance;
 import com.mob.serverapi.reseller.database.tReseller;
 import com.mob.serverapi.reseller.database.tResellerAssociation;
 import com.mob.serverapi.reseller.database.tResellerBalance;
+import com.mob.serverapi.reseller.database.tResellerMovementType;
 import com.mob.serverapi.reseller.repositories.database.*;
 import com.mob.serverapi.servicefault.FaultMapping;
 import com.mob.serverapi.servicefault.ServiceFault;
 import com.mob.serverapi.servicefault.ServiceFaultException;
 import com.mob.serverapi.users.database.tUser;
 import com.mob.serverapi.users.database.tUserRole;
+import com.mob.serverapi.users.database.tUserStatus;
 import com.mob.serverapi.users.database.tUserType;
 import com.mob.serverapi.users.repositories.database.tUserLogRepository;
 import com.mob.serverapi.users.repositories.database.tUserRepository;
@@ -61,6 +63,8 @@ public class ResellerRepository implements IResellerRepository {
     protected tDeviceRepository deviceRepository = new tDeviceRepository();
     @Autowired
     protected tDeviceUserRepository deviceUserRepository = new tDeviceUserRepository();
+    @Autowired
+    protected tResellerMovementTypeRepository resellerMovementTypeRepository = new tResellerMovementTypeRepository();
 
 
     @Override
@@ -243,7 +247,8 @@ public class ResellerRepository implements IResellerRepository {
     }
 
     @Override
-    public boolean setResellerBalanceMovement(UUID resellerId, String debitCredit, float movementValue, UUID actionUserId) {
+    public boolean setResellerBalanceMovement(UUID resellerId, String debitCredit, float movementValue, String movementType,
+                                              String movementDetail, UUID actionUserId) {
 
         boolean val = false;
 
@@ -258,21 +263,29 @@ public class ResellerRepository implements IResellerRepository {
 
                 if (u != null) {
 
-                    tResellerBalance rBalance = new tResellerBalance();
-                    rBalance.setReseller(u);
-                    rBalance.setMovementDate(localMovementDate);
-                    rBalance.setDebitCredit(debitCredit.toUpperCase());
-                    rBalance.setMovementValue(movementValue);
+                    tResellerMovementType movementTypeVal = resellerMovementTypeRepository
+                            .findResellerMovementTypeByDescription(movementType);
 
-                    resellerBalanceRepository.saveResellerBalance(rBalance);
+                    if(movementTypeVal!= null) {
+                        tResellerBalance rBalance = new tResellerBalance();
+                        rBalance.setReseller(u);
+                        rBalance.setMovementDate(localMovementDate);
+                        rBalance.setDebitCredit(debitCredit.toUpperCase());
+                        rBalance.setMovementValue(movementValue);
+                        rBalance.setResellerMovementType(movementTypeVal);
+                        rBalance.setMovementDetail(movementDetail);
 
-                    u.setCurrentBalance(resellerBalanceRepository.getCurrentBalance(resellerId));
-                    resellerRepository.saveReseller(u);
+                        resellerBalanceRepository.saveResellerBalance(rBalance);
 
-                    resellerLogRepository.insertResellerLog(actionUser, u, "ADD_RESELLER_BALANCE_MOVEMENT", "");
+                        u.setCurrentBalance(resellerBalanceRepository.getCurrentBalance(resellerId));
+                        resellerRepository.saveReseller(u);
 
-                    val = true;
+                        resellerLogRepository.insertResellerLog(actionUser, u, "ADD_RESELLER_BALANCE_MOVEMENT", "");
 
+                        val = true;
+                    } else {
+                    throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.invalidStatus.label, ""));
+                }
                 } else {
                     throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
                 }

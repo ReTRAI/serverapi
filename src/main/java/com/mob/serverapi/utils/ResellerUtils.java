@@ -78,6 +78,8 @@ public  class ResellerUtils {
         r.setDebitCredit(resellerBalance.getDebitCredit());
         r.setMovementDate(resellerBalance.getMovementDate().format(formatter));
         r.setMovementValue(resellerBalance.getMovementValue());
+        r.setMovementType(resellerBalance.getResellerMovementType().getDescription());
+        r.setMovementDetail(resellerBalance.getMovementDetail());
         return r;
     }
 
