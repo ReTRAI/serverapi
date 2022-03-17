@@ -640,7 +640,7 @@ public class DeviceRepository implements IDeviceRepository {
 
 
             } else {
-                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {
@@ -678,7 +678,7 @@ public class DeviceRepository implements IDeviceRepository {
                 return nBalance;
 
             } else {
-                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.resellerNotExist.label, ""));
+                throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.deviceNotExist.label, ""));
             }
 
         } catch (ServiceFaultException se) {

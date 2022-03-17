@@ -36,7 +36,6 @@ public class UserRepository implements IUserRepository {
     protected tUserLogRepository userLogRepository = new tUserLogRepository();
     @Autowired
     protected tUserLoginLogRepository userLoginLogRepository = new tUserLoginLogRepository();
-
     @Override
     public User getUserById(UUID id) {
 

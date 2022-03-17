@@ -16,7 +16,7 @@
     <xs:element name="setDeviceNotificationResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="deviceNotification" type="tns:deviceNotification" maxOccurs="unbounded"/>
+                <xs:element name="deviceNotification" type="tns:deviceNotification"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -34,7 +34,7 @@
     <xs:element name="setUserNotificationResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userNotification" type="tns:userNotification" maxOccurs="unbounded"/>
+                <xs:element name="userNotification" type="tns:userNotification"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -51,7 +51,7 @@
     <xs:element name="setDeviceNotificationCheckedResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="deviceNotification" type="tns:deviceNotification" maxOccurs="unbounded"/>
+                <xs:element name="deviceNotification" type="tns:deviceNotification"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -68,7 +68,7 @@
     <xs:element name="setUserNotificationCheckedResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userNotification" type="tns:userNotification" maxOccurs="unbounded"/>
+                <xs:element name="userNotification" type="tns:userNotification"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

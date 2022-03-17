@@ -38,6 +38,6 @@ public class tUserNotification implements Serializable {
             foreignKey = @ForeignKey(name="FK_USERNOTIFICATION_USERID"))
     private tUser user;
 
-    protected tUserNotification() {}
+    public tUserNotification() {}
 
 }

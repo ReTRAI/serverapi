@@ -41,7 +41,8 @@ public class FaultMapping {
         simNumberExist("SIM_NUMBER_EXIST"),
         imeiExist("IMEI_EXIST"),
         serialNumberExist("SERIAL_NUMBER_EXIST"),
-        invalidStatus("INVALID_STATUS");
+        invalidStatus("INVALID_STATUS"),
+        notificationNotExist("NOTIFICATION_DONT_EXIST");
 
         public final String label;
 

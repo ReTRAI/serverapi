@@ -39,6 +39,6 @@ public class tDeviceNotification implements Serializable {
             foreignKey = @ForeignKey(name="FK_DEVICENOTIFICATION_DEVICEID"))
     private tDevice device;
 
-    protected tDeviceNotification() {}
+    public tDeviceNotification() {}
 
 }
