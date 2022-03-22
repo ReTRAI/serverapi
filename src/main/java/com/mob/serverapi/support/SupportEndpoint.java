@@ -23,7 +23,7 @@ public class SupportEndpoint {
         this.supportRepository = supportRepository;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getSupportByIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetSupportByIdRequest")
     @ResponsePayload
     public GetSupportByIdResponse getSupportById(@RequestPayload GetSupportByIdRequest request) {
 
@@ -33,7 +33,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getSupportByUserIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetSupportByUserIdRequest")
     @ResponsePayload
     public GetSupportByUserIdResponse getSupportByUserId(@RequestPayload GetSupportByUserIdRequest request) {
 
@@ -43,7 +43,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getSupportFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetSupportFilteredRequest")
     @ResponsePayload
     public GetSupportFilteredResponse getSupportFiltered(@RequestPayload GetSupportFilteredRequest request) {
 
@@ -55,7 +55,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountSupportFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountSupportFilteredRequest")
     @ResponsePayload
     public GetCountSupportFilteredResponse getCountSupportFiltered(@RequestPayload GetCountSupportFilteredRequest request) {
 
@@ -66,7 +66,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getTicketFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetTicketFilteredRequest")
     @ResponsePayload
     public GetTicketFilteredResponse getTicketFiltered(@RequestPayload GetTicketFilteredRequest request) {
 
@@ -78,7 +78,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountTicketFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountTicketFilteredRequest")
     @ResponsePayload
     public GetCountTicketFilteredResponse getCountTicketFiltered(@RequestPayload GetCountTicketFilteredRequest request) {
 
@@ -90,7 +90,7 @@ public class SupportEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getTicketDetailFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetTicketDetailFilteredRequest")
     @ResponsePayload
     public GetTicketDetailFilteredResponse getTicketDetailFiltered(@RequestPayload GetTicketDetailFilteredRequest request) {
 
@@ -102,7 +102,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountTicketDetailFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountTicketDetailFilteredRequest")
     @ResponsePayload
     public GetCountTicketDetailFilteredResponse getCountTicketDetailFiltered(@RequestPayload GetCountTicketDetailFilteredRequest request) {
 
@@ -113,7 +113,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setSupportRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetSupportRequest")
     @ResponsePayload
     public SetSupportResponse setSupport(@RequestPayload SetSupportRequest request) {
 
@@ -124,7 +124,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeSupportRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveSupportRequest")
     @ResponsePayload
     public RemoveSupportResponse removeSupport(@RequestPayload RemoveSupportRequest request) {
 
@@ -135,7 +135,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getSupportAssociationRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetSupportAssociationRequest")
     @ResponsePayload
     public GetSupportAssociationResponse getSupportAssociation(@RequestPayload GetSupportAssociationRequest request) {
 
@@ -148,7 +148,7 @@ public class SupportEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAvailableSupportParentRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAvailableSupportParentRequest")
     @ResponsePayload
     public GetAvailableSupportParentResponse getAvailableSupportParent(@RequestPayload GetAvailableSupportParentRequest request) {
 
@@ -159,7 +159,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountAvailableSupportParentRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountAvailableSupportParentRequest")
     @ResponsePayload
     public GetCountAvailableSupportParentResponse getCountAvailableSupportParent
             (@RequestPayload GetCountAvailableSupportParentRequest request) {
@@ -171,7 +171,7 @@ public class SupportEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getSupportParentByChildIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetSupportParentByChildIdRequest")
     @ResponsePayload
     public GetSupportParentByChildIdResponse getSupportParentByChildId(@RequestPayload GetSupportParentByChildIdRequest request) {
 
@@ -182,7 +182,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setSupportAssociationRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetSupportAssociationRequest")
     @ResponsePayload
     public SetSupportAssociationResponse setSupportAssociation(@RequestPayload SetSupportAssociationRequest request) {
 
@@ -193,7 +193,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setTicketRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetTicketRequest")
     @ResponsePayload
     public SetTicketResponse setTicket(@RequestPayload SetTicketRequest request) {
 
@@ -203,7 +203,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setTicketDetailRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetTicketDetailRequest")
     @ResponsePayload
     public SetTicketDetailResponse setTicketDetail(@RequestPayload SetTicketDetailRequest request) {
 
@@ -214,7 +214,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateTicketRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "UpdateTicketRequest")
     @ResponsePayload
     public UpdateTicketResponse updateTicket(@RequestPayload UpdateTicketRequest request) {
 
@@ -225,7 +225,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeSupportAssociationRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveSupportAssociationRequest")
     @ResponsePayload
     public RemoveSupportAssociationResponse removeSupportAssociation(@RequestPayload RemoveSupportAssociationRequest request) {
 
@@ -237,7 +237,7 @@ public class SupportEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "isHierarchyValidRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "IsHierarchyValidRequest")
     @ResponsePayload
     public IsHierarchyValidResponse isHierarchyValid(@RequestPayload IsHierarchyValidRequest request) {
 

@@ -25,12 +25,14 @@ interface IResellerRepository {
     List<ResellerBalance> getResellerBalanceMovements(UUID resellerId, @Nullable String startMovementDate,
                                                       @Nullable String endMovementDate, @Nullable String minValue,
                                                       @Nullable String maxValue, @Nullable String dc,
+                                                      @Nullable String movementType,
                                                       @Nullable String field, @Nullable String orderField,
                                                       int offset, int numberRecords);
 
    long getCountResellerBalanceMovements(UUID resellerId, @Nullable String startMovementDate,
                                                       @Nullable String endMovementDate, @Nullable String minValue,
-                                                      @Nullable String maxValue, @Nullable String dc);
+                                                      @Nullable String maxValue, @Nullable String dc,
+                                                        @Nullable String movementType);
 
     Reseller setReseller(UUID userId, UUID actionUserId);
 

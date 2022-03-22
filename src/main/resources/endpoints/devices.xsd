@@ -2,24 +2,24 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/device/base"
            targetNamespace="http://www.mob.com/serverapi/device/base" elementFormDefault="qualified">
 
-    <!-- getDeviceById-->
-    <xs:element name="getDeviceByIdRequest">
+    <!-- GetDeviceById-->
+    <xs:element name="GetDeviceByIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getDeviceByIdResponse">
+    <xs:element name="GetDeviceByIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device"/>
+                <xs:element name="device" type="tns:Device"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getDevicesFiltered-->
-    <xs:element name="getDevicesFilteredRequest">
+    <!-- GetDevicesFiltered-->
+    <xs:element name="GetDevicesFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId"  type="xs:string" />
@@ -38,16 +38,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getDevicesFilteredResponse">
+    <xs:element name="GetDevicesFilteredResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device" maxOccurs="unbounded"/>
+                <xs:element name="device" type="tns:Device" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountDevicesFiltered-->
-    <xs:element name="getCountDevicesFilteredRequest">
+    <!-- GetCountDevicesFiltered-->
+    <xs:element name="GetCountDevicesFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId"  type="xs:string" />
@@ -62,7 +62,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountDevicesFilteredResponse">
+    <xs:element name="GetCountDevicesFilteredResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long"/>
@@ -70,8 +70,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- setDevice-->
-    <xs:element name="setDeviceRequest">
+    <!-- SetDevice-->
+    <xs:element name="SetDeviceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="brand" type="xs:string"/>
@@ -84,33 +84,33 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setDeviceResponse">
+    <xs:element name="SetDeviceResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device"/>
+                <xs:element name="device" type="tns:Device"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setDeviceList-->
-    <xs:element name="setDeviceListRequest">
+    <!-- SetDeviceList-->
+    <xs:element name="SetDeviceListRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device" maxOccurs="unbounded"/>
+                <xs:element name="device" type="tns:Device" maxOccurs="unbounded"/>
                 <xs:element name="actionUserId" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setDeviceListResponse">
+    <xs:element name="SetDeviceListResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device" maxOccurs="unbounded"/>
+                <xs:element name="device" type="tns:Device" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- assignDevice-->
-    <xs:element name="assignDeviceRequest">
+    <!-- AssignDevice-->
+    <xs:element name="AssignDeviceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId" type="xs:string"/>
@@ -119,16 +119,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="assignDeviceResponse">
+    <xs:element name="AssignDeviceResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device"/>
+                <xs:element name="device" type="tns:Device"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- activateDevice-->
-    <xs:element name="activateDeviceRequest">
+    <!-- ActivateDevice-->
+    <xs:element name="ActivateDeviceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId" type="xs:string"/>
@@ -137,16 +137,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="activateDeviceResponse">
+    <xs:element name="ActivateDeviceResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device"/>
+                <xs:element name="device" type="tns:Device"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- blockDevice-->
-    <xs:element name="blockDeviceRequest">
+    <!-- BlockDevice-->
+    <xs:element name="BlockDeviceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId" type="xs:string"/>
@@ -154,16 +154,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="blockDeviceResponse">
+    <xs:element name="BlockDeviceResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device"/>
+                <xs:element name="device" type="tns:Device"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- wipeDevice-->
-    <xs:element name="wipeDeviceRequest">
+    <!-- WipeDevice-->
+    <xs:element name="WipeDeviceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId" type="xs:string"/>
@@ -171,16 +171,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="wipeDeviceResponse">
+    <xs:element name="WipeDeviceResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device"/>
+                <xs:element name="device" type="tns:Device"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- suspendDevice-->
-    <xs:element name="suspendDeviceRequest">
+    <!-- SuspendDevice-->
+    <xs:element name="SuspendDeviceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId" type="xs:string"/>
@@ -188,16 +188,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="suspendDeviceResponse">
+    <xs:element name="SuspendDeviceResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device"/>
+                <xs:element name="device" type="tns:Device"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setDeviceNotes-->
-    <xs:element name="setDeviceNotesRequest">
+    <!-- SetDeviceNotes-->
+    <xs:element name="SetDeviceNotesRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId" type="xs:string"/>
@@ -206,15 +206,15 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setDeviceNotesResponse">
+    <xs:element name="SetDeviceNotesResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="device" type="tns:device"/>
+                <xs:element name="device" type="tns:Device"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setDeviceBalanceMovement-->
+    <!-- SetDeviceBalanceMovement-->
     <xs:element name="setDeviceBalanceMovementRequest">
         <xs:complexType>
             <xs:sequence>
@@ -225,7 +225,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setDeviceBalanceMovementResponse">
+    <xs:element name="SetDeviceBalanceMovementResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -233,8 +233,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- getDeviceBalanceMovements-->
-    <xs:element name="getDeviceBalanceMovementsRequest">
+    <!-- GetDeviceBalanceMovements-->
+    <xs:element name="GetDeviceBalanceMovementsRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId"  type="xs:string" />
@@ -250,16 +250,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getDeviceBalanceMovementsResponse">
+    <xs:element name="GetDeviceBalanceMovementsResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="deviceBalance" type="tns:deviceBalance" maxOccurs="unbounded"/>
+                <xs:element name="deviceBalance" type="tns:DeviceBalance" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountDeviceBalanceMovements-->
-    <xs:element name="getCountDeviceBalanceMovementsRequest">
+    <!-- GetCountDeviceBalanceMovements-->
+    <xs:element name="GetCountDeviceBalanceMovementsRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId"  type="xs:string" />
@@ -271,7 +271,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountDeviceBalanceMovementsResponse">
+    <xs:element name="GetCountDeviceBalanceMovementsResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long" />
@@ -281,7 +281,7 @@
 
 
     <!-- Endpoint Device Object-->
-    <xs:complexType name="device">
+    <xs:complexType name="Device">
         <xs:sequence>
             <xs:element name="deviceId"  type="xs:string" minOccurs="0" />
             <xs:element name="resellerId" type="xs:string" minOccurs="0"/>
@@ -306,7 +306,7 @@
     </xs:complexType>
 
     <!-- Endpoint DeviceBalance Object-->
-    <xs:complexType name="deviceBalance">
+    <xs:complexType name="DeviceBalance">
         <xs:sequence>
             <xs:element name="deviceBalanceId"  type="xs:string"/>
             <xs:element name="debitCredit" type="xs:string" />

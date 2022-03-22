@@ -3,8 +3,8 @@
            targetNamespace="http://www.mob.com/serverapi/notification/base" elementFormDefault="qualified">
 
 
-    <!-- setDeviceNotification-->
-    <xs:element name="setDeviceNotificationRequest">
+    <!-- SetDeviceNotification-->
+    <xs:element name="SetDeviceNotificationRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId"  type="xs:string" />
@@ -13,16 +13,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setDeviceNotificationResponse">
+    <xs:element name="SetDeviceNotificationResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="deviceNotification" type="tns:deviceNotification"/>
+                <xs:element name="deviceNotification" type="tns:DeviceNotification"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setUserNotification-->
-    <xs:element name="setUserNotificationRequest">
+    <!-- SetUserNotification-->
+    <xs:element name="SetUserNotificationRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId"  type="xs:string" />
@@ -31,16 +31,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setUserNotificationResponse">
+    <xs:element name="SetUserNotificationResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userNotification" type="tns:userNotification"/>
+                <xs:element name="userNotification" type="tns:UserNotification"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setDeviceNotificationChecked-->
-    <xs:element name="setDeviceNotificationCheckedRequest">
+    <!-- SetDeviceNotificationChecked-->
+    <xs:element name="SetDeviceNotificationCheckedRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceNotificationId"  type="xs:string" />
@@ -48,16 +48,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setDeviceNotificationCheckedResponse">
+    <xs:element name="SetDeviceNotificationCheckedResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="deviceNotification" type="tns:deviceNotification"/>
+                <xs:element name="deviceNotification" type="tns:DeviceNotification"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setUserNotificationChecked-->
-    <xs:element name="setUserNotificationCheckedRequest">
+    <!-- SetUserNotificationChecked-->
+    <xs:element name="SetUserNotificationCheckedRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userNotificationId"  type="xs:string" />
@@ -65,16 +65,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setUserNotificationCheckedResponse">
+    <xs:element name="SetUserNotificationCheckedResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userNotification" type="tns:userNotification"/>
+                <xs:element name="userNotification" type="tns:UserNotification"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getDeviceNotificationFiltered-->
-    <xs:element name="getDeviceNotificationFilteredRequest">
+    <!-- GetDeviceNotificationFiltered-->
+    <xs:element name="GetDeviceNotificationFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId"  type="xs:string" />
@@ -90,16 +90,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getDeviceNotificationFilteredResponse">
+    <xs:element name="GetDeviceNotificationFilteredResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="deviceNotification" type="tns:deviceNotification" maxOccurs="unbounded"/>
+                <xs:element name="deviceNotification" type="tns:DeviceNotification" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountDeviceNotificationFiltered-->
-    <xs:element name="getCountDeviceNotificationFilteredRequest">
+    <!-- GetCountDeviceNotificationFiltered-->
+    <xs:element name="GetCountDeviceNotificationFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deviceId"  type="xs:string" />
@@ -111,7 +111,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountDeviceNotificationFilteredResponse">
+    <xs:element name="GetCountDeviceNotificationFilteredResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long"/>
@@ -119,8 +119,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- getUserNotificationFiltered-->
-    <xs:element name="getUserNotificationFilteredRequest">
+    <!-- GetUserNotificationFiltered-->
+    <xs:element name="GetUserNotificationFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId"  type="xs:string" />
@@ -136,16 +136,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getUserNotificationFilteredResponse">
+    <xs:element name="GetUserNotificationFilteredResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userNotification" type="tns:userNotification" maxOccurs="unbounded"/>
+                <xs:element name="userNotification" type="tns:UserNotification" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountUserNotificationFiltered-->
-    <xs:element name="getCountUserNotificationFilteredRequest">
+    <!-- GetCountUserNotificationFiltered-->
+    <xs:element name="GetCountUserNotificationFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId"  type="xs:string" />
@@ -157,7 +157,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountUserNotificationFilteredResponse">
+    <xs:element name="GetCountUserNotificationFilteredResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long"/>
@@ -166,7 +166,7 @@
     </xs:element>
 
     <!-- Endpoint DeviceNotification Object-->
-    <xs:complexType name="deviceNotification">
+    <xs:complexType name="DeviceNotification">
         <xs:sequence>
             <xs:element name="deviceNotificationId"  type="xs:string"/>
             <xs:element name="deviceId" type="xs:string"/>
@@ -178,7 +178,7 @@
     </xs:complexType>
 
     <!-- Endpoint UserNotification Object-->
-    <xs:complexType name="userNotification">
+    <xs:complexType name="UserNotification">
         <xs:sequence>
             <xs:element name="userNotificationId"  type="xs:string"/>
             <xs:element name="userId" type="xs:string"/>

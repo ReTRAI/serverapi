@@ -1,9 +1,6 @@
 package com.mob.serverapi.reseller.repositories.database;
 
-import com.mob.serverapi.reseller.database.tReseller;
-import com.mob.serverapi.reseller.database.tResellerBalance;
-import com.mob.serverapi.reseller.database.tResellerBalance_;
-import com.mob.serverapi.reseller.database.tReseller_;
+import com.mob.serverapi.reseller.database.*;
 import com.mob.serverapi.users.database.tUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -54,6 +51,7 @@ public class tResellerBalanceRepository {
     public List<tResellerBalance> getResellerBalanceFiltered(UUID resellerId, @Nullable LocalDateTime startMovementDate,
                                                              @Nullable LocalDateTime endMovementDate, @Nullable String minValue,
                                                              @Nullable String maxValue, @Nullable String debitCredit,
+                                                             @Nullable String movementType,
                                                              @Nullable String field, @Nullable String orderField,
                                                              int offset, int numberRecords) {
 
@@ -66,9 +64,10 @@ public class tResellerBalanceRepository {
         Metamodel m = entityManager.getMetamodel();
         Root<tResellerBalance> root = query.from(tResellerBalance.class);
         Join<tResellerBalance, tReseller> reseller = root.join(tResellerBalance_.RESELLER);
+        Join<tResellerBalance, tResellerMovementType> movType = root.join(tResellerBalance_.RESELLER_MOVEMENT_TYPE);
 
-        query = getPredicates(cb, query, root, reseller, resellerId, startMovementDate, endMovementDate,
-                minValue, maxValue, debitCredit);
+        query = getPredicates(cb, query, root, reseller,movType, resellerId, startMovementDate, endMovementDate,
+                minValue, maxValue, debitCredit,movementType);
 
         List<Order> orders = new ArrayList<Order>(2);
         if (field != null) {
@@ -84,6 +83,12 @@ public class tResellerBalanceRepository {
                     orders.add(cb.asc(reseller.get(field)));
                 if (orderField.toUpperCase(Locale.ROOT).equals("DESC"))
                     orders.add(cb.desc(reseller.get(field)));
+            }
+            if(field.equals("movementType")) {
+                if (orderField.toUpperCase(Locale.ROOT).equals("ASC"))
+                    orders.add(cb.asc(movType.get("description")));
+                if (orderField.toUpperCase(Locale.ROOT).equals("DESC"))
+                    orders.add(cb.desc(movType.get("description")));
             }
         }
 
@@ -103,16 +108,18 @@ public class tResellerBalanceRepository {
 
     public long getCountResellerFiltered(UUID resellerId, @Nullable LocalDateTime startMovementDate,
                                          @Nullable LocalDateTime endMovementDate, @Nullable String minValue,
-                                         @Nullable String maxValue, @Nullable String debitCredit) {
+                                         @Nullable String maxValue, @Nullable String debitCredit,
+                                         @Nullable String movementType) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<tResellerBalance> query = cb.createQuery(tResellerBalance.class);
         Metamodel m = entityManager.getMetamodel();
         Root<tResellerBalance> root = query.from(tResellerBalance.class);
         Join<tResellerBalance, tReseller> reseller = root.join(tResellerBalance_.RESELLER);
+        Join<tResellerBalance, tResellerMovementType> movType = root.join(tResellerBalance_.RESELLER_MOVEMENT_TYPE);
 
-        query = getPredicates(cb, query, root, reseller, resellerId, startMovementDate, endMovementDate,
-                minValue, maxValue, debitCredit);
+        query = getPredicates(cb, query, root, reseller,movType, resellerId, startMovementDate, endMovementDate,
+                minValue, maxValue, debitCredit,movementType);
 
         long result = entityManager.createQuery(query)
                 .getResultList()
@@ -123,9 +130,11 @@ public class tResellerBalanceRepository {
 
     private CriteriaQuery<tResellerBalance> getPredicates(CriteriaBuilder cb, CriteriaQuery<tResellerBalance> query,
                                                           Root<tResellerBalance> root, Join<tResellerBalance, tReseller> reseller,
+                                                          Join<tResellerBalance, tResellerMovementType> movType,
                                                           UUID resellerId, @Nullable LocalDateTime startMovementDate,
                                                           @Nullable LocalDateTime endMovementDate, @Nullable String minValue,
-                                                          @Nullable String maxValue, @Nullable String debitCredit) {
+                                                          @Nullable String maxValue, @Nullable String debitCredit,
+                                                          @Nullable String movementType) {
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
@@ -148,6 +157,9 @@ public class tResellerBalanceRepository {
 
         if (debitCredit != null)
             predicates.add(cb.equal(cb.lower(root.get("debitCredit")), debitCredit.toLowerCase()));
+
+        if(movementType != null)
+            predicates.add(cb.equal(cb.lower(movType.<String>get("description")), movementType.toLowerCase()));
 
         Predicate[] predArray = new Predicate[predicates.size()];
         predicates.toArray(predArray);

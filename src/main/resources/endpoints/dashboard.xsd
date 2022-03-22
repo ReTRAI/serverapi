@@ -2,8 +2,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/dashboard/base"
            targetNamespace="http://www.mob.com/serverapi/dashboard/base" elementFormDefault="qualified">
 
-    <!-- getDashboardByResellerId-->
-    <xs:element name="getDashboardByResellerIdRequest">
+    <!-- GetDashboardByResellerId-->
+    <xs:element name="GetDashboardByResellerIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:string"/>
@@ -11,19 +11,19 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getDashboardByResellerIdResponse">
+    <xs:element name="GetDashboardByResellerIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="global" type="tns:global"/>
-                <xs:element name="inactive" type="tns:inactive"/>
-                <xs:element name="expiring" type="tns:expiring"/>
-                <xs:element name="active" type="tns:active"/>
+                <xs:element name="global" type="tns:Global"/>
+                <xs:element name="inactive" type="tns:Inactive"/>
+                <xs:element name="expiring" type="tns:Expiring"/>
+                <xs:element name="active" type="tns:Active"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
     <!-- Endpoint Dashboard Global Object-->
-    <xs:complexType name="global">
+    <xs:complexType name="Global">
         <xs:sequence>
             <xs:element name="active"  type="xs:long"/>
             <xs:element name="notActive" type="xs:long"/>
@@ -33,7 +33,7 @@
     </xs:complexType>
 
     <!-- Endpoint Dashboard Inactive Object-->
-    <xs:complexType name="inactive">
+    <xs:complexType name="Inactive">
         <xs:sequence>
             <xs:element name="wiped"  type="xs:long"/>
             <xs:element name="blocked" type="xs:long"/>
@@ -43,7 +43,7 @@
     </xs:complexType>
 
     <!-- Endpoint DashboardExpiring Object-->
-    <xs:complexType name="expiring">
+    <xs:complexType name="Expiring">
         <xs:sequence>
             <xs:element name="renewed"  type="xs:long"/>
             <xs:element name="in30Days" type="xs:long"/>
@@ -53,7 +53,7 @@
     </xs:complexType>
 
     <!-- Endpoint Dashboard Active Object-->
-    <xs:complexType name="active">
+    <xs:complexType name="Active">
         <xs:sequence>
             <xs:element name="day"  type="xs:long"/>
             <xs:element name="week" type="xs:long"/>

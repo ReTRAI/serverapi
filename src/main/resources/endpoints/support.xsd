@@ -2,40 +2,40 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/support/base"
            targetNamespace="http://www.mob.com/serverapi/support/base" elementFormDefault="qualified">
 
-    <!-- getSupportById-->
-    <xs:element name="getSupportByIdRequest">
+    <!-- GetSupportById-->
+    <xs:element name="GetSupportByIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="supportId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getSupportByIdResponse">
+    <xs:element name="GetSupportByIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="support" type="tns:support"/>
+                <xs:element name="support" type="tns:Support"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getSupportByUserId-->
-    <xs:element name="getSupportByUserIdRequest">
+    <!-- GetSupportByUserId-->
+    <xs:element name="GetSupportByUserIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getSupportByUserIdResponse">
+    <xs:element name="GetSupportByUserIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="support" type="tns:support"/>
+                <xs:element name="support" type="tns:Support"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getSupportFiltered-->
-    <xs:element name="getSupportFilteredRequest">
+    <!-- GetSupportFiltered-->
+    <xs:element name="GetSupportFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="supportId"  type="xs:string" />
@@ -48,16 +48,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getSupportFilteredResponse">
+    <xs:element name="GetSupportFilteredResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="support" type="tns:support" maxOccurs="unbounded"/>
+                <xs:element name="support" type="tns:Support" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getTicketFiltered-->
-    <xs:element name="getTicketFilteredRequest">
+    <!-- GetTicketFiltered-->
+    <xs:element name="GetTicketFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ticketId"  type="xs:string" />
@@ -71,16 +71,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getTicketFilteredResponse">
+    <xs:element name="GetTicketFilteredResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="ticket" type="tns:ticket" maxOccurs="unbounded"/>
+                <xs:element name="ticket" type="tns:Ticket" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getTicketDetailFiltered-->
-    <xs:element name="getTicketDetailFilteredRequest">
+    <!-- GetTicketDetailFiltered-->
+    <xs:element name="GetTicketDetailFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ticketId"  type="xs:string" />
@@ -93,16 +93,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getTicketDetailFilteredResponse">
+    <xs:element name="GetTicketDetailFilteredResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="ticketDetail" type="tns:ticketDetail" maxOccurs="unbounded"/>
+                <xs:element name="ticketDetail" type="tns:TicketDetail" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountTicketDetailFiltered-->
-    <xs:element name="getCountTicketDetailFilteredRequest">
+    <!-- GetCountTicketDetailFiltered-->
+    <xs:element name="GetCountTicketDetailFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ticketId"  type="xs:string" />
@@ -111,7 +111,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountTicketDetailFilteredResponse">
+    <xs:element name="GetCountTicketDetailFilteredResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long"/>
@@ -119,8 +119,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountSupportFiltered-->
-    <xs:element name="getCountSupportFilteredRequest">
+    <!-- GetCountSupportFiltered-->
+    <xs:element name="GetCountSupportFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="supportId"  type="xs:string" />
@@ -129,7 +129,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountSupportFilteredResponse">
+    <xs:element name="GetCountSupportFilteredResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long"/>
@@ -137,8 +137,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountTicketFiltered-->
-    <xs:element name="getCountTicketFilteredRequest">
+    <!-- GetCountTicketFiltered-->
+    <xs:element name="GetCountTicketFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ticketId"  type="xs:string" />
@@ -148,7 +148,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountTicketFilteredResponse">
+    <xs:element name="GetCountTicketFilteredResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long"/>
@@ -156,8 +156,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- getSupportAssociation-->
-    <xs:element name="getSupportAssociationRequest">
+    <!-- GetSupportAssociation-->
+    <xs:element name="GetSupportAssociationRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="parentSupportId"  type="xs:string"/>
@@ -165,32 +165,32 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getSupportAssociationResponse">
+    <xs:element name="GetSupportAssociationResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="supportAssociation" type="tns:supportAssociation"/>
+                <xs:element name="supportAssociation" type="tns:SupportAssociation"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getSupportParentByChildId-->
-    <xs:element name="getSupportParentByChildIdRequest">
+    <!-- GetSupportParentByChildId-->
+    <xs:element name="GetSupportParentByChildIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="childSupportId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getSupportParentByChildIdResponse">
+    <xs:element name="GetSupportParentByChildIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="support" type="tns:support"/>
+                <xs:element name="support" type="tns:Support"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getAvailableSupportParent-->
-    <xs:element name="getAvailableSupportParentRequest">
+    <!-- GetAvailableSupportParent-->
+    <xs:element name="GetAvailableSupportParentRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="supportId"  type="xs:string" />
@@ -199,23 +199,23 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getAvailableSupportParentResponse">
+    <xs:element name="GetAvailableSupportParentResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="support" type="tns:support" maxOccurs="unbounded"/>
+                <xs:element name="support" type="tns:Support" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountAvailableSupportParent-->
-    <xs:element name="getCountAvailableSupportParentRequest">
+    <!-- GetCountAvailableSupportParent-->
+    <xs:element name="GetCountAvailableSupportParentRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="supportId"  type="xs:string" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountAvailableSupportParentResponse">
+    <xs:element name="GetCountAvailableSupportParentResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long" />
@@ -223,8 +223,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- setSupport-->
-    <xs:element name="setSupportRequest">
+    <!-- SetSupport-->
+    <xs:element name="SetSupportRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -232,16 +232,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setSupportResponse">
+    <xs:element name="SetSupportResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="support" type="tns:support"/>
+                <xs:element name="support" type="tns:Support"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setSupportAssociation-->
-    <xs:element name="setSupportAssociationRequest">
+    <!-- SetSupportAssociation-->
+    <xs:element name="SetSupportAssociationRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="parentSupportId" type="xs:string"/>
@@ -250,7 +250,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setSupportAssociationResponse">
+    <xs:element name="SetSupportAssociationResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -258,8 +258,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- setTicket-->
-    <xs:element name="setTicketRequest">
+    <!-- SetTicket-->
+    <xs:element name="SetTicketRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="message" type="xs:string"/>
@@ -267,16 +267,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setTicketResponse">
+    <xs:element name="SetTicketResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="ticket" type="tns:ticket"/>
+                <xs:element name="ticket" type="tns:Ticket"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setTicketDetail-->
-    <xs:element name="setTicketDetailRequest">
+    <!-- SetTicketDetail-->
+    <xs:element name="SetTicketDetailRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ticketId" type="xs:string"/>
@@ -285,7 +285,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setTicketDetailResponse">
+    <xs:element name="SetTicketDetailResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -293,8 +293,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- updateTicket -->
-    <xs:element name="updateTicketRequest">
+    <!-- UpdateTicket -->
+    <xs:element name="UpdateTicketRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="ticketId" type="xs:string"/>
@@ -304,7 +304,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="updateTicketResponse">
+    <xs:element name="UpdateTicketResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -312,8 +312,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- removeSupport-->
-    <xs:element name="removeSupportRequest">
+    <!-- RemoveSupport-->
+    <xs:element name="RemoveSupportRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="supportId" type="xs:string"/>
@@ -321,7 +321,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="removeSupportResponse">
+    <xs:element name="RemoveSupportResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -329,8 +329,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- removeSupportAssociation-->
-    <xs:element name="removeSupportAssociationRequest">
+    <!-- RemoveSupportAssociation-->
+    <xs:element name="RemoveSupportAssociationRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="parentSupportId" type="xs:string"/>
@@ -339,7 +339,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="removeSupportAssociationResponse">
+    <xs:element name="RemoveSupportAssociationResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -347,8 +347,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- isHierarchyValid-->
-    <xs:element name="isHierarchyValidRequest">
+    <!-- IsHierarchyValid-->
+    <xs:element name="IsHierarchyValidRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="supportId" type="xs:string"/>
@@ -356,7 +356,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="isHierarchyValidResponse">
+    <xs:element name="IsHierarchyValidResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -365,7 +365,7 @@
     </xs:element>
 
     <!-- Endpoint Support Object-->
-    <xs:complexType name="support">
+    <xs:complexType name="Support">
         <xs:sequence>
             <xs:element name="supportId"  type="xs:string"/>
             <xs:element name="userId" type="xs:string"/>
@@ -374,7 +374,7 @@
     </xs:complexType>
 
     <!-- Endpoint SupportAssociation Object-->
-    <xs:complexType name="supportAssociation">
+    <xs:complexType name="SupportAssociation">
         <xs:sequence>
             <xs:element name="supportAssociationId"  type="xs:string"/>
             <xs:element name="parentSupportId" type="xs:string"/>
@@ -383,7 +383,7 @@
     </xs:complexType>
 
     <!-- Endpoint Ticket Object-->
-    <xs:complexType name="ticket">
+    <xs:complexType name="Ticket">
         <xs:sequence>
             <xs:element name="ticketId"  type="xs:string"/>
             <xs:element name="status" type="xs:string"/>
@@ -394,7 +394,7 @@
     </xs:complexType>
 
     <!-- Endpoint TicketDetail Object-->
-    <xs:complexType name="ticketDetail">
+    <xs:complexType name="TicketDetail">
         <xs:sequence>
             <xs:element name="ticketId"  type="xs:string"/>
             <xs:element name="ticketDetailId" type="xs:string"/>

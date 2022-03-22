@@ -307,6 +307,7 @@ public class ResellerRepository implements IResellerRepository {
     public List<ResellerBalance> getResellerBalanceMovements(UUID resellerId, @Nullable String startMovementDate,
                                                              @Nullable String endMovementDate, @Nullable String minValue,
                                                              @Nullable String maxValue, @Nullable String debitCredit,
+                                                             @Nullable String movementType,
                                                              @Nullable String field, @Nullable String orderField,
                                                              int offset, int numberRecords) {
 
@@ -321,6 +322,7 @@ public class ResellerRepository implements IResellerRepository {
                 String localMinValue = minValue.equals("") ? null : minValue;
                 String localMaxValue = maxValue.equals("") ? null : maxValue;
                 String localDebitCredit = debitCredit.equals("") ? null : debitCredit;
+                String localMovementType = movementType.equals("") ? null : movementType;
                 LocalDateTime localStartMovementDate = startMovementDate.equals("") ? null :
                         LocalDateTime.parse(startMovementDate, formatter);
                 LocalDateTime localEndMovementDate = endMovementDate.equals("") ? null :
@@ -330,8 +332,8 @@ public class ResellerRepository implements IResellerRepository {
                 String localOrderField = orderField.equals("") ? null : orderField;
 
                 List<tResellerBalance> listBalance = resellerBalanceRepository.getResellerBalanceFiltered(resellerId,
-                        localStartMovementDate, localEndMovementDate, localMinValue, localMaxValue, localDebitCredit, localField,
-                        localOrderField, offset, numberRecords);
+                        localStartMovementDate, localEndMovementDate, localMinValue, localMaxValue, localDebitCredit,
+                        localMovementType, localField, localOrderField, offset, numberRecords);
 
                 if (listBalance != null)
                     returnList = ResellerUtils.transformResellerBalanceList(listBalance);
@@ -352,7 +354,8 @@ public class ResellerRepository implements IResellerRepository {
     @Override
     public long getCountResellerBalanceMovements(UUID resellerId, @Nullable String startMovementDate,
                                                  @Nullable String endMovementDate, @Nullable String minValue,
-                                                 @Nullable String maxValue, @Nullable String debitCredit) {
+                                                 @Nullable String maxValue, @Nullable String debitCredit,
+                                                 @Nullable String movementType) {
 
 
         try {
@@ -364,6 +367,8 @@ public class ResellerRepository implements IResellerRepository {
                 String localMinValue = minValue.equals("") ? null : minValue;
                 String localMaxValue = maxValue.equals("") ? null : maxValue;
                 String localDebitCredit = debitCredit.equals("") ? null : debitCredit;
+                String localMovementType = movementType.equals("") ? null : movementType;
+
                 LocalDateTime localStartMovementDate = startMovementDate.equals("") ? null :
                         LocalDateTime.parse(startMovementDate, formatter);
                 LocalDateTime localEndMovementDate = endMovementDate.equals("") ? null :
@@ -371,7 +376,8 @@ public class ResellerRepository implements IResellerRepository {
 
 
                 long nBalance = resellerBalanceRepository.getCountResellerFiltered(resellerId,
-                        localStartMovementDate, localEndMovementDate, localMinValue, localMaxValue, localDebitCredit);
+                        localStartMovementDate, localEndMovementDate, localMinValue, localMaxValue, localDebitCredit,
+                        localMovementType);
 
                 return nBalance;
 

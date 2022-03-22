@@ -29,9 +29,9 @@ public class UserEndpoint {
         this.userRepository = userRepository;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserByIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetUserByIdRequest")
     @ResponsePayload
-    public GetUserByIdResponse getUserById(@RequestPayload GetUserByIdRequest request) {
+    public GetUserByIdResponse GetUserById(@RequestPayload GetUserByIdRequest request) {
 
         GetUserByIdResponse response = new GetUserByIdResponse();
         response.setUser(userRepository.getUserById(UUID.fromString(request.getUserId())));
@@ -39,9 +39,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "userLoginRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "UserLoginRequest")
     @ResponsePayload
-    public UserLoginResponse userLogin (@RequestPayload UserLoginRequest request) {
+    public UserLoginResponse UserLogin (@RequestPayload UserLoginRequest request) {
 
         UserLoginResponse response = new UserLoginResponse();
         response.setUser(userRepository.userLogin(request.getUserEmail(), request.getUserPassword()));
@@ -50,18 +50,18 @@ public class UserEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRolesByUserIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetUserRolesByUserIdRequest")
     @ResponsePayload
-    public GetUserRolesByUserIdResponse getAllUser(@RequestPayload GetUserRolesByUserIdRequest request) {
+    public GetUserRolesByUserIdResponse GetAllUser(@RequestPayload GetUserRolesByUserIdRequest request) {
         GetUserRolesByUserIdResponse response = new GetUserRolesByUserIdResponse();
         response.getUserRole().addAll(userRepository.getUserRolesByUserById(UUID.fromString(request.getUserId())));
 
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setUserRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetUserRequest")
     @ResponsePayload
-    public SetUserResponse setUser (@RequestPayload SetUserRequest request) {
+    public SetUserResponse SetUser (@RequestPayload SetUserRequest request) {
 
         SetUserResponse response = new SetUserResponse();
         response.setUser(userRepository.setUser(request.getUserName(),request.getUserEmail(),
@@ -71,9 +71,9 @@ public class UserEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "unblockUserRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "UnblockUserRequest")
     @ResponsePayload
-    public UnblockUserResponse unblockUser (@RequestPayload UnblockUserRequest request) {
+    public UnblockUserResponse UnblockUser (@RequestPayload UnblockUserRequest request) {
 
         UnblockUserResponse response = new UnblockUserResponse();
         response.setResult(userRepository.unblockUser(UUID.fromString(request.getUserId())
@@ -82,9 +82,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "changeUserPwRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ChangeUserPwRequest")
     @ResponsePayload
-    public ChangeUserPwResponse changeUserPw (@RequestPayload ChangeUserPwRequest request) {
+    public ChangeUserPwResponse ChangeUserPw (@RequestPayload ChangeUserPwRequest request) {
 
         ChangeUserPwResponse response = new ChangeUserPwResponse();
         response.setResult(userRepository.changeUserPw(UUID.fromString(request.getUserId()), request.getPassword(),
@@ -93,9 +93,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "inactivateUserRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "InactivateUserRequest")
     @ResponsePayload
-    public InactivateUserResponse inactivateUser (@RequestPayload InactivateUserRequest request) {
+    public InactivateUserResponse InactivateUser (@RequestPayload InactivateUserRequest request) {
 
         InactivateUserResponse response = new InactivateUserResponse();
         response.setResult(userRepository.inactivateUser(UUID.fromString(request.getUserId())
@@ -105,9 +105,9 @@ public class UserEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "activateUserRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ActivateUserRequest")
     @ResponsePayload
-    public ActivateUserResponse inactivateUser (@RequestPayload ActivateUserRequest request) {
+    public ActivateUserResponse ActivateUser (@RequestPayload ActivateUserRequest request) {
 
         ActivateUserResponse response = new ActivateUserResponse();
         response.setResult(userRepository.activateUser(UUID.fromString(request.getUserId())
@@ -116,9 +116,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "changeLangPreferenceRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ChangeLangPreferenceRequest")
     @ResponsePayload
-    public ChangeLangPreferenceResponse changeLangPreference
+    public ChangeLangPreferenceResponse ChangeLangPreference
             (@RequestPayload ChangeLangPreferenceRequest request) {
 
         ChangeLangPreferenceResponse response = new ChangeLangPreferenceResponse();
@@ -129,9 +129,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "changeThemePreferenceRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ChangeThemePreferenceRequest")
     @ResponsePayload
-    public ChangeThemePreferenceResponse changeThemePreference
+    public ChangeThemePreferenceResponse ChangeThemePreference
             (@RequestPayload ChangeThemePreferenceRequest request) {
 
         ChangeThemePreferenceResponse response = new ChangeThemePreferenceResponse();
@@ -141,9 +141,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "existUserNameRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ExistUserNameRequest")
     @ResponsePayload
-    public ExistUserNameResponse existUserName (@RequestPayload ExistUserNameRequest request) {
+    public ExistUserNameResponse ExistUserName (@RequestPayload ExistUserNameRequest request) {
 
         ExistUserNameResponse response = new ExistUserNameResponse();
         response.setResult(userRepository.existUserName(request.getUserName()));
@@ -151,9 +151,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "existUserEmailRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ExistUserEmailRequest")
     @ResponsePayload
-    public ExistUserEmailResponse existUserEmail (@RequestPayload ExistUserEmailRequest request) {
+    public ExistUserEmailResponse ExistUserEmail (@RequestPayload ExistUserEmailRequest request) {
 
         ExistUserEmailResponse response = new ExistUserEmailResponse();
         response.setResult(userRepository.existUserEmail(request.getUserEmail()));
@@ -162,9 +162,9 @@ public class UserEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetUserFilteredRequest")
     @ResponsePayload
-    public GetUserFilteredResponse getUserFiltered(@RequestPayload GetUserFilteredRequest request) {
+    public GetUserFilteredResponse GetUserFiltered(@RequestPayload GetUserFilteredRequest request) {
 
         GetUserFilteredResponse response = new GetUserFilteredResponse();
         response.getUser().addAll(userRepository.getUserFiltered(request.getUserId(),request.getUserName(),
@@ -175,9 +175,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountUserFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountUserFilteredRequest")
     @ResponsePayload
-    public GetCountUserFilteredResponse getCountUserFiltered(@RequestPayload GetCountUserFilteredRequest request) {
+    public GetCountUserFilteredResponse GetCountUserFiltered(@RequestPayload GetCountUserFilteredRequest request) {
 
         GetCountUserFilteredResponse response = new GetCountUserFilteredResponse();
         response.setResult(userRepository.getCountUserFiltered(request.getUserId(),request.getUserName(),
@@ -187,9 +187,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setUserAdminRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetUserAdminRequest")
     @ResponsePayload
-    public SetUserAdminResponse setUserAdmin (@RequestPayload SetUserAdminRequest request) {
+    public SetUserAdminResponse SetUserAdmin (@RequestPayload SetUserAdminRequest request) {
 
         SetUserAdminResponse response = new SetUserAdminResponse();
         response.setResult(userRepository.setUserAdmin(UUID.fromString(request.getUserId())
@@ -198,9 +198,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeUserAdminRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveUserAdminRequest")
     @ResponsePayload
-    public RemoveUserAdminResponse removeUserAdmin (@RequestPayload RemoveUserAdminRequest request) {
+    public RemoveUserAdminResponse RemoveUserAdmin (@RequestPayload RemoveUserAdminRequest request) {
 
         RemoveUserAdminResponse response = new RemoveUserAdminResponse();
         response.setResult(userRepository.removeUserAdmin(UUID.fromString(request.getUserId())

@@ -2,56 +2,56 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/reseller/base"
            targetNamespace="http://www.mob.com/serverapi/reseller/base" elementFormDefault="qualified">
 
-    <!-- getResellerById-->
-    <xs:element name="getResellerByIdRequest">
+    <!-- GetResellerById-->
+    <xs:element name="GetResellerByIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getResellerByIdResponse">
+    <xs:element name="GetResellerByIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="reseller" type="tns:reseller"/>
+                <xs:element name="reseller" type="tns:Reseller"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getResellerByUserId-->
-    <xs:element name="getResellerByUserIdRequest">
+    <!-- GetResellerByUserId-->
+    <xs:element name="GetResellerByUserIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getResellerByUserIdResponse">
+    <xs:element name="GetResellerByUserIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="reseller" type="tns:reseller"/>
+                <xs:element name="reseller" type="tns:Reseller"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getResellerByUserDeviceName-->
-    <xs:element name="getResellerByUserDeviceNameRequest">
+    <!-- GetResellerByUserDeviceName-->
+    <xs:element name="GetResellerByUserDeviceNameRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userDeviceName"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getResellerByUserDeviceNameResponse">
+    <xs:element name="GetResellerByUserDeviceNameResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="reseller" type="tns:reseller"/>
+                <xs:element name="reseller" type="tns:Reseller"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getResellerFiltered-->
-    <xs:element name="getResellerFilteredRequest">
+    <!-- GetResellerFiltered-->
+    <xs:element name="GetResellerFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:string" />
@@ -64,16 +64,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getResellerFilteredResponse">
+    <xs:element name="GetResellerFilteredResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="reseller" type="tns:reseller" maxOccurs="unbounded"/>
+                <xs:element name="reseller" type="tns:Reseller" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getAvailableResellerParent-->
-    <xs:element name="getAvailableResellerParentRequest">
+    <!-- GetAvailableResellerParent-->
+    <xs:element name="GetAvailableResellerParentRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:string" />
@@ -82,23 +82,23 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getAvailableResellerParentResponse">
+    <xs:element name="GetAvailableResellerParentResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="reseller" type="tns:reseller" maxOccurs="unbounded"/>
+                <xs:element name="reseller" type="tns:Reseller" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountAvailableResellerParent-->
-    <xs:element name="getCountAvailableResellerParentRequest">
+    <!-- GetCountAvailableResellerParent-->
+    <xs:element name="GetCountAvailableResellerParentRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:string" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountAvailableResellerParentResponse">
+    <xs:element name="GetCountAvailableResellerParentResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long" />
@@ -106,8 +106,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- getResellerBalanceMovements-->
-    <xs:element name="getResellerBalanceMovementsRequest">
+    <!-- GetResellerBalanceMovements-->
+    <xs:element name="GetResellerBalanceMovementsRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:string" />
@@ -116,6 +116,7 @@
                 <xs:element name="minValue"  type="xs:string" />
                 <xs:element name="maxValue"  type="xs:string" />
                 <xs:element name="debitCredit"  type="xs:string" />
+                <xs:element name="movementType" type="xs:string"/>
                 <xs:element name="field"  type="xs:string" />
                 <xs:element name="orderField"  type="xs:string" />
                 <xs:element name="offset"  type="xs:int"/>
@@ -123,16 +124,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getResellerBalanceMovementsResponse">
+    <xs:element name="GetResellerBalanceMovementsResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="resellerBalance" type="tns:resellerBalance" maxOccurs="unbounded"/>
+                <xs:element name="resellerBalance" type="tns:ResellerBalance" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountResellerBalanceMovements-->
-    <xs:element name="getCountResellerBalanceMovementsRequest">
+    <!-- GetCountResellerBalanceMovements-->
+    <xs:element name="GetCountResellerBalanceMovementsRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:string" />
@@ -141,10 +142,11 @@
                 <xs:element name="minValue"  type="xs:string" />
                 <xs:element name="maxValue"  type="xs:string" />
                 <xs:element name="debitCredit"  type="xs:string" />
+                <xs:element name="movementType" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountResellerBalanceMovementsResponse">
+    <xs:element name="GetCountResellerBalanceMovementsResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long" />
@@ -152,8 +154,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountResellerFiltered-->
-    <xs:element name="getCountResellerFilteredRequest">
+    <!-- GetCountResellerFiltered-->
+    <xs:element name="GetCountResellerFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId"  type="xs:string" />
@@ -162,7 +164,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountResellerFilteredResponse">
+    <xs:element name="GetCountResellerFilteredResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long"/>
@@ -170,8 +172,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- getResellerAssociation-->
-    <xs:element name="getResellerAssociationRequest">
+    <!-- GetResellerAssociation-->
+    <xs:element name="GetResellerAssociationRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="parentResellerId"  type="xs:string"/>
@@ -179,32 +181,32 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getResellerAssociationResponse">
+    <xs:element name="GetResellerAssociationResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="resellerAssociation" type="tns:resellerAssociation"/>
+                <xs:element name="resellerAssociation" type="tns:ResellerAssociation"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getResellerParentByChildId-->
-    <xs:element name="getResellerParentByChildIdRequest">
+    <!-- GetResellerParentByChildId-->
+    <xs:element name="GetResellerParentByChildIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="childResellerId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getResellerParentByChildIdResponse">
+    <xs:element name="GetResellerParentByChildIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="reseller" type="tns:reseller"/>
+                <xs:element name="reseller" type="tns:Reseller"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setReseller-->
-    <xs:element name="setResellerRequest">
+    <!-- SetReseller-->
+    <xs:element name="SetResellerRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -212,16 +214,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setResellerResponse">
+    <xs:element name="SetResellerResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="reseller" type="tns:reseller"/>
+                <xs:element name="reseller" type="tns:Reseller"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setResellerBalanceMovement-->
-    <xs:element name="setResellerBalanceMovementRequest">
+    <!-- SetResellerBalanceMovement-->
+    <xs:element name="SetResellerBalanceMovementRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId" type="xs:string"/>
@@ -233,7 +235,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setResellerBalanceMovementResponse">
+    <xs:element name="SetResellerBalanceMovementResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -242,8 +244,8 @@
     </xs:element>
 
 
-    <!-- setResellerAssociation-->
-    <xs:element name="setResellerAssociationRequest">
+    <!-- SetResellerAssociation-->
+    <xs:element name="SetResellerAssociationRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="parentResellerId" type="xs:string"/>
@@ -252,7 +254,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setResellerAssociationResponse">
+    <xs:element name="SetResellerAssociationResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -260,8 +262,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- removeReseller-->
-    <xs:element name="removeResellerRequest">
+    <!-- RemoveReseller-->
+    <xs:element name="RemoveResellerRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId" type="xs:string"/>
@@ -269,7 +271,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="removeResellerResponse">
+    <xs:element name="RemoveResellerResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -277,8 +279,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- removeResellerAssociation-->
-    <xs:element name="removeResellerAssociationRequest">
+    <!-- RemoveResellerAssociation-->
+    <xs:element name="RemoveResellerAssociationRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="parentResellerId" type="xs:string"/>
@@ -287,7 +289,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="removeResellerAssociationResponse">
+    <xs:element name="RemoveResellerAssociationResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -295,8 +297,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- isHierarchyValid-->
-    <xs:element name="isHierarchyValidRequest">
+    <!-- IsHierarchyValid-->
+    <xs:element name="IsHierarchyValidRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="resellerId" type="xs:string"/>
@@ -304,7 +306,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="isHierarchyValidResponse">
+    <xs:element name="IsHierarchyValidResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -313,7 +315,7 @@
     </xs:element>
 
     <!-- Endpoint Reseller Object-->
-    <xs:complexType name="reseller">
+    <xs:complexType name="Reseller">
         <xs:sequence>
             <xs:element name="resellerId"  type="xs:string"/>
             <xs:element name="userId" type="xs:string"/>
@@ -324,7 +326,7 @@
     </xs:complexType>
 
     <!-- Endpoint ResellerAssociation Object-->
-    <xs:complexType name="resellerAssociation">
+    <xs:complexType name="ResellerAssociation">
         <xs:sequence>
             <xs:element name="resellerAssociationId"  type="xs:string"/>
             <xs:element name="parentResellerId" type="xs:string"/>
@@ -333,7 +335,7 @@
     </xs:complexType>
 
     <!-- Endpoint ResellerBalance Object-->
-    <xs:complexType name="resellerBalance">
+    <xs:complexType name="ResellerBalance">
         <xs:sequence>
             <xs:element name="resellerBalanceId"  type="xs:string"/>
             <xs:element name="debitCredit" type="xs:string" />

@@ -26,7 +26,7 @@ public class NotificationEndpoint {
         this.notificationRepository = notificationRepository;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setDeviceNotificationRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetDeviceNotificationRequest")
     @ResponsePayload
     public SetDeviceNotificationResponse setDeviceNotification(@RequestPayload SetDeviceNotificationRequest request) {
 
@@ -37,7 +37,7 @@ public class NotificationEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setDeviceNotificationCheckedRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetDeviceNotificationCheckedRequest")
     @ResponsePayload
     public SetDeviceNotificationCheckedResponse setDeviceNotificationChecked(@RequestPayload SetDeviceNotificationCheckedRequest request) {
 
@@ -49,7 +49,7 @@ public class NotificationEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getDeviceNotificationFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetDeviceNotificationFilteredRequest")
     @ResponsePayload
     public GetDeviceNotificationFilteredResponse getDeviceNotificationFiltered(@RequestPayload GetDeviceNotificationFilteredRequest request) {
 
@@ -63,7 +63,7 @@ public class NotificationEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountDeviceNotificationFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountDeviceNotificationFilteredRequest")
     @ResponsePayload
     public GetCountDeviceNotificationFilteredResponse getCountDeviceNotificationFiltered(@RequestPayload GetCountDeviceNotificationFilteredRequest request) {
 
@@ -75,9 +75,9 @@ public class NotificationEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setUserNotificationRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetUserNotificationRequest")
     @ResponsePayload
-    public SetUserNotificationResponse setUserNotificationRequest(@RequestPayload SetUserNotificationRequest request) {
+    public SetUserNotificationResponse setUserNotification(@RequestPayload SetUserNotificationRequest request) {
 
         SetUserNotificationResponse response = new SetUserNotificationResponse();
         response.setUserNotification(notificationRepository.setUserNotification(UUID.fromString(request.getUserId()),
@@ -86,7 +86,7 @@ public class NotificationEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setUserNotificationCheckedRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetUserNotificationCheckedRequest")
     @ResponsePayload
     public SetUserNotificationCheckedResponse setUserNotificationChecked(@RequestPayload SetUserNotificationCheckedRequest request) {
 
@@ -97,7 +97,7 @@ public class NotificationEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserNotificationFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetUserNotificationFilteredRequest")
     @ResponsePayload
     public GetUserNotificationFilteredResponse getUserNotificationFiltered(@RequestPayload GetUserNotificationFilteredRequest request) {
 

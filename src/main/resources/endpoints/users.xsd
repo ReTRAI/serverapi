@@ -2,40 +2,40 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.mob.com/serverapi/users/base"
            targetNamespace="http://www.mob.com/serverapi/users/base" elementFormDefault="qualified">
 
-    <!-- getUserById-->
-    <xs:element name="getUserByIdRequest">
+    <!-- GetUserById-->
+    <xs:element name="GetUserByIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getUserByIdResponse">
+    <xs:element name="GetUserByIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="user" type="tns:user"/>
+                <xs:element name="user" type="tns:User"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getUserRolesByUserId-->
-    <xs:element name="getUserRolesByUserIdRequest">
+    <!-- GetUserRolesByUserId-->
+    <xs:element name="GetUserRolesByUserIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId"  type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getUserRolesByUserIdResponse">
+    <xs:element name="GetUserRolesByUserIdResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="userRole" type="tns:userRole" maxOccurs="unbounded"/>
+                <xs:element name="userRole" type="tns:UserRole" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getUserFiltered-->
-    <xs:element name="getUserFilteredRequest">
+    <!-- GetUserFiltered-->
+    <xs:element name="GetUserFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId"  type="xs:string" />
@@ -51,16 +51,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getUserFilteredResponse">
+    <xs:element name="GetUserFilteredResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="user" type="tns:user" maxOccurs="unbounded"/>
+                <xs:element name="user" type="tns:User" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- getCountUserFiltered-->
-    <xs:element name="getCountUserFilteredRequest">
+    <!-- GetCountUserFiltered-->
+    <xs:element name="GetCountUserFilteredRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId"  type="xs:string" />
@@ -72,7 +72,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getCountUserFilteredResponse">
+    <xs:element name="GetCountUserFilteredResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:long"/>
@@ -80,8 +80,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- userLogin-->
-    <xs:element name="userLoginRequest">
+    <!-- UserLogin-->
+    <xs:element name="UserLoginRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userEmail" type="xs:string"/>
@@ -89,16 +89,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="userLoginResponse">
+    <xs:element name="UserLoginResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="user" type="tns:user"/>
+                <xs:element name="user" type="tns:User"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- setUser-->
-    <xs:element name="setUserRequest">
+    <!-- SetUser-->
+    <xs:element name="SetUserRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userName" type="xs:string"/>
@@ -108,16 +108,16 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setUserResponse">
+    <xs:element name="SetUserResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="user" type="tns:user"/>
+                <xs:element name="user" type="tns:User"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <!-- unblockUser-->
-    <xs:element name="unblockUserRequest">
+    <!-- UnblockUser-->
+    <xs:element name="UnblockUserRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -126,7 +126,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="unblockUserResponse">
+    <xs:element name="UnblockUserResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -134,8 +134,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- changeUserPw-->
-    <xs:element name="changeUserPwRequest">
+    <!-- ChangeUserPw-->
+    <xs:element name="ChangeUserPwRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -145,7 +145,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="changeUserPwResponse">
+    <xs:element name="ChangeUserPwResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -153,8 +153,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- inactivateUser-->
-    <xs:element name="inactivateUserRequest">
+    <!-- InactivateUser-->
+    <xs:element name="InactivateUserRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -163,7 +163,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="inactivateUserResponse">
+    <xs:element name="InactivateUserResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -171,8 +171,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- activateUser-->
-    <xs:element name="activateUserRequest">
+    <!-- ActivateUser-->
+    <xs:element name="ActivateUserRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -181,7 +181,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="activateUserResponse">
+    <xs:element name="ActivateUserResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -189,8 +189,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- changeLangPreference-->
-    <xs:element name="changeLangPreferenceRequest">
+    <!-- ChangeLangPreference-->
+    <xs:element name="ChangeLangPreferenceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -200,7 +200,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="changeLangPreferenceResponse">
+    <xs:element name="ChangeLangPreferenceResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -208,8 +208,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- changeThemePreference-->
-    <xs:element name="changeThemePreferenceRequest">
+    <!-- ChangeThemePreference-->
+    <xs:element name="ChangeThemePreferenceRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -218,7 +218,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="changeThemePreferenceResponse">
+    <xs:element name="ChangeThemePreferenceResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -226,15 +226,15 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- existUserName-->
-    <xs:element name="existUserNameRequest">
+    <!-- ExistUserName-->
+    <xs:element name="ExistUserNameRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userName" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="existUserNameResponse">
+    <xs:element name="ExistUserNameResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -242,15 +242,15 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- existUserEmail-->
-    <xs:element name="existUserEmailRequest">
+    <!-- ExistUserEmail-->
+    <xs:element name="ExistUserEmailRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userEmail" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="existUserEmailResponse">
+    <xs:element name="ExistUserEmailResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -258,8 +258,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- setUserAdmin-->
-    <xs:element name="setUserAdminRequest">
+    <!-- SetUserAdmin-->
+    <xs:element name="SetUserAdminRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -267,7 +267,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="setUserAdminResponse">
+    <xs:element name="SetUserAdminResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -275,8 +275,8 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- removeUserAdmin-->
-    <xs:element name="removeUserAdminRequest">
+    <!-- RemoveUserAdmin-->
+    <xs:element name="RemoveUserAdminRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userId" type="xs:string"/>
@@ -284,7 +284,7 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="removeUserAdminResponse">
+    <xs:element name="RemoveUserAdminResponse">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="result" type="xs:boolean"/>
@@ -293,7 +293,7 @@
     </xs:element>
 
     <!-- Endpoint User Object-->
-    <xs:complexType name="user">
+    <xs:complexType name="User">
         <xs:sequence>
             <xs:element name="userId"  type="xs:string"/>
             <xs:element name="userName" type="xs:string"/>
@@ -306,7 +306,7 @@
     </xs:complexType>
 
     <!-- Endpoint UserRole Object-->
-    <xs:complexType name="userRole">
+    <xs:complexType name="UserRole">
         <xs:sequence>
             <xs:element name="userRoleId"  type="xs:string"/>
             <xs:element name="userRoleName" type="xs:string"/>

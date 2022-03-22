@@ -25,7 +25,7 @@ public class ResellerEndpoint {
         this.resellerRepository = resellerRepository;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerByIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetResellerByIdRequest")
     @ResponsePayload
     public GetResellerByIdResponse getResellerById(@RequestPayload GetResellerByIdRequest request) {
 
@@ -35,7 +35,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerByUserIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetResellerByUserIdRequest")
     @ResponsePayload
     public GetResellerByUserIdResponse getResellerByUserId(@RequestPayload GetResellerByUserIdRequest request) {
 
@@ -45,7 +45,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerByUserDeviceNameRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetResellerByUserDeviceNameRequest")
     @ResponsePayload
     public GetResellerByUserDeviceNameResponse getResellerByUserDeviceName (@RequestPayload GetResellerByUserDeviceNameRequest request) {
 
@@ -56,7 +56,7 @@ public class ResellerEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetResellerFilteredRequest")
     @ResponsePayload
     public GetResellerFilteredResponse getResellerFiltered(@RequestPayload GetResellerFilteredRequest request) {
 
@@ -68,7 +68,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAvailableResellerParentRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAvailableResellerParentRequest")
     @ResponsePayload
     public GetAvailableResellerParentResponse getAvailableResellerParent (@RequestPayload GetAvailableResellerParentRequest request) {
 
@@ -79,9 +79,9 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountAvailableResellerParentRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountAvailableResellerParentRequest")
     @ResponsePayload
-    public GetCountAvailableResellerParentResponse getCountAvailableResellerParentRequest(@RequestPayload GetCountAvailableResellerParentRequest request) {
+    public GetCountAvailableResellerParentResponse getCountAvailableResellerParent(@RequestPayload GetCountAvailableResellerParentRequest request) {
 
         GetCountAvailableResellerParentResponse response = new GetCountAvailableResellerParentResponse();
         response.setResult(resellerRepository.getCountAvailableResellerParent(UUID.fromString(request.getResellerId())));
@@ -89,20 +89,20 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerBalanceMovementsRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetResellerBalanceMovementsRequest")
     @ResponsePayload
     public GetResellerBalanceMovementsResponse getResellerBalanceMovements(@RequestPayload GetResellerBalanceMovementsRequest request) {
 
         GetResellerBalanceMovementsResponse response = new GetResellerBalanceMovementsResponse();
         response.getResellerBalance().addAll(resellerRepository.getResellerBalanceMovements
                 (UUID.fromString(request.getResellerId()), request.getStartMovementDate(),request.getEndMovementDate(),
-                        request.getMinValue(),request.getMaxValue(), request.getDebitCredit(),request.getField(),request.getOrderField(),
-                        request.getOffset(),request.getNumberRecords()));
+                        request.getMinValue(),request.getMaxValue(), request.getDebitCredit(),request.getMovementType(),
+                        request.getField(),request.getOrderField(), request.getOffset(),request.getNumberRecords()));
 
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountResellerBalanceMovementsRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountResellerBalanceMovementsRequest")
     @ResponsePayload
     public GetCountResellerBalanceMovementsResponse getCountResellerBalanceMovements
             (@RequestPayload GetCountResellerBalanceMovementsRequest request) {
@@ -110,12 +110,12 @@ public class ResellerEndpoint {
         GetCountResellerBalanceMovementsResponse response = new GetCountResellerBalanceMovementsResponse();
         response.setResult(resellerRepository.getCountResellerBalanceMovements (UUID.fromString(request.getResellerId()),
                         request.getStartMovementDate(),request.getEndMovementDate(),
-                        request.getMinValue(),request.getMaxValue(), request.getDebitCredit()));
+                        request.getMinValue(),request.getMaxValue(), request.getDebitCredit(),request.getMovementType()));
 
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountResellerFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountResellerFilteredRequest")
     @ResponsePayload
     public GetCountResellerFilteredResponse getCountResellerFiltered(@RequestPayload GetCountResellerFilteredRequest request) {
 
@@ -126,7 +126,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetResellerRequest")
     @ResponsePayload
     public SetResellerResponse setReseller (@RequestPayload SetResellerRequest request) {
 
@@ -137,7 +137,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerBalanceMovementRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetResellerBalanceMovementRequest")
     @ResponsePayload
     public SetResellerBalanceMovementResponse setResellerBalanceMovement (@RequestPayload SetResellerBalanceMovementRequest request) {
 
@@ -149,7 +149,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerAssociationRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetResellerAssociationRequest")
     @ResponsePayload
     public GetResellerAssociationResponse getResellerAssociation(@RequestPayload GetResellerAssociationRequest request) {
 
@@ -160,7 +160,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getResellerParentByChildIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetResellerParentByChildIdRequest")
     @ResponsePayload
     public GetResellerParentByChildIdResponse getResellerParentByChildId(@RequestPayload GetResellerParentByChildIdRequest request) {
 
@@ -171,7 +171,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setResellerAssociationRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetResellerAssociationRequest")
     @ResponsePayload
     public SetResellerAssociationResponse setResellerAssociation (@RequestPayload SetResellerAssociationRequest request) {
 
@@ -182,7 +182,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeResellerRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveResellerRequest")
     @ResponsePayload
     public RemoveResellerResponse removeReseller (@RequestPayload RemoveResellerRequest request) {
 
@@ -193,7 +193,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeResellerAssociationRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveResellerAssociationRequest")
     @ResponsePayload
     public RemoveResellerAssociationResponse removeResellerAssociation (@RequestPayload RemoveResellerAssociationRequest request) {
 
@@ -205,7 +205,7 @@ public class ResellerEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "isHierarchyValidRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "IsHierarchyValidRequest")
     @ResponsePayload
     public IsHierarchyValidResponse isHierarchyValid (@RequestPayload IsHierarchyValidRequest request) {
 

@@ -19,8 +19,8 @@ public class tDeviceUserLog implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "deviceLogId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
-    public UUID deviceLogId;
+    @Column(name = "deviceUserLogId", columnDefinition = "BINARY(16)", unique = true, updatable = false, nullable = false)
+    public UUID deviceUserLogId;
 
     @Column(name = "action", nullable = false)
     public String action;

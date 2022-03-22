@@ -23,7 +23,7 @@ public class DeviceEndpoint {
         this.deviceRepository = deviceRepository;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getDeviceByIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetDeviceByIdRequest")
     @ResponsePayload
     public GetDeviceByIdResponse getDeviceById(@RequestPayload GetDeviceByIdRequest request) {
 
@@ -33,7 +33,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "assignDeviceRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AssignDeviceRequest")
     @ResponsePayload
     public AssignDeviceResponse assignDevice(@RequestPayload AssignDeviceRequest request) {
 
@@ -44,7 +44,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "activateDeviceRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ActivateDeviceRequest")
     @ResponsePayload
     public ActivateDeviceResponse activateDevice(@RequestPayload ActivateDeviceRequest request) {
 
@@ -55,7 +55,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "blockDeviceRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "BlockDeviceRequest")
     @ResponsePayload
     public BlockDeviceResponse blockDevice(@RequestPayload BlockDeviceRequest request) {
 
@@ -66,7 +66,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "wipeDeviceRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "WipeDeviceRequest")
     @ResponsePayload
     public WipeDeviceResponse wipeDevice(@RequestPayload WipeDeviceRequest request) {
 
@@ -77,7 +77,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "suspendDeviceRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SuspendDeviceRequest")
     @ResponsePayload
     public SuspendDeviceResponse suspendDevice(@RequestPayload SuspendDeviceRequest request) {
 
@@ -89,7 +89,7 @@ public class DeviceEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setDeviceRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetDeviceRequest")
     @ResponsePayload
     public SetDeviceResponse setDevice(@RequestPayload SetDeviceRequest request) {
 
@@ -101,7 +101,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setDeviceListRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetDeviceListRequest")
     @ResponsePayload
     public SetDeviceListResponse setDeviceList(@RequestPayload SetDeviceListRequest request) {
 
@@ -112,7 +112,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getDevicesFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetDevicesFilteredRequest")
     @ResponsePayload
     public GetDevicesFilteredResponse getDevicesFiltered(@RequestPayload GetDevicesFilteredRequest request) {
 
@@ -127,7 +127,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountDevicesFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountDevicesFilteredRequest")
     @ResponsePayload
     public GetCountDevicesFilteredResponse getCountDevicesFiltered(@RequestPayload GetCountDevicesFilteredRequest request) {
 
@@ -141,7 +141,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setDeviceNotesRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetDeviceNotesRequest")
     @ResponsePayload
     public SetDeviceNotesResponse setDeviceNotes(@RequestPayload SetDeviceNotesRequest request) {
 
@@ -152,7 +152,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getDeviceBalanceMovementsRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetDeviceBalanceMovementsRequest")
     @ResponsePayload
     public GetDeviceBalanceMovementsResponse getDeviceBalanceMovements(@RequestPayload GetDeviceBalanceMovementsRequest request) {
 
@@ -165,7 +165,7 @@ public class DeviceEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountDeviceBalanceMovementsRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountDeviceBalanceMovementsRequest")
     @ResponsePayload
     public GetCountDeviceBalanceMovementsResponse getCountDeviceBalanceMovements
             (@RequestPayload GetCountDeviceBalanceMovementsRequest request) {
@@ -179,9 +179,9 @@ public class DeviceEndpoint {
     }
 
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "setDeviceBalanceMovementRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SetDeviceBalanceMovementRequest")
     @ResponsePayload
-    public SetDeviceBalanceMovementResponse setDeviceBalanceMovementRequest
+    public SetDeviceBalanceMovementResponse setDeviceBalanceMovement
             (@RequestPayload SetDeviceBalanceMovementRequest request) {
 
         SetDeviceBalanceMovementResponse response = new SetDeviceBalanceMovementResponse();

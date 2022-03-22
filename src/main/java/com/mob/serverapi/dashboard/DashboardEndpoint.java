@@ -26,7 +26,7 @@ public class DashboardEndpoint {
         this.dashboardRepository = dashboardRepository;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getDashboardByResellerIdRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetDashboardByResellerIdRequest")
     @ResponsePayload
     public GetDashboardByResellerIdResponse getDashboardByResellerId(@RequestPayload GetDashboardByResellerIdRequest request) {
 
