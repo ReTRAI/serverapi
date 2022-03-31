@@ -43,6 +43,13 @@ public class tTicket implements Serializable {
             foreignKey = @ForeignKey(name="FK_TICKET_ASSIGNEDUSERID"))
     private tUser assignedUser;
 
+    @Column(name = "title", length = 255, nullable = true)
+    private String title;
+
+    @Lob
+    @Column(name = "attachPath", nullable = true)
+    private String attachPath;
+
     /**
      * FK from ticketDetail to ticket
      */

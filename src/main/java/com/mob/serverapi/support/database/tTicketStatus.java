@@ -1,5 +1,6 @@
 package com.mob.serverapi.support.database;
 
+import com.mob.serverapi.users.database.tUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -30,6 +31,11 @@ public class tTicketStatus implements Serializable {
         COMPLETED;
     }
 
+    /**
+     * FK from ticket to ticketStatus
+     */
+    @OneToMany(targetEntity = tTicket.class,mappedBy="ticketStatus" , fetch = FetchType.LAZY)
+    private Set<tTicket> ticket;
 
     public tTicketStatus() {
     }

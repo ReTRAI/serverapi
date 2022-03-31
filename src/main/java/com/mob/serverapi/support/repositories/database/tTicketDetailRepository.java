@@ -4,6 +4,7 @@ package com.mob.serverapi.support.repositories.database;
 import com.mob.serverapi.support.database.*;
 import com.mob.serverapi.support.database.tTicketDetail_;
 import com.mob.serverapi.support.database.tTicket_;
+import com.mob.serverapi.users.database.tUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,7 @@ public class tTicketDetailRepository {
 
     public List<tTicketDetail> getTicketDetailFiltered(@Nullable UUID ticketId,
                                            @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate,
+                                           @Nullable UUID responseUserId,
                                            @Nullable String field, @Nullable String orderField,
                                            int offset, int numberRecords) {
 
@@ -41,8 +43,9 @@ public class tTicketDetailRepository {
         CriteriaQuery<tTicketDetail> query = cb.createQuery(tTicketDetail.class);
         Root<tTicketDetail> root = query.from(tTicketDetail.class);
         Join<tTicketDetail, tTicket> ticketJoin = root.join(tTicketDetail_.TICKET);
+        Join<tTicketDetail, tUser> responseUser = root.join(tTicketDetail_.USER);
 
-        query = getPredicates(cb,query,root,ticketJoin,ticketId,startCreationDate,endCreationDate);
+        query = getPredicates(cb,query,root,ticketJoin,responseUser,ticketId,startCreationDate,endCreationDate,responseUserId);
 
         List<Order> orders = new ArrayList<Order>(2);
         if (field != null) {
@@ -75,7 +78,8 @@ public class tTicketDetailRepository {
     }
 
     public long getCountTicketDetailFiltered(@Nullable UUID ticketId,
-                                       @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate) {
+                                       @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate,
+                                             @Nullable UUID responseUserId) {
 
         List<tTicketDetail> finalList = new ArrayList<>();
 
@@ -84,8 +88,9 @@ public class tTicketDetailRepository {
         CriteriaQuery<tTicketDetail> query = cb.createQuery(tTicketDetail.class);
         Root<tTicketDetail> root = query.from(tTicketDetail.class);
         Join<tTicketDetail, tTicket> ticketJoin = root.join(tTicketDetail_.TICKET);
+        Join<tTicketDetail, tUser> responseUser = root.join(tTicketDetail_.USER);
 
-        query = getPredicates(cb,query,root,ticketJoin,ticketId,startCreationDate,endCreationDate);
+        query = getPredicates(cb,query,root,ticketJoin,responseUser,ticketId,startCreationDate,endCreationDate,responseUserId);
 
         long result = entityManager.createQuery(query)
                 .getResultList()
@@ -96,13 +101,18 @@ public class tTicketDetailRepository {
     }
 
     private CriteriaQuery<tTicketDetail> getPredicates(CriteriaBuilder cb , CriteriaQuery<tTicketDetail> query, Root<tTicketDetail> root,
-                                                       Join<tTicketDetail, tTicket> ticketJoin, @Nullable UUID ticketId,
-                                                       @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate){
+                                                       Join<tTicketDetail, tTicket> ticketJoin,
+                                                       Join<tTicketDetail, tUser> responseUser,
+                                                       @Nullable UUID ticketId,
+                                                       @Nullable LocalDateTime startCreationDate,
+                                                       @Nullable LocalDateTime endCreationDate,
+                                                       @Nullable UUID responseUserId){
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
         if (ticketId != null)
             predicates.add(cb.equal(ticketJoin.get("ticketId"), ticketId));
+
         if (startCreationDate != null && endCreationDate != null)
             predicates.add(cb.between(root.get("detailDate"), startCreationDate, endCreationDate));
         if (startCreationDate != null && endCreationDate == null)
@@ -110,6 +120,8 @@ public class tTicketDetailRepository {
         if (startCreationDate == null && endCreationDate != null)
             predicates.add(cb.lessThanOrEqualTo(root.get("detailDate"), endCreationDate));
 
+        if (responseUserId != null)
+            predicates.add(cb.equal(responseUser.get("userId"), responseUserId));
 
         Predicate[] predArray = new Predicate[predicates.size()];
         predicates.toArray(predArray);

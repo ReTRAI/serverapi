@@ -31,19 +31,23 @@ interface ISupportRepository {
 
     List<Ticket> getTicketFiltered(@Nullable String ticketId, @Nullable String status,
                                    @Nullable String startCreationDate, @Nullable String endCreationDate,
+                                    @Nullable String openUserId, @Nullable String assignedUserId,
                                     @Nullable String field, @Nullable String orderField,
                                     int offset, int numberRecords);
 
     long getCountTicketFiltered(@Nullable String ticketId, @Nullable String status,
-                                 @Nullable String startCreationDate, @Nullable String endCreationDate);
+                                 @Nullable String startCreationDate, @Nullable String endCreationDate,
+                                @Nullable String openUserId, @Nullable String assignedUserId);
 
     List<TicketDetail> getTicketDetailFiltered(@Nullable String ticketId,
                                          @Nullable String startCreationDate, @Nullable String endCreationDate,
+                                               @Nullable String responseUserId,
                                          @Nullable String field, @Nullable String orderField,
                                          int offset, int numberRecords);
 
     long getCountTicketDetailFiltered(@Nullable String ticketId,
-                                @Nullable String startCreationDate, @Nullable String endCreationDate);
+                                @Nullable String startCreationDate, @Nullable String endCreationDate,
+                                      @Nullable String responseUserId);
 
     boolean setSupportAssociation(UUID parentSupportId, UUID childSupportId, UUID actionUserId);
 
@@ -53,11 +57,11 @@ interface ISupportRepository {
 
     Support getSupportParentByChildId(UUID childSupportId);
 
-    Ticket setTicket(String message,UUID creationUserId);
+    Ticket setTicket(String title, String message, String attachPath, UUID creationUserId);
 
     boolean updateTicket(UUID ticketId, @Nullable String status, @Nullable String assignedUserId, UUID actionUserId);
 
-    boolean setTicketDetail(UUID ticketId,String message,UUID actionUserId);
+    boolean setTicketDetail(UUID ticketId,String message,String attachPath, UUID actionUserId);
 
     List<Support> getAvailableSupportParent(UUID supportId, int offset, int numberRecords);
 

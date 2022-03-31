@@ -4,6 +4,7 @@ package com.mob.serverapi.support.repositories.database;
 import com.mob.serverapi.support.database.tTicket;
 import com.mob.serverapi.support.database.tTicketStatus;
 import com.mob.serverapi.support.database.tTicket_;
+import com.mob.serverapi.users.database.tUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -53,6 +54,7 @@ public class tTicketRepository {
 
     public List<tTicket> getTicketFiltered(@Nullable UUID ticketId, @Nullable String status,
                                            @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate,
+                                           @Nullable UUID openUserId, @Nullable UUID assignedUserId,
                                            @Nullable String field, @Nullable String orderField,
                                            int offset, int numberRecords) {
 
@@ -64,11 +66,15 @@ public class tTicketRepository {
         Root<tTicket> root = query.from(tTicket.class);
         Join<tTicket, tTicketStatus> statusJoin = root.join(tTicket_.TICKET_STATUS);
 
-        query = getPredicates(cb,query,root,statusJoin,ticketId,status,startCreationDate,endCreationDate);
+        Join<tTicket, tUser> openUser = root.join(tTicket_.OPEN_USER);
+        Join<tTicket, tUser> assignUser = root.join(tTicket_.ASSIGNED_USER, JoinType.LEFT);
+
+        query = getPredicates(cb,query,root,statusJoin, openUser, assignUser, ticketId,status,startCreationDate,
+                endCreationDate,openUserId,assignedUserId);
 
         List<Order> orders = new ArrayList<Order>(2);
         if (field != null) {
-            if (field.equals("ticketId") || field.equals("creationDate")) {
+            if (field.equals("ticketId") || field.equals("openDate")) {
                 if (orderField.toUpperCase(Locale.ROOT).equals("ASC"))
                     orders.add(cb.asc(root.get(field)));
                 if (orderField.toUpperCase(Locale.ROOT).equals("DESC"))
@@ -97,7 +103,8 @@ public class tTicketRepository {
     }
 
     public long getCountTicketFiltered(@Nullable UUID ticketId, @Nullable String status,
-                                       @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate) {
+                                       @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate,
+                                       @Nullable UUID openUserId, @Nullable UUID assignedUserId) {
 
         List<tTicket> finalList = new ArrayList<>();
 
@@ -108,7 +115,12 @@ public class tTicketRepository {
         Root<tTicket> root = query.from(tTicket.class);
         Join<tTicket, tTicketStatus> statusJoin = root.join(tTicket_.TICKET_STATUS);
 
-        query = getPredicates(cb,query,root,statusJoin,ticketId,status,startCreationDate,endCreationDate);
+        Join<tTicket, tUser> openUser = root.join(tTicket_.OPEN_USER);
+        Join<tTicket, tUser> assignUser = root.join(tTicket_.ASSIGNED_USER, JoinType.LEFT);
+
+
+        query = getPredicates(cb,query,root,statusJoin,openUser,assignUser,
+                ticketId,status,startCreationDate,endCreationDate,openUserId,assignedUserId);
 
 
         long result = entityManager.createQuery(query)
@@ -120,8 +132,11 @@ public class tTicketRepository {
     }
 
     private CriteriaQuery<tTicket> getPredicates(CriteriaBuilder cb, CriteriaQuery<tTicket> query, Root<tTicket> root,
-                                                 Join<tTicket, tTicketStatus> statusJoin, @Nullable UUID ticketId, @Nullable String status,
-                                                 @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate){
+                                                 Join<tTicket, tTicketStatus> statusJoin,Join<tTicket, tUser> openUser,
+                                                 Join<tTicket, tUser> assignUser,
+                                                 @Nullable UUID ticketId, @Nullable String status,
+                                                 @Nullable LocalDateTime startCreationDate, @Nullable LocalDateTime endCreationDate,
+                                                 @Nullable UUID openUserId, @Nullable UUID assignedUserId){
 
         List<Predicate> predicates = new ArrayList<Predicate>();
 
@@ -129,16 +144,23 @@ public class tTicketRepository {
             predicates.add(cb.equal(root.get("ticketId"), ticketId));
         if (status != null)
             predicates.add(cb.like(cb.lower(statusJoin.get("description")), "%" + status.toLowerCase() + "%"));
+
         if (startCreationDate != null && endCreationDate != null)
-            predicates.add(cb.between(root.get("creationDate"), startCreationDate, endCreationDate));
+            predicates.add(cb.between(root.get("openDate"), startCreationDate, endCreationDate));
         if (startCreationDate != null && endCreationDate == null)
-            predicates.add(cb.greaterThanOrEqualTo(root.get("creationDate"), startCreationDate));
+            predicates.add(cb.greaterThanOrEqualTo(root.get("openDate"), startCreationDate));
         if (startCreationDate == null && endCreationDate != null)
-            predicates.add(cb.lessThanOrEqualTo(root.get("creationDate"), endCreationDate));
+            predicates.add(cb.lessThanOrEqualTo(root.get("openDate"), endCreationDate));
+
+        if (openUserId != null)
+            predicates.add(cb.equal(openUser.get("userId"), openUserId));
+        if (assignedUserId != null)
+            predicates.add(cb.equal(assignUser.get("userId"), assignedUserId));
 
 
         Predicate[] predArray = new Predicate[predicates.size()];
         predicates.toArray(predArray);
+        query.where(predArray);
 
         return query;
     }

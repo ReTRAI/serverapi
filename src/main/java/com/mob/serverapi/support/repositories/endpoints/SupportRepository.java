@@ -218,7 +218,8 @@ public class SupportRepository implements ISupportRepository {
             String localOrderField = orderField.equals("") ? null : orderField;
 
 
-            List<tSupport> support = supportRepository.getSupportFiltered(localSupportId, localSupportName, onlyChildren, localField, localOrderField, offset, numberRecords);
+            List<tSupport> support = supportRepository.getSupportFiltered(localSupportId, localSupportName,
+                    onlyChildren, localField, localOrderField, offset, numberRecords);
 
             if (support != null)
                 returnList = SupportUtils.transformSupportList(support);
@@ -255,7 +256,10 @@ public class SupportRepository implements ISupportRepository {
 
 
     @Override
-    public List<Ticket> getTicketFiltered(@Nullable String ticketId, @Nullable String status, @Nullable String startCreationDate, @Nullable String endCreationDate, @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
+    public List<Ticket> getTicketFiltered(@Nullable String ticketId, @Nullable String status,
+                                          @Nullable String startCreationDate, @Nullable String endCreationDate,
+                                          @Nullable String openUserId, @Nullable String assignedUserId,
+                                          @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
 
         List<Ticket> returnList = new ArrayList<>();
 
@@ -269,8 +273,12 @@ public class SupportRepository implements ISupportRepository {
             String localOrderField = orderField.equals("") ? null : orderField;
             LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
             LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            UUID localOpenUserId = openUserId.equals("") ? null : UUID.fromString(openUserId);
+            UUID localAssignedUserId = assignedUserId.equals("") ? null : UUID.fromString(assignedUserId);
 
-            List<tTicket> ticket = ticketRepository.getTicketFiltered(localTicketId, localStatus, localStartCreationDate, localEndCreationDate, localField, localOrderField, offset, numberRecords);
+            List<tTicket> ticket = ticketRepository.getTicketFiltered(localTicketId, localStatus,
+                    localStartCreationDate, localEndCreationDate, localOpenUserId, localAssignedUserId, localField,
+                    localOrderField, offset, numberRecords);
 
             if (ticket != null)
                 returnList = SupportUtils.transformTicketList(ticket);
@@ -285,7 +293,9 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public long getCountTicketFiltered(@Nullable String ticketId, @Nullable String status, @Nullable String startCreationDate, @Nullable String endCreationDate) {
+    public long getCountTicketFiltered(@Nullable String ticketId, @Nullable String status, @Nullable String startCreationDate,
+                                       @Nullable String endCreationDate,
+                                       @Nullable String openUserId, @Nullable String assignedUserId) {
 
         try {
 
@@ -295,9 +305,11 @@ public class SupportRepository implements ISupportRepository {
             String localStatus = status.equals("") ? null : status;
             LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
             LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            UUID localOpenUserId = openUserId.equals("") ? null : UUID.fromString(openUserId);
+            UUID localAssignedUserId = assignedUserId.equals("") ? null : UUID.fromString(assignedUserId);
 
-
-            long countSupport = ticketRepository.getCountTicketFiltered(localTicketId, localStatus, localStartCreationDate, localEndCreationDate);
+            long countSupport = ticketRepository.getCountTicketFiltered(localTicketId, localStatus,
+                    localStartCreationDate, localEndCreationDate, localOpenUserId, localAssignedUserId);
 
             return countSupport;
 
@@ -309,7 +321,10 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public List<TicketDetail> getTicketDetailFiltered(@Nullable String ticketId, @Nullable String startCreationDate, @Nullable String endCreationDate, @Nullable String field, @Nullable String orderField, int offset, int numberRecords) {
+    public List<TicketDetail> getTicketDetailFiltered(@Nullable String ticketId, @Nullable String startCreationDate,
+                                                      @Nullable String endCreationDate, @Nullable String responseUserId,
+                                                      @Nullable String field,
+                                                      @Nullable String orderField, int offset, int numberRecords) {
         List<TicketDetail> returnList = new ArrayList<>();
 
         try {
@@ -321,8 +336,12 @@ public class SupportRepository implements ISupportRepository {
             String localOrderField = orderField.equals("") ? null : orderField;
             LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
             LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            UUID localResponseUserId = responseUserId.equals("") ? null : UUID.fromString(responseUserId);
 
-            List<tTicketDetail> ticket = ticketDetailRepository.getTicketDetailFiltered(localTicketId, localStartCreationDate, localEndCreationDate, localField, localOrderField, offset, numberRecords);
+
+            List<tTicketDetail> ticket = ticketDetailRepository.getTicketDetailFiltered(localTicketId,
+                    localStartCreationDate, localEndCreationDate, localResponseUserId,
+                    localField, localOrderField, offset, numberRecords);
 
             if (ticket != null)
                 returnList = SupportUtils.transformTicketDetailList(ticket);
@@ -337,7 +356,8 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public long getCountTicketDetailFiltered(@Nullable String ticketId, @Nullable String startCreationDate, @Nullable String endCreationDate) {
+    public long getCountTicketDetailFiltered(@Nullable String ticketId, @Nullable String startCreationDate,
+                                             @Nullable String endCreationDate, @Nullable String responseUserId) {
         try {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -345,9 +365,11 @@ public class SupportRepository implements ISupportRepository {
             UUID localTicketId = ticketId.equals("") ? null : UUID.fromString(ticketId);
             LocalDateTime localStartCreationDate = startCreationDate.equals("") ? null : LocalDateTime.parse(startCreationDate, formatter);
             LocalDateTime localEndCreationDate = endCreationDate.equals("") ? null : LocalDateTime.parse(endCreationDate, formatter).plusDays(1);
+            UUID localResponseUserId = responseUserId.equals("") ? null : UUID.fromString(responseUserId);
 
 
-            long countSupport = ticketDetailRepository.getCountTicketDetailFiltered(localTicketId, localStartCreationDate, localEndCreationDate);
+            long countSupport = ticketDetailRepository.getCountTicketDetailFiltered(localTicketId,
+                    localStartCreationDate, localEndCreationDate, localResponseUserId);
 
             return countSupport;
 
@@ -524,7 +546,7 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public Ticket setTicket(String message, UUID creationUserId) {
+    public Ticket setTicket(String title, String message, String attachPath, UUID creationUserId) {
         Ticket ticket = new Ticket();
 
         try {
@@ -534,9 +556,13 @@ public class SupportRepository implements ISupportRepository {
                 tTicketStatus ticketStatusVal = ticketStatusRepository.findTicketStatusByDescription(tTicketStatus.TicketStatusEnum.OPEN.name());
 
                 tTicket ticketToSave = new tTicket();
+                ticketToSave.setTitle(title);
                 ticketToSave.setOpenUser(creationUser);
                 ticketToSave.setOpenDate(LocalDateTime.now());
                 ticketToSave.setTicketStatus(ticketStatusVal);
+
+                if (attachPath != null)
+                    ticketToSave.setAttachPath(attachPath);
 
                 tTicket saved = ticketRepository.saveTicket(ticketToSave);
 
@@ -582,29 +608,46 @@ public class SupportRepository implements ISupportRepository {
                 if (actionUser != null) {
 
                     UUID localAssignedUserId = assignedUserId.equals("") ? null : UUID.fromString(assignedUserId);
-                    tTicketStatus localStatus = status.equals("") ? null : ticketStatusRepository.findTicketStatusByDescription(status);
 
                     if (localAssignedUserId != null) {
 
                         tUser assignedUser = userRepository.findById(localAssignedUserId);
-
                         if (assignedUser != null) {
-                            ticket.setAssignedUser(assignedUser);
+
+                            if (ticket.getOpenUser().getUserId().equals(assignedUser.getUserId())) {
+
+                                ticket.setAssignedUser(ticket.getOpenUser());
+
+                            } else {
+                                if (assignedUser.getUserStatus().getUserStatusId().equals
+                                        (ticket.getOpenUser().getUserStatus().getUserStatusId())) {
+
+                                    assignedUser.setUserStatus(ticket.getOpenUser().getUserStatus());
+                                }
+                                ticket.setAssignedUser(assignedUser);
+                            }
+
                             ticketRepository.saveTicket(ticket);
-                            ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED", "ALTERED ASSIGNED USER TO : " + localStatus.getDescription());
+                            ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED", "ALTERED ASSIGNED USER TO : " + assignedUserId);
                         } else {
                             throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.userNotExist.label, ""));
                         }
                     }
-                    if (localStatus != null) {
 
-                        ticket.setTicketStatus(localStatus);
-                        ticketRepository.saveTicket(ticket);
-                        ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED", "ALTERED STATUS TO : " + localStatus.getDescription());
+                    if (!status.equals("")) {
 
-                    } else {
-                        throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.statusNotExist.label, ""));
+                        tTicketStatus localStatus = ticketStatusRepository.findTicketStatusByDescription(status);
+
+                        if (localStatus != null) {
+                            ticket.setTicketStatus(localStatus);
+                            ticketRepository.saveTicket(ticket);
+                            ticketLogRepository.insertTicketLog(actionUser, ticket, "TICKET ALTERED", "ALTERED STATUS TO : " + localStatus.getDescription());
+                        } else {
+                            throw new ServiceFaultException(FaultMapping.FaultType.error.label, new ServiceFault(FaultMapping.RepoFault.statusNotExist.label, ""));
+
+                        }
                     }
+
 
                     val = true;
 
@@ -624,7 +667,7 @@ public class SupportRepository implements ISupportRepository {
     }
 
     @Override
-    public boolean setTicketDetail(UUID ticketId, String message, UUID actionUserId) {
+    public boolean setTicketDetail(UUID ticketId, String message, String attachPath, UUID actionUserId) {
         boolean val = false;
 
         try {
@@ -642,6 +685,9 @@ public class SupportRepository implements ISupportRepository {
                     tickedDetailToSave.setDetailDate(LocalDateTime.now());
                     tickedDetailToSave.setUser(actionUser);
                     tickedDetailToSave.setOriginalMessage(false);
+
+                    if (attachPath != null)
+                        tickedDetailToSave.setAttachPath(attachPath);
 
                     ticketDetailRepository.saveTicketDetail(tickedDetailToSave);
                     ticketLogRepository.insertTicketLog(actionUser, ticket, "ADD TICKET DETAIL", "TICKET ID: " + ticket.getTicketId());

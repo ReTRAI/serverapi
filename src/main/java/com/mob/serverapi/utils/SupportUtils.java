@@ -52,9 +52,13 @@ public  class SupportUtils {
         r.setCreationDate(ticket.getOpenDate().format(formatter));
         r.setCreationUserId(ticket.getOpenUser().getUserId().toString());
         r.setStatus(ticket.getTicketStatus().getDescription());
+        r.setTitle(ticket.getTitle());
 
         if(ticket.getAssignedUser() != null)
             r.setAssignedUserId(ticket.getAssignedUser().getUserId().toString());
+
+        if(ticket.getAttachPath() != null)
+            r.setAttachPath(ticket.getAttachPath());
 
         return r;
     }
@@ -102,6 +106,10 @@ public  class SupportUtils {
         r.setDetailDate(ticketDetail.getDetailDate().format(formatter));
         r.setOriginalMessage(ticketDetail.isOriginalMessage());
         r.setDetailUserId(ticketDetail.getUser().getUserId().toString());
+
+
+        if(ticketDetail.getAttachPath() != null)
+            r.setAttachPath(ticketDetail.getAttachPath());
 
         return r;
     }

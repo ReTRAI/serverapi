@@ -73,6 +73,7 @@ public class SupportEndpoint {
         GetTicketFilteredResponse response = new GetTicketFilteredResponse();
         response.getTicket().addAll(supportRepository.getTicketFiltered(request.getTicketId(),
                 request.getTicketStatus(), request.getStartCreationDate(), request.getEndCreationDate(),
+                request.getOpenUserId(), request.getAssignedUserId(),
                 request.getField(), request.getOrderField(), request.getOffset(), request.getNumberRecords()));
 
         return response;
@@ -83,8 +84,11 @@ public class SupportEndpoint {
     public GetCountTicketFilteredResponse getCountTicketFiltered(@RequestPayload GetCountTicketFilteredRequest request) {
 
         GetCountTicketFilteredResponse response = new GetCountTicketFilteredResponse();
-        response.setResult(supportRepository.getCountTicketFiltered(request.getTicketId(), request.getTicketStatus(),
-                request.getStartCreationDate(), request.getEndCreationDate()));
+        response.setResult(supportRepository.getCountTicketFiltered(request.getTicketId(),
+                request.getTicketStatus(),
+                request.getStartCreationDate(), request.getEndCreationDate(),
+                request.getOpenUserId(),
+                request.getAssignedUserId()));
 
         return response;
     }
@@ -96,7 +100,7 @@ public class SupportEndpoint {
 
         GetTicketDetailFilteredResponse response = new GetTicketDetailFilteredResponse();
         response.getTicketDetail().addAll(supportRepository.getTicketDetailFiltered(request.getTicketId(),
-                request.getStartDetailDate(), request.getEndDetailDate(),
+                request.getStartDetailDate(), request.getEndDetailDate(),request.getResponseUserId(),
                 request.getField(), request.getOrderField(), request.getOffset(), request.getNumberRecords()));
 
         return response;
@@ -108,7 +112,7 @@ public class SupportEndpoint {
 
         GetCountTicketDetailFilteredResponse response = new GetCountTicketDetailFilteredResponse();
         response.setResult(supportRepository.getCountTicketDetailFiltered(request.getTicketId(),
-                request.getStartDetailDate(), request.getEndDetailDate()));
+                request.getStartDetailDate(), request.getEndDetailDate(), request.getResponseUserId()));
 
         return response;
     }
@@ -198,7 +202,8 @@ public class SupportEndpoint {
     public SetTicketResponse setTicket(@RequestPayload SetTicketRequest request) {
 
         SetTicketResponse response = new SetTicketResponse();
-        response.setTicket(supportRepository.setTicket(request.getMessage(), UUID.fromString(request.getCreationUserId())));
+        response.setTicket(supportRepository.setTicket(request.getTitle(), request.getMessage(), request.getAttachPath(),
+                UUID.fromString(request.getCreationUserId())));
 
         return response;
     }
@@ -209,7 +214,7 @@ public class SupportEndpoint {
 
         SetTicketDetailResponse response = new SetTicketDetailResponse();
         response.setResult(supportRepository.setTicketDetail(UUID.fromString(request.getTicketId()),
-                request.getMessage(), UUID.fromString(request.getActionUserId())));
+                request.getMessage(), request.getAttachPath(), UUID.fromString(request.getActionUserId())));
 
         return response;
     }

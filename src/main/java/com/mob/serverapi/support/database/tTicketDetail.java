@@ -42,6 +42,10 @@ public class tTicketDetail {
     @Column(name = "detailDate", nullable = false)
     private LocalDateTime detailDate;
 
+    @Lob
+    @Column(name = "attachPath", nullable = true)
+    private String attachPath;
+
     public tTicketDetail() {
     }
 

@@ -34,7 +34,7 @@ public class tUserStatus implements Serializable {
     /**
      * FK from user to userStatus
      */
-    @OneToMany(targetEntity = tUser.class,mappedBy="userStatus" , fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = tUser.class, mappedBy="userStatus" , fetch = FetchType.LAZY)
     private Set<tUser> user;
 
     public tUserStatus() {
