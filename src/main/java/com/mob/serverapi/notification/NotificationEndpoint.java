@@ -111,9 +111,9 @@ public class NotificationEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCountUserNotificationFilteredRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetCountUserNotificationFilteredRequest")
     @ResponsePayload
-    public GetCountUserNotificationFilteredResponse getCountUserNotificationFiltered(@RequestPayload GetCountUserNotificationFilteredRequest request) {
+    public GetCountUserNotificationFilteredResponse GetCountUserNotificationFiltered(@RequestPayload GetCountUserNotificationFilteredRequest request) {
 
         GetCountUserNotificationFilteredResponse response = new GetCountUserNotificationFilteredResponse();
         response.setResult(notificationRepository.getCountUserNotificationFiltered(
