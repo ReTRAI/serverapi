@@ -32,7 +32,7 @@ public class NotificationEndpoint {
 
         SetDeviceNotificationResponse response = new SetDeviceNotificationResponse();
         response.setDeviceNotification(notificationRepository.setDeviceNotification(UUID.fromString(request.getDeviceId()),
-                request.getDetail(), UUID.fromString(request.getActionUserId())));
+                request.getDetail(), request.getInfo(),  UUID.fromString(request.getActionUserId())));
 
         return response;
     }
@@ -42,7 +42,8 @@ public class NotificationEndpoint {
     public SetDeviceNotificationCheckedResponse setDeviceNotificationChecked(@RequestPayload SetDeviceNotificationCheckedRequest request) {
 
         SetDeviceNotificationCheckedResponse response = new SetDeviceNotificationCheckedResponse();
-        response.setDeviceNotification(notificationRepository.setDeviceNotificationChecked(UUID.fromString(request.getDeviceNotificationId()),
+        response.setDeviceNotification(notificationRepository.setDeviceNotificationChecked(
+                UUID.fromString(request.getDeviceNotificationId()),
                  UUID.fromString(request.getActionUserId())));
 
         return response;
@@ -81,7 +82,7 @@ public class NotificationEndpoint {
 
         SetUserNotificationResponse response = new SetUserNotificationResponse();
         response.setUserNotification(notificationRepository.setUserNotification(UUID.fromString(request.getUserId()),
-                request.getDetail(), UUID.fromString(request.getActionUserId())));
+                request.getDetail(),request.getInfo(), UUID.fromString(request.getActionUserId())));
 
         return response;
     }

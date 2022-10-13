@@ -32,6 +32,10 @@ public class tUserNotification implements Serializable {
     @Column(name = "checkedDate")
     private LocalDateTime checkedDate;
 
+    @Column(name = "info", nullable = false)
+    @Lob
+    private String info;
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to Reseller, column resellerId
     @JoinColumn(name = "userId", referencedColumnName = "userId",

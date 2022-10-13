@@ -561,9 +561,6 @@ public class SupportRepository implements ISupportRepository {
                 ticketToSave.setOpenDate(LocalDateTime.now());
                 ticketToSave.setTicketStatus(ticketStatusVal);
 
-                if (attachPath != null)
-                    ticketToSave.setAttachPath(attachPath);
-
                 tTicket saved = ticketRepository.saveTicket(ticketToSave);
 
                 if (saved != null) {
@@ -577,6 +574,9 @@ public class SupportRepository implements ISupportRepository {
                     tickedDetailToSave.setDetailDate(LocalDateTime.now());
                     tickedDetailToSave.setUser(creationUser);
                     tickedDetailToSave.setOriginalMessage(true);
+
+                    if (attachPath != null)
+                        tickedDetailToSave.setAttachPath(attachPath);
 
                     ticketDetailRepository.saveTicketDetail(tickedDetailToSave);
                     ticketLogRepository.insertTicketLog(creationUser, saved, "TICKET CREATED", "TICKET ID: " + saved.getTicketId());

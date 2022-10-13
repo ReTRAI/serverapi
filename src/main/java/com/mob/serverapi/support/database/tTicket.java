@@ -46,10 +46,6 @@ public class tTicket implements Serializable {
     @Column(name = "title", length = 255, nullable = true)
     private String title;
 
-    @Lob
-    @Column(name = "attachPath", nullable = true)
-    private String attachPath;
-
     /**
      * FK from ticketDetail to ticket
      */

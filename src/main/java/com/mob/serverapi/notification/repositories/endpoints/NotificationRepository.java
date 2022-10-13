@@ -47,7 +47,7 @@ public class NotificationRepository implements INotificationRepository {
     protected tUserLogRepository userLogRepository = new tUserLogRepository();
 
     @Override
-    public DeviceNotification setDeviceNotification(UUID deviceId, String detail, UUID actionUserId) {
+    public DeviceNotification setDeviceNotification(UUID deviceId, String detail,String info,  UUID actionUserId) {
 
         DeviceNotification dn = new DeviceNotification();
         try {
@@ -64,6 +64,7 @@ public class NotificationRepository implements INotificationRepository {
                     deviceNotification.setDetail(detail);
                     deviceNotification.setCreationDate(LocalDateTime.now());
                     deviceNotification.setChecked(false);
+                    deviceNotification.setInfo(info);
 
                     tDeviceNotification saved = deviceNotificationRepository.saveDeviceNotification(deviceNotification);
 
@@ -219,7 +220,7 @@ public class NotificationRepository implements INotificationRepository {
     }
 
     @Override
-    public UserNotification setUserNotification(UUID userId, String detail, UUID actionUserId) {
+    public UserNotification setUserNotification(UUID userId, String detail, String info, UUID actionUserId) {
 
         UserNotification dn = new UserNotification();
         try {
@@ -234,6 +235,8 @@ public class NotificationRepository implements INotificationRepository {
                 userNotification.setDetail(detail);
                 userNotification.setCreationDate(LocalDateTime.now());
                 userNotification.setChecked(false);
+                userNotification.setInfo(info);
+
 
                 tUserNotification saved = userNotificationRepository.saveUserNotification(userNotification);
 

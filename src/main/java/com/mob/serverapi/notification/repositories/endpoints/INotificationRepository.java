@@ -11,7 +11,7 @@ import java.util.UUID;
 interface INotificationRepository {
 
 
-    DeviceNotification setDeviceNotification(UUID deviceId, String detail, UUID actionUserId);
+    DeviceNotification setDeviceNotification(UUID deviceId, String detail,String info,  UUID actionUserId);
 
     DeviceNotification setDeviceNotificationChecked(UUID deviceNotificationId, UUID actionUserId);
 
@@ -25,7 +25,7 @@ interface INotificationRepository {
                                                             @Nullable String endCreationDate, @Nullable String checked,
                                                             @Nullable String startCheckedDate, @Nullable String endCheckedDate);
 
-    UserNotification setUserNotification(UUID userId, String detail, UUID actionUserId);
+    UserNotification setUserNotification(UUID userId, String detail,String info,  UUID actionUserId);
 
     UserNotification setUserNotificationChecked(UUID userNotificationId, UUID actionUserId);
 

@@ -30,6 +30,7 @@ public  class NotificationUtils {
 
         r.setDeviceId(deviceNotification.getDevice().getDeviceId().toString());
         r.setDetail(deviceNotification.getDetail());
+        r.setInfo(deviceNotification.getInfo());
 
         if(deviceNotification.getCheckedDate() != null)
             r.setCheckedDate(deviceNotification.getCheckedDate().format(formatter));
@@ -61,7 +62,7 @@ public  class NotificationUtils {
         r.setChecked(userNotification.isChecked());
         r.setUserId(userNotification.getUser().getUserId().toString());
         r.setDetail(userNotification.getDetail());
-
+        r.setInfo(userNotification.getInfo());
 
         if(userNotification.getCheckedDate() != null)
             r.setCheckedDate(userNotification.getCheckedDate().format(formatter));

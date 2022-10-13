@@ -33,6 +33,10 @@ public class tDeviceNotification implements Serializable {
     @Column(name = "checkedDate")
     private LocalDateTime checkedDate;
 
+    @Column(name = "info", nullable = false)
+    @Lob
+    private String info;
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, optional = false)
     //FK to device, column deviceId
     @JoinColumn(name = "deviceId", referencedColumnName = "deviceId",

@@ -57,8 +57,6 @@ public  class SupportUtils {
         if(ticket.getAssignedUser() != null)
             r.setAssignedUserId(ticket.getAssignedUser().getUserId().toString());
 
-        if(ticket.getAttachPath() != null)
-            r.setAttachPath(ticket.getAttachPath());
 
         return r;
     }
